@@ -1,11 +1,14 @@
 import { Register } from "./pages/Register";
-import "./style.css";
+import { Login } from "./pages/Login";
+import { Home } from "./pages/Home";
+import "./style.scss";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Register></Register>
+        <Home></Home>
+        {/* <Register /> */}
       </header>
     </div>
   );
