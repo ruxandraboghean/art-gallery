@@ -1,51 +1,22 @@
 import React from "react";
-import user from "../images/user.png";
+import { messages } from '../mockData/messages';
+
 
 export const Chats = () => {
   return (
     <div className="chats">
-      <div className="user-chat">
-        <img src={user} />
-        <div className="user-chat-info">
-          <span>Jane Doe</span>
-          <p>Hello</p>
+      {
+        messages.map(chat => (
+
+          <div className="user-chat" key={chat.message}>
+          <img src={chat.image} />
+          <div className="user-chat-info">
+            <span>{chat.username}</span>
+            <p>{chat.message}</p>
+          </div>
         </div>
-      </div>
-      <div className="user-chat">
-        <img src={user} />
-        <div className="user-chat-info">
-          <span>Jane Doe</span>
-          <p>Hello</p>
-        </div>
-      </div>
-      <div className="user-chat">
-        <img src={user} />
-        <div className="user-chat-info">
-          <span>Jane Doe</span>
-          <p>Hello</p>
-        </div>
-      </div>
-      <div className="user-chat">
-        <img src={user} />
-        <div className="user-chat-info">
-          <span>Jane Doe</span>
-          <p>Hello</p>
-        </div>
-      </div>
-      <div className="user-chat">
-        <img src={user} />
-        <div className="user-chat-info">
-          <span>Jane Doe</span>
-          <p>Hello</p>
-        </div>
-      </div>
-      <div className="user-chat">
-        <img src={user} />
-        <div className="user-chat-info">
-          <span>Jane Doe</span>
-          <p>Hello</p>
-        </div>
-      </div>
+        ))
+      }
     </div>
   );
 };
