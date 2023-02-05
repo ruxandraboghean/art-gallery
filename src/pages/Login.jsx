@@ -1,10 +1,29 @@
-import React from "react";
+import { React, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
-import logo from "../images/logo-default.png";
-import background from "../images/background.png";
+import logo from "../images/General/logo-default.png";
 
 export const Login = () => {
+  const [err, setErr] = useState(false);
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/");
+    } catch (err) {
+      setErr(true);
+    }
+  };
+
   return (
     <>
       <div className="form-container">
@@ -13,7 +32,7 @@ export const Login = () => {
             <img src={logo} alt="Logo" className="logo" />
           </div>
           <div className="progress-bar"></div>
-          <form className="form">
+          <form className="form" onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="&#xF007;&nbsp;&nbsp; username"
@@ -31,15 +50,21 @@ export const Login = () => {
                 className="fa-circle-arrow-right"
               />
             </button>
+            {err && (
+              <span>
+                {" "}
+                Something went wrong. Please verify your credentials!{" "}
+              </span>
+            )}
           </form>
-          <p className="form-paragraph">
-            {" "}
-            You don't have an account? <a href="/register"> Register </a>{" "}
+          <p>
+            You don't have an account?{" "}
+            <Link to="/register" className="link">
+              Register
+            </Link>
           </p>
         </div>
-        <div className="image-wrapper">
-          <img src={background} alt="Background" className="background" />
-        </div>
+        <div className="image-wrapper"></div>
       </div>
     </>
   );

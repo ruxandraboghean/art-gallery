@@ -1,8 +1,8 @@
 import React from "react";
-import { Messages } from "../components/Messages";
+import { Messages } from "../Chat/Messages";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis, faUserPlus } from "@fortawesome/free-solid-svg-icons";
-import { Input } from "./Input";
+import { Input } from "../Chat/Input";
 
 export const Chat = () => {
   return (

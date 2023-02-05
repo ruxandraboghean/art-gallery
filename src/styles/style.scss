@@ -1,0 +1,47 @@
+@mixin mobile {
+    @media screen and (max-width: 568px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media screen and (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin laptop {
+    @media screen and (max-width: 1200px) {
+        @content;
+    }
+}
+
+@mixin bigger-laptop {
+    @media screen and (max-width: 1500px) {
+        @content;
+    }
+}
+
+@mixin monitor {
+    @media screen and (min-width: 1600px) {
+        @content;
+    }
+}
+
+body, .App-header {
+    background: #fff9fd;
+    font-family: 'Roboto Mono';
+    margin: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+body > #root > div {
+    height: 100vh;
+  }
+
+.center {
+    margin: auto;
+    text-align: center;
+}

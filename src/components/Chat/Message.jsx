@@ -1,6 +1,5 @@
 import React from "react";
-import user from "../images/user.png";
-import image from "../images/image.png";
+import user from "../../images/Chat/user.png";
 
 export const Message = () => {
   return (
@@ -11,7 +10,6 @@ export const Message = () => {
       </div>
       <div className="message-content">
         <p> This is a message. </p>
-        {/* <img src={ image } alt='Image'/> */}
       </div>
     </div>
   );

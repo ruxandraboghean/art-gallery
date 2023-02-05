@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
-import logo from "../images/logo-default.png";
-import background from "../images/background.png";
+import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import logo from "../images/General/logo-default.png";
 
 export const Register = () => {
   const [err, setErr] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,6 +20,7 @@ export const Register = () => {
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
+      navigate("/login");
     } catch (err) {
       setErr(true);
     }
@@ -52,15 +54,17 @@ export const Register = () => {
                 className="arrow-right"
               />
             </button>
+            {err && <span> Something went wrong </span>}
           </form>
-          <p className="form-paragraph">
+          <p>
             {" "}
-            Already have an account? <a href="/login"> Login </a>{" "}
+            Already have an account?{" "}
+            <Link to="/login" className="link">
+              Login
+            </Link>
           </p>
         </div>
-        <div className="image-wrapper">
-          <img src={background} alt="Background" className="background" />
-        </div>
+        <div className="image-wrapper"></div>
       </div>
     </>
   );
