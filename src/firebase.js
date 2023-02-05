@@ -2,7 +2,7 @@ import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDsoIo16q8jV7DetZWIhSj8ZPX85fL8eqk",
+  apiKey: process.env.REACT_APP_API_KEY,
   authDomain: "art-gallery-da0fa.firebaseapp.com",
   projectId: "art-gallery-da0fa",
   storageBucket: "art-gallery-da0fa.appspot.com",
