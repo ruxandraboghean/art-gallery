@@ -1,4 +1,4 @@
-import user from "../images/Chat/user.png";
+import user from "../images/user.png";
 
 export const messages = [
   {

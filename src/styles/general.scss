@@ -1,164 +1,22 @@
-@import './style.scss';
-@import './mixins.scss';
+@import "./mixins.scss";
+@import "./variables.scss";
 
-.form-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-
-    .form-wrapper {
-        width: 74%;
-        flex: 2 1 auto;
-        
-        .logo {
-            width: 10rem;
-            height: 10rem; 
-            
-            @include monitor() {
-                width: 18rem;
-                height: 18rem; 
-            }
-        }
-
-        .form {
-            padding: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-around;
-
-            input {
-                font-family: FontAwesome;
-                font-style: normal;
-                font-weight: 300;
-                font-size: 1rem;
-                color: #FFF9FD;
-                letter-spacing: 1px;
-        
-                width: 25rem;
-                height: 3rem;
-                margin: 1%;
-                margin-bottom: 1%;
-        
-                background: #B396A8;
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                border: none;
-                border-radius: 100px;
-                padding-left: 3rem;
-
-                &::placeholder {
-                    color: #FFF9FD;
-                    opacity: 1;
-                }
-
-                &:focus {
-                    outline: none;
-                }
-
-                @include monitor() {
-                    width: 30rem;
-                    height: 3rem;
-                    font-size: 1.2rem;
-                }
-            }
-
-            button {
-                font-family: FontAwesome;
-                font-style: normal;
-                font-weight: 400;
-                font-size: 1rem;
-                color: #FFF9FD;
-                letter-spacing: -0.133333px;
-            
-                width: 28rem;
-                height: 3rem;
-                margin: 2rem 0 2rem 0;
-            
-                background: #6D398E;
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                border: none;
-                border-radius: 70px;
-                cursor: pointer;
-
-                .text {
-                    font-family: 'Roboto Mono';
-                    font-style: normal;
-                    font-weight: 700;
-                    font-size: 1rem;
-                
-                    text-align: center;
-                    letter-spacing: -0.133333px;
-                
-                    color: #FFF9FD;
-                    margin-right: 1.5rem;
-
-                    @include monitor() {
-                        font-size: 1.2rem;
-                    }
-                }
-                .arrow-right {
-                    width: 1.2rem;
-                    height: 1.2rem;
-                    color: #fff9fd;
-                    text-align: center;
-                }
-
-                @include monitor() {
-                    width: 33rem;
-                    height: 3rem;
-                    font-size: 1.2rem;
-                }
-            }
-
-            span {
-                color: red;
-                font-size: 0.8rem;
-            }
-        }
-
-        p {
-            font-family: 'Roboto Mono';
-            font-style: normal;
-            font-weight: 400;
-            font-size: 1rem;
-            text-align: center;
-            letter-spacing: -0.133333px;
-        
-            color: #6E6D91;
-
-            .link {
-                color: #B396A8;
-                font-weight: 600;
-                text-decoration: none;
-                
-                &:hover {
-                    color: #6D398E;
-                }
-            }
-        }
-    }
-
-    .image-wrapper {
-        top: 0%;
-        flex: 1 1 auto;
-        height: 100%;
-        width: 26%;
-        background-size: 100% 100%;
-        background-image: url('../images/General/background.png');
-
-        @include mobile() {
-            display: none;
-        }
-
-        @include tablet() {
-            display: none;
-        }
-
-        @include monitor() {
-            background-image: url('../images/General/background-big.png');
+body > {
+    #root > {
+         div {
+            height: 100vh;
         }
     }
 }
+
+body {
+    margin: 0;
+    .App-header {
+        @include font($roboto-mono, $light, $m);
+        @include dim (100%, 100%);
+        background: $base_color;
+        overflow: hidden;
+        margin: 0;
+    }
+}
+

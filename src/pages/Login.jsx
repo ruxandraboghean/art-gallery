@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
-import logo from "../images/General/logo-default.png";
+import logo from "../images/logo-default.png";
 
 export const Login = () => {
   const [err, setErr] = useState(false);
@@ -27,7 +27,7 @@ export const Login = () => {
   return (
     <>
       <div className="form-container">
-        <div className="form-wrapper center">
+        <div className="form-wrapper">
           <div className="center">
             <img src={logo} alt="Logo" className="logo" />
           </div>

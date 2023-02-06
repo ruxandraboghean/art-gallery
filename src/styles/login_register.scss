@@ -1,0 +1,125 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+.form-container {
+    @include flexbox-direction(flex, center, row, space-between);
+    @include dim(100%, 100%);
+
+    .form-wrapper {
+        @include center;
+        width: 74%;
+        flex: 2 1 auto;
+        
+        .logo {
+            @include dim(10rem, 10rem);
+            
+            @include monitor() {
+                @include dim(18rem, 18rem);
+            }
+        }
+
+        .form {
+            @include flexbox-direction(flex, center, column, space-around);
+            padding: 0.5rem;
+
+            input {
+                @include font(FontAwesome, $light, $m);
+                @include border-outline-none;
+                @include dim(25rem, 3rem); 
+                color: $base_color;
+                letter-spacing: 1px;
+                margin: 1% 1% 2% 1%;
+                background: $grayish_pink;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                border-radius: 100px;
+                padding-left: 3rem;
+
+                &::placeholder {
+                    color: $base_color;
+                    opacity: 1;
+                }
+
+                @include monitor() {
+                    @include dim(30rem, 3rem);
+                    font-size: $l;
+                }
+            }
+
+            button {
+                @include font(FontAwesome, $normal, $m);
+                @include dim(28rem, 3rem);
+                color: $base_color;
+                letter-spacing: -0.133333px;
+                margin: 2rem 0 2rem 0;
+                background: $magenta;
+                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                border: none;
+                border-radius: 70px;
+                cursor: pointer;
+
+                .text {
+                    @include font($roboto-mono, $regular, $m);       
+                    text-align: center;
+                    letter-spacing: -0.133333px;
+                    color: $base_color;
+                    margin-right: 1.5rem;
+
+                    @include monitor() {
+                        font-size: 1.2rem;
+                    }
+                }
+                .arrow-right {
+                    @include dim(1.2rem, 1.2rem);
+                    color: $base_color;
+                    text-align: center;
+                }
+
+                @include monitor() {
+                    @include dim(33rem, 3rem);
+                    font-size: $l;
+                }
+            }
+
+            span {
+                color: red;
+                font-size: $xs;
+            }
+        }
+
+        p {
+            @include font($roboto-mono, $normal, $m); 
+            text-align: center;
+            letter-spacing: -0.133333px;
+            color: $grayish_blue;
+
+            .link {
+                color: $grayish_pink;
+                font-weight: $medium;
+                text-decoration: none;
+                
+                &:hover {
+                    color: $magenta;
+                }
+            }
+        }
+    }
+
+    .image-wrapper {
+        @include image(background);
+        @include dim (26%, 100%);
+        flex: 1 1 auto;
+        background-size: 100% 100%;
+
+        @include mobile() {
+            display: none;
+        }
+
+        @include tablet() {
+            display: none;
+        }
+
+        @include monitor() {
+            @include image(background-big);
+        }
+    }
+}
