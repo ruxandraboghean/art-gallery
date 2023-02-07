@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { auth, db, storage } from "../firebase";
+import { doc, setDoc } from "firebase/firestore";
 import logo from "../images/logo-default.png";
+import add from "../images/add.png";
 
 export const Register = () => {
   const [err, setErr] = useState(false);
@@ -13,14 +16,40 @@ export const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const username = e.target[0].value;
+    const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
     const checkPassword = e.target[3].value;
+    const file = e.target[4].files[0];
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/login");
+
+      const storageRef = ref(storage, displayName);
+
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            await updateProfile(res.user, {
+              displayName,
+              photoURL: downloadURL,
+            });
+
+            await setDoc(doc(db, "users", res.user.uid), {
+              uid: res.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL,
+            });
+
+            await setDoc(doc(db, "userChats", res.user.uid), {});
+            navigate("/login");
+          } catch (err) {
+            console.log(err);
+            setErr(true);
+          }
+        });
+      });
     } catch (err) {
       setErr(true);
     }
@@ -37,16 +66,29 @@ export const Register = () => {
             <span></span>
           </div>
           <form onSubmit={handleSubmit} className="form">
-            <input type="text" placeholder="&#xF007;&nbsp;&nbsp; username" />
-            <input type="email" placeholder="&#xf0e0;&nbsp;&nbsp; email" />
-            <input
-              type="password"
-              placeholder="&#xf023;&nbsp;&nbsp; password"
-            />
-            <input
-              type="password"
-              placeholder="&#xf023;&nbsp;&nbsp; confirm password"
-            />
+            <div>
+              <div className="input-icons">
+                <i className="fa fa-user"></i>
+                <input type="text" placeholder="username" />
+              </div>
+              <div className="input-icons">
+                <i className="fa fa-envelope"></i>
+                <input type="email" placeholder="email" />
+              </div>
+              <div className="input-icons">
+                <i className="fa fa-duotone fa-lock"></i>
+                <input type="password" placeholder="password" />
+              </div>
+              <div className="input-icons">
+                <i className="fa fa-duotone fa-lock"></i>
+                <input type="password" placeholder="confirm password" />
+              </div>
+            </div>
+            <input style={{ display: "none" }} type="file" id="file" />
+            <label htmlFor="file">
+              <img src={add} alt="Add" />
+              <span> Add an avatar </span>
+            </label>
             <button>
               <span className="text">Next</span>
               <FontAwesomeIcon

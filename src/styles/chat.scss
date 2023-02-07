@@ -61,11 +61,10 @@
                 border-bottom: 1px solid lightgray;
                 color: black;
                 outline: none;
-                height: 17%;
 
                 .search-form {
                     @include flexbox(flex, center, left);
-                    padding: 2% 0 0 10%;
+                    padding: 1rem 0 1rem 3rem;
                     gap: 10%;
 
                     input {
@@ -96,13 +95,14 @@
                 }
 
                 img {
-                    @include dim (12.5%, 12.5%);
+                    @include dim (3rem, 3rem);
                     border-radius: 50%;
                     object-fit: cover;
+                    border: 1px solid $grayish_purple;
                 }
 
                 .user-chat-info {
-                    height: calc(100% - 10% - 17% - 2rem);
+                    // height: calc(100% - 10% - 17% - 2rem);
                     padding-left: 1.5rem;
 
                     span {

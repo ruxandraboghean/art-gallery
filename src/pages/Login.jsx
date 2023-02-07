@@ -32,17 +32,17 @@ export const Login = () => {
             <img src={logo} alt="Logo" className="logo" />
           </div>
           <div className="progress-bar"></div>
-          <form className="form" onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="&#xF007;&nbsp;&nbsp; username"
-              className="form-input"
-            />
-            <input
-              type="password"
-              placeholder="&#xf023;&nbsp;&nbsp; password"
-              className="form-input"
-            />
+          <form onSubmit={handleSubmit} className="form">
+            <div>
+              <div className="input-icons">
+                <i class="fa fa-envelope"></i>
+                <input type="email" placeholder="email" />
+              </div>
+              <div className="input-icons">
+                <i class="fa fa-duotone fa-lock"></i>
+                <input type="password" placeholder="password" />
+              </div>
+            </div>
             <button className="form-button">
               <span className="text">Login</span>
               <FontAwesomeIcon

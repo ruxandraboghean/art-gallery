@@ -5,8 +5,6 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 
 export const Navbar = () => {
-  const logout = () => {};
-
   return (
     <div className="navbar">
       <div className="all-conversations">Conversations</div>
@@ -14,7 +12,7 @@ export const Navbar = () => {
         <FontAwesomeIcon icon={faGear} />
       </div>
       <button className="send-button" onClick={() => signOut(auth)}>
-        logout
+        Logout
       </button>
     </div>
   );

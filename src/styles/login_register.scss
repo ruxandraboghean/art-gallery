@@ -21,45 +21,76 @@
         .form {
             @include flexbox-direction(flex, center, column, space-around);
             padding: 0.5rem;
+            
+            div {
+                .input-icons {
+                    i {
+                        @include dim(1rem, 1rem);
+                        position: absolute;
+                        padding:1.25rem 0 0 1.75rem;
+                        color: $magenta;
 
-            input {
-                @include font(FontAwesome, $light, $m);
-                @include border-outline-none;
-                @include dim(25rem, 3rem); 
-                color: $base_color;
-                letter-spacing: 1px;
-                margin: 1% 1% 2% 1%;
-                background: $grayish_pink;
-                box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                border-radius: 100px;
-                padding-left: 3rem;
+                        @include monitor() {
+                           padding:1.5rem 0 0 2rem;
+                        }
+                    }
+    
+                    input {
+                        @include font($roboto-mono, $light, $xxs);
+                        @include border-outline-none;
+                        @include dim(20rem, 2.8rem); 
+                        color: $magenta;
+                        letter-spacing: 1px;
+                        margin: 1% 1% 2% 1%;
+                        background: $light_grayish_purple;
+                        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                        border-radius: 20px;
+                        padding-left: 5rem;
+        
+                        &::placeholder {
+                            color: $magenta;
+                            opacity: 1;
+                            font-size: $xs;
+                        }
+        
+                        @include monitor() {
+                            @include dim(30rem, 3rem);
+                            font-size: $m;
+                        }
+                    }
+                }
+            }
 
-                &::placeholder {
-                    color: $base_color;
-                    opacity: 1;
+            label {
+                @include flexbox (flex, center, space-between);
+                gap: 1.5rem;
+                margin-top: 1rem;
+
+                img {
+                    @include dim(3rem, 3rem);
                 }
 
-                @include monitor() {
-                    @include dim(30rem, 3rem);
-                    font-size: $l;
+                span {
+                    color: $magenta;
+                    font-size: $xs;
                 }
             }
 
             button {
                 @include font(FontAwesome, $normal, $m);
-                @include dim(28rem, 3rem);
+                @include dim(25rem, 3rem);
                 color: $base_color;
                 letter-spacing: -0.133333px;
-                margin: 2rem 0 2rem 0;
+                margin: 2rem 0 0 0.5rem;
                 background: $magenta;
                 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
                 border: none;
-                border-radius: 70px;
+                border-radius: 10px;
                 cursor: pointer;
+                text-align: center;
 
                 .text {
                     @include font($roboto-mono, $regular, $m);       
-                    text-align: center;
                     letter-spacing: -0.133333px;
                     color: $base_color;
                     margin-right: 1.5rem;
@@ -71,11 +102,11 @@
                 .arrow-right {
                     @include dim(1.2rem, 1.2rem);
                     color: $base_color;
-                    text-align: center;
+                    margin-right: 1rem;
                 }
 
                 @include monitor() {
-                    @include dim(33rem, 3rem);
+                    @include dim(35rem, 3rem);
                     font-size: $l;
                 }
             }
@@ -87,7 +118,7 @@
         }
 
         p {
-            @include font($roboto-mono, $normal, $m); 
+            @include font($roboto-mono, $normal, $xs); 
             text-align: center;
             letter-spacing: -0.133333px;
             color: $grayish_blue;
@@ -100,6 +131,9 @@
                 &:hover {
                     color: $magenta;
                 }
+            }
+            @include monitor() {
+                font-size: $s;
             }
         }
     }

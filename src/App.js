@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthContext } from "./components/Chat/AuthContext";
+import { AuthContext } from "./context/AuthContext";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 import { Home } from "./pages/Home";
