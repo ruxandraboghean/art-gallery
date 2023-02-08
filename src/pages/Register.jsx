@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleArrowRight,
+  faSpinner,
+} from "@fortawesome/free-solid-svg-icons";
+import ClipLoader from "react-spinners/ClipLoader";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
@@ -10,10 +14,12 @@ import logo from "../images/logo-default.png";
 import add from "../images/add.png";
 
 export const Register = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const displayName = e.target[0].value;
@@ -43,6 +49,7 @@ export const Register = () => {
             });
 
             await setDoc(doc(db, "userChats", res.user.uid), {});
+            setIsLoading(false);
             navigate("/login");
           } catch (err) {
             setErr(true);
@@ -51,6 +58,7 @@ export const Register = () => {
       });
     } catch (err) {
       setErr(true);
+      setIsLoading(false);
     }
   };
 
@@ -104,7 +112,17 @@ export const Register = () => {
               Login
             </Link>
           </p>
+          {isLoading && (
+            <div>
+              <ClipLoader
+                size={30}
+                className="spinner"
+                aria-label="Loading Spinner"
+              />
+            </div>
+          )}
         </div>
+
         <div className="image-wrapper"></div>
       </div>
     </>

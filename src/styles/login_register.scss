@@ -136,6 +136,12 @@
                 font-size: $s;
             }
         }
+
+        div {
+            .spinner {
+                color: $magenta;
+            }
+        }
     }
 
     .image-wrapper {

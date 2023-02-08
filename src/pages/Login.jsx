@@ -4,13 +4,16 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import ClipLoader from "react-spinners/ClipLoader";
 import logo from "../images/logo-default.png";
 
 export const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
 
     const email = e.target[0].value;
@@ -18,9 +21,11 @@ export const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      setIsLoading(false);
       navigate("/");
     } catch (err) {
       setErr(true);
+      setIsLoading(false);
     }
   };
 
@@ -63,6 +68,15 @@ export const Login = () => {
               Register
             </Link>
           </p>
+          {isLoading && (
+            <div>
+              <ClipLoader
+                size={30}
+                className="spinner"
+                aria-label="Loading Spinner"
+              />
+            </div>
+          )}
         </div>
         <div className="image-wrapper"></div>
       </div>
