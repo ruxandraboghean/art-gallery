@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
-import { Chat } from "../components/Chat/Chat";
-import { Sidebar } from "../components/Chat/Sidebar";
+import React from "react";
+import { HomeNavbar } from "../components/Home/HomeNavbar";
+import { HomeSidebar } from "../components/Home/HomeSidebar";
 import { MenuHeader } from "../components/Home/MenuHeader";
-import { AuthContext } from "../context/AuthContext";
+import { HomeChat } from "./HomeChat";
 
 export const Home = () => {
   return (
     <>
-      <MenuHeader />
       <div className="home">
-        <div className="container">
-          <Sidebar />
-          <Chat />
+        <HomeSidebar />
+        <div className="navbar">
+          <HomeNavbar />
+          <HomeChat />
         </div>
       </div>
     </>

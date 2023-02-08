@@ -1,0 +1,30 @@
+@import "./index.scss";
+
+
+.home-navbar {
+    @include flexbox(flex, center, space-between);
+    padding: 0 1.5rem 0 0; 
+    .navbar {
+        @include flexbox(flex, center, center);
+        gap: 3rem;
+        .works {
+            font-size: $m;
+            cursor: pointer;
+            
+             &:hover {
+              color:$magenta;
+              font-weight: $regular;
+             }
+          }
+      
+          .artists {
+              font-size: $m;
+              cursor: pointer;
+      
+              &:hover {
+                  color:$magenta;
+                  font-weight: $regular;
+              }
+          }
+    }
+}

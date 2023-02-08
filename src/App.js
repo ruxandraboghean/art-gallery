@@ -3,9 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
-import { Home } from "./pages/Home";
 import "./App.scss";
-import { MenuHeader } from "./components/Home/MenuHeader";
+import { Home } from "./pages/Home";
 
 function App() {
   const { currentUser } = useContext(AuthContext);

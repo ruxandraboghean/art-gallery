@@ -1,5 +1,4 @@
-@import "./mixins.scss";
-@import "./variables.scss";
+@import './index.scss';
 
 body > {
     #root > {
@@ -21,10 +20,6 @@ body {
         div{
             .current-user {
                 @include dim (3rem, 3rem);
-                position: absolute;
-                margin: 2rem 3rem;
-                top: 0;
-                right: 0;
                 border-radius: 50px;
                 object-fit: cover;
                 border: 2px solid $magenta;
@@ -32,14 +27,14 @@ body {
     
                 @include mobile() {
                     @include dim (2rem, 2rem);
-                    margin: 1rem;
+                    // margin: 1rem;
                 }
             }
 
             .dropdown-menu {
                 @include flexbox-direction(flex, center, column, space-around);
                 position: absolute;
-                margin: 5rem 2.75rem 2rem 2rem;
+                margin: 0.8rem 4.5rem 0 0;
                 top: 0;
                 right: 0;
 
@@ -47,10 +42,12 @@ body {
                     @include dim (1rem, 1rem);
                     margin: 4rem 1.55rem 1rem 1rem;
                 }
+
                 .dropdown-menu-item {
                     @include dim (2.5rem, 2.5rem);
                     color: $purple;
                     padding: 1rem;
+                    transform: rotate(180deg);
 
                     @include mobile() {
                        @include dim(1rem, 1rem);

@@ -88,7 +88,6 @@ export const Input = () => {
         value={text}
       />
       <div className="send">
-        <FontAwesomeIcon icon={faCameraRetro} />
         <input
           type="file"
           style={{ display: "none" }}
@@ -96,7 +95,7 @@ export const Input = () => {
           onChange={(e) => setImg(e.target.files[0])}
         />
         <label htmlFor="file">
-          <FontAwesomeIcon icon={faPaperclip} />
+          <FontAwesomeIcon icon={faPaperclip} className="attach" />
         </label>
         <button onClick={handleSend}>
           <span>Send</span>

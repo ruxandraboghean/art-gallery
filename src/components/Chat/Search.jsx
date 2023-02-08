@@ -35,7 +35,7 @@ export const Search = () => {
   const handleSearch = async () => {
     const q = query(
       collection(db, "users"),
-      where("displayName", "==", username)
+      where("displayName", "==", username.toLowerCase())
     );
     if (!q.res) {
       setErr(true);
@@ -119,9 +119,6 @@ export const Search = () => {
   return (
     <div className="search">
       <div className="search-form">
-        <div className="search-icon">
-          <FontAwesomeIcon icon={faSearch} onClick={handleSearch} />
-        </div>
         <div className="search-text">
           <input
             type="text"
