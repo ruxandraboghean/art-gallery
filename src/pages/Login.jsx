@@ -35,11 +35,11 @@ export const Login = () => {
           <form onSubmit={handleSubmit} className="form">
             <div>
               <div className="input-icons">
-                <i class="fa fa-envelope"></i>
+                <i className="fa fa-envelope"></i>
                 <input type="email" placeholder="email" />
               </div>
               <div className="input-icons">
-                <i class="fa fa-duotone fa-lock"></i>
+                <i className="fa fa-duotone fa-lock"></i>
                 <input type="password" placeholder="password" />
               </div>
             </div>

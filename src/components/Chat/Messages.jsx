@@ -9,20 +9,21 @@ export const Messages = () => {
   const { data } = useContext(ChatContext);
 
   useEffect(() => {
-    const onSub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
+    const unSub = onSnapshot(doc(db, "chats", data.chatId), (doc) => {
       doc.exists() && setMessages(doc.data().messages);
     });
 
     return () => {
-      onSub();
+      unSub();
     };
   }, [data.chatId]);
 
   return (
     <div className="messages">
-      {messages.map((m) => {
-        <Message message={m} key={m.id} />;
-      })}
+      {messages?.map((m) => (
+        <Message message={m} key={m.id} />
+      ))}
     </div>
   );
 };
+

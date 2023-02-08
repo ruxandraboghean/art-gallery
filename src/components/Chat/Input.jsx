@@ -15,16 +15,17 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 export const Input = () => {
   const [text, setText] = useState("");
-  const [image, setImage] = useState(null);
+  const [img, setImg] = useState(null);
   const [err, setErr] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
   const handleSend = async () => {
-    if (image) {
+    if (img) {
       const storageRef = ref(storage, uuid());
-      const uploadTask = uploadBytesResumable(storageRef, image);
+
+      const uploadTask = uploadBytesResumable(storageRef, img);
 
       uploadTask.on(
         (error) => {
@@ -38,7 +39,7 @@ export const Input = () => {
                 text,
                 senderId: currentUser.uid,
                 date: Timestamp.now(),
-                image: downloadURL,
+                img: downloadURL,
               }),
             });
           });
@@ -70,7 +71,11 @@ export const Input = () => {
     });
 
     setText("");
-    setImage(null);
+    setImg(null);
+  };
+
+  const handleKey = (e) => {
+    e.code === "Enter" && handleSend();
   };
 
   return (
@@ -78,6 +83,7 @@ export const Input = () => {
       <input
         type="text"
         placeholder="Type something..."
+        onKeyDown={handleKey}
         onChange={(e) => setText(e.target.value)}
         value={text}
       />
@@ -87,7 +93,7 @@ export const Input = () => {
           type="file"
           style={{ display: "none" }}
           id="file"
-          onChange={(e) => setImage(e.target.files[0])}
+          onChange={(e) => setImg(e.target.files[0])}
         />
         <label htmlFor="file">
           <FontAwesomeIcon icon={faPaperclip} />

@@ -12,7 +12,7 @@
         border-radius: 50px;
         display: flex;
         overflow: hidden;
-
+      
         @include mobile() {
             width: 90%;
         }
@@ -28,12 +28,13 @@
             border-right: 1px solid lightgray;
 
             .navbar {
-                @include flexbox(flex, center, space-between);
-                background-color: $light_purple;
+                @include flexbox(flex, center, flex-start);
+                background-color: $pale_purple;
                 height: 10%;
                 border-radius: 50px 0px 0px 0px;
                 overflow: hidden;
                 border-bottom: 1px solid lightgray;
+                padding-left: 10%;
 
                 .all-conversations {
                     @include font($roboto-mono, $regular, $s);
@@ -42,10 +43,7 @@
                     padding-left: 10%;
                 }
 
-                .settings {
-                    padding-right: 10%;
-                }
-
+              
                 button {
                     @include border-outline-none;
                     padding: 2.5% 5%;
@@ -80,6 +78,11 @@
                         font-size: $m;
                     }
                 }
+                span {
+                    padding-left: 6rem;
+                    color: red;
+                    font-size: $xs;
+                }
             }
 
             .user-chat {
@@ -102,8 +105,8 @@
                 }
 
                 .user-chat-info {
-                    // height: calc(100% - 10% - 17% - 2rem);
                     padding-left: 1.5rem;
+                    width: 50%;
 
                     span {
                         font-size: $m;
@@ -111,7 +114,10 @@
 
                     p {
                         @include font($roboto-mono, $normal, $xxs);
-                        padding-left: 5%;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        max-width: 200px;
                     }
                 }
             }
@@ -154,7 +160,7 @@
                 .message {
                     display: flex;
                     gap: 5%;
-                    margin-bottom: 10%;
+                    margin-bottom: 1rem;
 
                     .message-info {
                         @include flexbox-direction(flex, center, column, space-around);
@@ -163,18 +169,21 @@
                         padding-right: 1rem;
 
                         img {
-                            @include dim (2.5rem, 2.5rem);
+                            @include dim (3rem, 3rem);
+                            object-fit: cover;
                             border-radius: 100px;
+                            border: 1px solid $grayish_purple;
                         }
                     }
 
                     .message-content {
                         @include flexbox-direction(flex, center, column, space-around);
-                        max-width: 80%;
+                        // width: 80%;
+                        // max-width: 80%;
 
                         p {
                             background-color: $pale_purple;
-                            padding: 5% 10%;
+                            padding: 1rem 2rem;
                             border-radius: 0 10px 10px 10px;
                             color: $magenta;
                             font-size: $xs;
@@ -203,11 +212,11 @@
             }
 
             .input {
-                @include flexbox(flex, center, start);
+                @include flexbox(flex, center, space-around);
                 @include dim (90%, 5%);
                 background-color: $pale_purple;
                 margin: 0 0 1% 1%;
-                padding: 1% 1% 1% 5%;
+                padding: 1% 0 1% 5%;
                 border-radius: 100px;
             
                 input {
@@ -254,7 +263,7 @@
                 }
 
                 .send {
-                    @include flexbox(flex, center, space-between);
+                    @include flexbox(flex, center, right);
                     gap: 30%;
 
                     @include laptop() {
