@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { ReactDOM, useContext, useRef, useState } from "react";
 import {
   collection,
   query,
@@ -14,6 +14,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { db } from "../../firebase";
+import { useOnOutsideClick } from "../../hooks/useOnOutsideClick";
 
 export const Search = () => {
   const [username, setUsername] = useState("");
@@ -21,6 +22,13 @@ export const Search = () => {
   const [err, setErr] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
+
+  const handleClickOutside = () => {
+    setUser(null);
+    setUsername("");
+  };
+
+  const ref = useOnOutsideClick(handleClickOutside);
 
   const handleSearch = async () => {
     const q = query(
@@ -30,13 +38,11 @@ export const Search = () => {
 
     try {
       const querySnapshot = await getDocs(q);
+
       querySnapshot.forEach((doc) => {
         setUser(doc.data());
-        console.log(doc.data(), "dataa");
       });
-    } catch (error) {
-      setErr(true);
-    }
+    } catch (error) {}
   };
 
   const handleKey = (e) => {
@@ -97,7 +103,6 @@ export const Search = () => {
     } catch (err) {
       setErr(true);
     }
-
     setUser(null);
     setUsername("");
   };
@@ -106,7 +111,7 @@ export const Search = () => {
     <div className="search">
       <div className="search-form">
         <div className="search-icon">
-          <FontAwesomeIcon icon={faSearch} />
+          <FontAwesomeIcon icon={faSearch} onClick={handleSearch} />
         </div>
         <div className="search-text">
           <input
@@ -118,9 +123,9 @@ export const Search = () => {
           />
         </div>
       </div>
-      {/* {err && <span className="not-found"> User not found </span>} */}
+      {err && <span className="not-found"> User not found </span>}
       {user && (
-        <div className="user-chat" onClick={handleSelect}>
+        <div ref={ref} onClick={handleSelect} className="user-chat">
           <img src={user.photoURL} />
           <div className="user-chat-info">
             <span> {user.displayName}</span>

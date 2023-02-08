@@ -65,6 +65,11 @@
                     padding: 1rem 0 1rem 3rem;
                     gap: 10%;
 
+                    .search-icon {
+                            color: $magenta;
+                            cursor: pointer;
+                    }
+
                     input {
                         @include border-outline-none;
                         padding: 5% 0 1% 10%;
@@ -102,6 +107,10 @@
                     border-radius: 50%;
                     object-fit: cover;
                     border: 1px solid $grayish_purple;
+                }
+
+                .hide {
+                    display: none;
                 }
 
                 .user-chat-info {
