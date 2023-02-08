@@ -6,7 +6,6 @@ import { ChatContext } from "../../context/ChatContext";
 
 export const Chats = () => {
   const [userChats, setUserChats] = useState([]);
-  // const [userChats, setUserChats] = useState([]);
 
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
@@ -30,6 +29,7 @@ export const Chats = () => {
     dispatch({ type: "CHANGE_USER", payload: user });
   };
 
+  // Object.entries(userChats).map((chat) => console.log(chat));
   return (
     <div className="chats">
       {Object.entries(userChats)

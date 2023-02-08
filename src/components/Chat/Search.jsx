@@ -45,8 +45,8 @@ export const Search = () => {
 
   const handleSelect = async () => {
     //check weather the group(chats in firestore) exists, if not create
-    console.log(user.uid);
-    console.log(currentUser.uid);
+    console.log(user.uid, "friend");
+    console.log(currentUser.uid, "me");
     const combinedId =
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
@@ -57,9 +57,36 @@ export const Search = () => {
 
       if (!res.exists()) {
         //create a chat in chat collection
-        await setDoc(doc(db, "chats"), { messages: [] });
+        await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
         //create user chats
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+      } else {
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.uid,
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+          [combinedId + ".date"]: serverTimestamp(),
+        });
+
         await updateDoc(doc(db, "userChats", user.uid), {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
@@ -93,7 +120,7 @@ export const Search = () => {
           />
         </div>
       </div>
-      {err && <span> User not found </span>}
+      {/* {err && <span className="not-found"> User not found </span>} */}
       {user && (
         <div className="user-chat" onClick={handleSelect}>
           <img src={user.photoURL} />
