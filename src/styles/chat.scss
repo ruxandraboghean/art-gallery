@@ -42,6 +42,9 @@
                     color: $magenta;
                     padding-left: 10%;
                 }
+                .conversations {
+                    @include dim(2rem, 2rem);
+                }
 
               
                 button {
@@ -81,13 +84,15 @@
                     input::placeholder {
                         color: $grayish_blue;
                         font-size: $m;
-                    }
+                    }    
                 }
                 .not-found {
-                    padding-left: 6rem;
-                    color: red;
+                    padding: 0 0 0.5rem 8rem;
+                    color: #c61a09;
+                    font-weight: $regular;
                     font-size: $xs;
                 }
+                
             }
 
             .user-chat {

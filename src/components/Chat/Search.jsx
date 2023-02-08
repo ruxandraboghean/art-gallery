@@ -9,6 +9,7 @@ import {
   setDoc,
   updateDoc,
   serverTimestamp,
+  onSnapshot,
 } from "firebase/firestore";
 import { AuthContext } from "../../context/AuthContext";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -26,6 +27,7 @@ export const Search = () => {
   const handleClickOutside = () => {
     setUser(null);
     setUsername("");
+    setErr(false);
   };
 
   const ref = useOnOutsideClick(handleClickOutside);
@@ -35,16 +37,23 @@ export const Search = () => {
       collection(db, "users"),
       where("displayName", "==", username)
     );
+    if (!q.res) {
+      setErr(true);
+      setUser(null);
+    }
 
     try {
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
         setUser(doc.data());
+        setErr(false);
       });
-    } catch (error) {}
+    } catch (err) {
+      setErr(true);
+    }
   };
-
+  console.log(err);
   const handleKey = (e) => {
     e.code === "Enter" && handleSearch();
   };
@@ -123,7 +132,7 @@ export const Search = () => {
           />
         </div>
       </div>
-      {err && <span className="not-found"> User not found </span>}
+
       {user && (
         <div ref={ref} onClick={handleSelect} className="user-chat">
           <img src={user.photoURL} />
@@ -131,6 +140,12 @@ export const Search = () => {
             <span> {user.displayName}</span>
           </div>
         </div>
+      )}
+      {err && (
+        <span ref={ref} className="not-found">
+          {" "}
+          User not found{" "}
+        </span>
       )}
     </div>
   );
