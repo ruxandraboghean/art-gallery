@@ -1,0 +1,60 @@
+.user-card {
+    @include flexbox-direction(flex, flex-start,column, space-around);
+    flex:4;
+    width: 100%;
+    border: 1px solid $light_grayish_purple;
+    border-radius: 20px;
+    background-color: $base_color;
+
+    .details {
+        @include flexbox-direction(flex, center,column, left);
+
+
+        .details-header {
+            @include flexbox(flex, center, space-around);
+            gap:2rem;
+            padding: 0 0 1rem 2rem; 
+
+            span {
+                @include font($roboto-mono, $regular, $l);
+               
+                color: black;
+            }
+          
+
+            .edit-btn {
+                @include dim(1.5rem, 1.5rem);
+                color: $magenta;
+
+            }
+        }
+
+        .details-content {
+
+            span {
+                @include font($roboto-mono, $regular, $m);
+
+            }
+
+            .social-links {
+                @include flexbox(flex, center, space-around);
+                gap:1rem;
+
+                .instagram {
+                    @include dim(1.5rem, 1.5rem);
+                    color: $grayish_pink;
+                }
+
+                .youtube {
+                    @include dim(1.5rem, 1.5rem);
+                    color: $magenta;
+                }
+
+                .blog {
+                    @include dim(1.5rem, 1.5rem);
+
+                }
+            }
+        }
+    }
+}

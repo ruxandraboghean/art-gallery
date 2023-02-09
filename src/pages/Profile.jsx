@@ -1,7 +1,7 @@
 import React from "react";
 import { HomeNavbar } from "../components/Home/HomeNavbar";
 import { HomeSidebar } from "../components/Home/HomeSidebar";
-import { UserProfile } from "../components/Home/UserProfile";
+import { UserProfile } from "../components/Profile/UserProfile";
 
 export const Profile = () => {
   return (

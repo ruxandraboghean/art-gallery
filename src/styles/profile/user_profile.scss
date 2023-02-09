@@ -1,27 +1,40 @@
+@import './user_card.scss';
+
 .user-profile {
-    margin: 2rem;
+    @include flexbox-direction(flex, flex-start,column, space-around);
+    width: 100%;
+    padding: 2rem;
 
     span {
         @include font($roboto-mono, $regular, $xl);
         color: $magenta;
-        padding: 2rem;
-
+        margin-left:1.25rem;
+    }
+    
+    .title {
+        padding-left: 2rem;
     }
 
-    div {
-        @include flexbox(flex, center, space-around);
+    .header {
+        @include flexbox(flex, center, flex-start);
 
         img {
-            flex: 1;
+            @include dim (10rem, 10rem);
+            margin: 1.5rem 0 1.5rem 1.5rem;
+            border-radius: 100px;
+            object-fit: cover;
+            border: 1px solid $dark_magenta;
         }
 
-        span {
-            @include font($roboto-mono, $normal, $l);
-            flex: 1;
+        .username {
+            @include font($roboto-mono, $bold, $l);
+            color: $magenta;
+            padding-right: 1rem;
         }
 
         .edit-btn {
-            flex: 1;
+            @include dim(1.5rem, 1.5rem);
+            color: $magenta;
         }
     }
 }

@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UserCard } from "./UserCard";
+import { AuthContext } from "../../context/AuthContext";
 
 export const UserProfile = () => {
+  const { currentUser } = useContext(AuthContext);
+
   return (
     <div className="user-profile">
-      <span> Profil </span>
+      <span className="title"> Profile </span>
       <div className="header">
-        <img src="" alt="" />
-        <span> username </span>
+        <img src={currentUser.photoURL} alt="User" className="user-image" />
+        <span className="username"> {currentUser.displayName} </span>
         <FontAwesomeIcon icon={faEdit} className="edit-btn" />
       </div>
       <UserCard />
