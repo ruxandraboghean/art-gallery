@@ -1,29 +1,40 @@
-@import "./index.scss";
-
+@import "../index.scss";
 
 .home-navbar {
     @include flexbox(flex, center, space-between);
     padding: 0 1.5rem 0 0; 
+  
     .navbar {
         @include flexbox(flex, center, center);
         gap: 3rem;
+       
+        .link {
+            text-decoration: none;
+        }
         .works {
             font-size: $m;
             cursor: pointer;
-            
+            padding: 0.8rem 2rem;
+            border-radius: 20px;
+           
              &:hover {
               color:$magenta;
               font-weight: $regular;
+              background-color: rgb(174,145,197, 0.3);
              }
           }
       
           .artists {
               font-size: $m;
               cursor: pointer;
+              padding: 0.8rem 2rem;
+              border-radius: 20px;
+
       
               &:hover {
                   color:$magenta;
                   font-weight: $regular;
+                  background-color: rgb(174,145,197, 0.3);
               }
           }
     }

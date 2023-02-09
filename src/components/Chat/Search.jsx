@@ -12,8 +12,6 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 import { AuthContext } from "../../context/AuthContext";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { db } from "../../firebase";
 import { useOnOutsideClick } from "../../hooks/useOnOutsideClick";
 

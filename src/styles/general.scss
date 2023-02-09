@@ -13,7 +13,7 @@ body {
     .App-header {
         @include font($roboto-mono, $light, $m);
         @include dim (100%, 100%);
-        background: $base_color;
+        background: $base_color_pink;
         overflow: hidden;
         margin: 0;
 
@@ -27,7 +27,6 @@ body {
     
                 @include mobile() {
                     @include dim (2rem, 2rem);
-                    // margin: 1rem;
                 }
             }
 
@@ -37,21 +36,34 @@ body {
                 margin: 0.8rem 4.5rem 0 0;
                 top: 0;
                 right: 0;
+                
 
                 @include mobile() {
                     @include dim (1rem, 1rem);
                     margin: 4rem 1.55rem 1rem 1rem;
                 }
+  
+                @include monitor() {
+                    @include dim(1rem, 1rem);
+                    margin: 2.5rem 5.6rem 0 0rem;
+                 }
 
                 .dropdown-menu-item {
                     @include dim (2.5rem, 2.5rem);
-                    color: $purple;
+                    background-color: $medium_purple;
+                    color: $base_color;
                     padding: 1rem;
                     transform: rotate(180deg);
 
                     @include mobile() {
                        @include dim(1rem, 1rem);
                     }
+
+                    &:hover {
+                    background-color: $dark_magenta;
+                    color: $base_color_pink;
+                    }
+                   
                 }
             }
         }

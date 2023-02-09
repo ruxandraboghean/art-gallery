@@ -1,0 +1,12 @@
+.work-container {
+    @include dim(10%, 30%);
+    flex: 1 0 15%;
+    padding: 2rem;
+    margin: 2rem;
+    border: 1px solid $grayish_blue;
+    border-radius: 20px;
+
+    .photo {
+        color:$magenta;
+    }
+}

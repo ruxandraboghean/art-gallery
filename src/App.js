@@ -2,9 +2,15 @@ import { useContext } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import { Register } from "./pages/Register";
+import { Profile } from "./pages/Profile";
 import { Login } from "./pages/Login";
+import { Gallery } from "./pages/Gallery";
+import { Courses } from "./pages/Courses";
 import "./App.scss";
 import { Home } from "./pages/Home";
+import { Messages } from "./pages/Messages";
+import { Works } from "./pages/Works";
+import { Artists } from "./pages/Artists";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -30,9 +36,70 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
             </Route>
+            <Route path="/profile">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="/gallery">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Gallery />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="/messages">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Messages />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="/courses">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Courses />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="/artists">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Artists />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="/works">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <Works />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
           </Routes>
         </BrowserRouter>
       </header>

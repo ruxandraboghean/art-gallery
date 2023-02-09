@@ -14,7 +14,9 @@ export default function UserMenu() {
             color="secondary"
             aria-label="edit"
             className="dropdown-menu-item"
-            onClick={() => signOut(auth)}
+            onClick={() => {
+              signOut(auth);
+            }}
           >
             <LogoutIcon />
           </Fab>

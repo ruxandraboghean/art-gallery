@@ -1,0 +1,26 @@
+@import '../index.scss';
+@import './sidebar.scss';
+@import './chat.scss';
+
+.home-chat {
+    @include flexbox(flex, center, space-between);
+    background-color: $base_color;
+    height: 90vh;
+    flex: 5;
+
+    .container {
+        @include dim (98.5%, 97.5%);
+        border: 1px solid lightgray;
+        border-radius: 50px;
+        display: flex;
+        overflow: hidden;
+    
+        @include mobile() {
+            width: 90%;
+        }
+
+        @include tablet() {
+            width: 85%;
+        }
+    }
+}

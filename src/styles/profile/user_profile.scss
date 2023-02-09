@@ -1,0 +1,27 @@
+.user-profile {
+    margin: 2rem;
+
+    span {
+        @include font($roboto-mono, $regular, $xl);
+        color: $magenta;
+        padding: 2rem;
+
+    }
+
+    div {
+        @include flexbox(flex, center, space-around);
+
+        img {
+            flex: 1;
+        }
+
+        span {
+            @include font($roboto-mono, $normal, $l);
+            flex: 1;
+        }
+
+        .edit-btn {
+            flex: 1;
+        }
+    }
+}

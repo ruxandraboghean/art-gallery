@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCircleArrowRight,
-  faSpinner,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, db, storage } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
-import logo from "../images/logo-default.png";
+import logo from "../images/logo_general.png";
 import add from "../images/add.png";
 
 export const Register = () => {
@@ -67,26 +64,26 @@ export const Register = () => {
       <div className="form-container">
         <div className="form-wrapper">
           <div className="center">
-            <img src={logo} alt="Logo" className="logo" />
+            <img src={logo} alt="Logo" className="register-logo" />
           </div>
           <div className="meter orange nostripes">
             <span></span>
           </div>
           <form onSubmit={handleSubmit} className="form">
             <div>
-              <div className="input-icons">
+              <div className="input-icons-register">
                 <i className="fa fa-user"></i>
                 <input type="text" placeholder="username" />
               </div>
-              <div className="input-icons">
+              <div className="input-icons-register">
                 <i className="fa fa-envelope"></i>
                 <input type="email" placeholder="email" />
               </div>
-              <div className="input-icons">
+              <div className="input-icons-register">
                 <i className="fa fa-duotone fa-lock"></i>
                 <input type="password" placeholder="password" />
               </div>
-              <div className="input-icons">
+              <div className="input-icons-register">
                 <i className="fa fa-duotone fa-lock"></i>
                 <input type="password" placeholder="confirm password" />
               </div>
@@ -96,7 +93,7 @@ export const Register = () => {
               <img src={add} alt="Add" />
               <span> Add an avatar </span>
             </label>
-            <button>
+            <button className="register-button">
               <span className="text">Next</span>
               <FontAwesomeIcon
                 icon={faCircleArrowRight}

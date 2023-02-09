@@ -1,0 +1,24 @@
+@import '../index.scss';
+@import './work.scss';
+
+.works-container {
+    @include flexbox(flex, center, space-between);
+    background-color: $base_color;
+    height: 90vh;
+    flex: 5;
+   
+    .works-wrapper {
+        @include flexbox(flex, center, space-between);
+        flex-wrap: wrap;
+        @include dim (98.5%, 97.5%);
+        border: 1px solid $purple;
+        border-radius: 50px;
+        background-color: $light_purple;
+        overflow: scroll;
+
+        &::-webkit-scrollbar { 
+            display: none;
+        }
+    }
+}
+   

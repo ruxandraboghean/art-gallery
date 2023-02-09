@@ -1,4 +1,4 @@
-@import './index.scss';
+@import '../index.scss';
 
 .form-container {
     @include flexbox-direction(flex, center, row, space-between);
@@ -16,12 +16,57 @@
                 @include dim(18rem, 18rem);
             }
         }
+        
+        .register-logo {
+            @include dim(8rem, 8rem);
+            
+            @include monitor() {
+                @include dim(18rem, 18rem);
+            }
+        }
 
         .form {
             @include flexbox-direction(flex, center, column, space-around);
             padding: 0.5rem;
             
             div {
+                .input-icons-register {
+                    i {
+                        @include dim(1rem, 1rem);
+                        position: absolute;
+                        padding:1.25rem 0 0 1.75rem;
+                        color: $magenta;
+
+                        @include monitor() {
+                           padding:1.5rem 0 0 2rem;
+                        }
+                    }
+    
+                    input {
+                        @include font($roboto-mono, $light, $xxs);
+                        @include border-outline-none;
+                        @include dim(16rem, 2.5rem); 
+                        color: $magenta;
+                        letter-spacing: 1px;
+                        margin: 1% 1% 2% 1%;
+                        background: $light_grayish_purple;
+                        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                        border-radius: 20px;
+                        padding-left: 5rem;
+        
+                        &::placeholder {
+                            color: $magenta;
+                            opacity: 1;
+                            font-size: $xs;
+                        }
+        
+                        @include monitor() {
+                            @include dim(25rem, 2.8rem);
+                            font-size: $m;
+                        }
+                    }
+                }
+            
                 .input-icons {
                     i {
                         @include dim(1rem, 1rem);
@@ -64,6 +109,7 @@
                 @include flexbox (flex, center, space-between);
                 gap: 1.5rem;
                 margin-top: 1rem;
+                cursor: pointer;
 
                 img {
                     @include dim(3rem, 3rem);
@@ -109,6 +155,14 @@
                     font-size: $l;
                 }
             }
+            .register-button {
+                @include dim(20rem, 3rem);
+
+                @include monitor() {
+                    @include dim(30rem, 2.8rem);
+                    font-size: $l;
+                }
+            }
 
             span {
                 color: red;
@@ -144,8 +198,9 @@
     }
 
     .image-wrapper {
-        @include image(background);
-        @include dim (26%, 100%);
+        @include image(background-big);
+        filter: grayscale(0.6) ;
+        @include dim (30%, 100%);
         flex: 1 1 auto;
         background-size: 100% 100%;
 
@@ -161,4 +216,5 @@
             @include image(background-big);
         }
     }
+
 }

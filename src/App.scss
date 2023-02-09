@@ -1,7 +1,13 @@
-@import "./styles/home.scss";
-@import "./styles/home_navbar.scss";
-@import "./styles/home_sidebar.scss";
-@import "./styles/chat.scss";
-@import "./styles/login_register.scss";
 @import "./styles/general.scss";
+@import "./styles/home/general.scss";
+@import "./styles/home/navbar.scss";
+@import "./styles/home/sidebar.scss";
+@import "./styles/login_register/style.scss";
+@import "./styles/artists/index.scss";
+@import "./styles/works/index.scss";
+@import "./styles/profile/index.scss";
+@import "./styles/gallery/index.scss";
+@import "./styles/messages/index.scss";
+@import "./styles/courses/index.scss";
+
 

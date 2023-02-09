@@ -2,14 +2,14 @@ import React from "react";
 import { HomeNavbar } from "../components/Home/HomeNavbar";
 import { HomeSidebar } from "../components/Home/HomeSidebar";
 
-export const Home = () => {
+export const Gallery = () => {
   return (
     <div className="home">
       <HomeSidebar />
       <div className="navbar">
         <HomeNavbar />
-        <div className="home-container">
-          <div className="home-wrapper">Home</div>
+        <div className="gallery-container">
+          <div className="gallery-wrapper">Gallery</div>
         </div>
       </div>
     </div>
