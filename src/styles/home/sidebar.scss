@@ -26,7 +26,7 @@
         .menu-icon {
             @include dim(1.5rem, 1.5rem);
             color: $dark_magenta;
-            padding:0 1rem 7.5rem 0;
+            padding-bottom:7.5rem;
             cursor: pointer;
         }
         .close-icon {
@@ -63,13 +63,21 @@
             &:hover {
                 font-weight: $regular;
                 background-color: rgb(174,145,197, 0.3);
-                border-radius: 100px;
+                border-radius: 20px;
 
+            }
+        }
+        .hidden-sidebar-item {
+            padding: 0.25rem 0.75rem;
+            margin: 0 0.5rem 0 0.25rem;
+
+            img {
+                @include dim(1.7rem, 1.7rem);
             }
         }
     }
 }
 .hidden-sidebar {
     flex: none;
-    padding:3rem 0 0 1rem;
+    padding-top:3rem;
 }

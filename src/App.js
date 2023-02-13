@@ -1,5 +1,10 @@
 import { useContext } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
 import { Register } from "./pages/Register";
 import { Profile } from "./pages/Profile";
@@ -11,6 +16,8 @@ import { Home } from "./pages/Home";
 import { Messages } from "./pages/Messages";
 import { Works } from "./pages/Works";
 import { Artists } from "./pages/Artists";
+import { Sidebar } from "./components/Chat/Sidebar";
+import { HomeSidebar } from "./components/Home/HomeSidebar";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -25,7 +32,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <BrowserRouter>
+        <Router>
           <Routes>
             <Route path="/">
               <Route
@@ -101,7 +108,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
           </Routes>
-        </BrowserRouter>
+        </Router>
       </header>
     </div>
   );

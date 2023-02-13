@@ -5,11 +5,11 @@ import gallery from "../../images/gallery.png";
 import message from "../../images/message.png";
 import courses from "../../images/courses.png";
 import { Link } from "react-router-dom";
-import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import * as FaIcons from "react-icons/fa";
+import * as AiIcons from "react-icons/ai";
 
 export const HomeSidebar = () => {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const handleClick = () => {
     setShowSidebar(!showSidebar);
@@ -26,20 +26,15 @@ export const HomeSidebar = () => {
           </div>
         )}
         {!showSidebar ? (
-          <FontAwesomeIcon
-            icon={faBars}
-            onClick={handleClick}
-            className="menu-icon"
-          />
+          <FaIcons.FaBars onClick={handleClick} className="menu-icon" />
         ) : (
-          <FontAwesomeIcon
-            icon={faClose}
+          <AiIcons.AiOutlineCloseCircle
             onClick={handleClick}
             className="close-icon"
           />
         )}
       </div>
-      {showSidebar && (
+      {showSidebar ? (
         <div className="sidebar-menu">
           <Link to="/profile" className="link">
             <div className="sidebar-menu-item">
@@ -63,6 +58,29 @@ export const HomeSidebar = () => {
             <div className="sidebar-menu-item">
               <img src={courses} alt="User" />
               <span>Courses</span>
+            </div>
+          </Link>
+        </div>
+      ) : (
+        <div className="sidebar-menu">
+          <Link to="/profile" className="link">
+            <div className="sidebar-menu-item hidden-sidebar-item">
+              <img src={user} alt="User" />
+            </div>
+          </Link>
+          <Link to="/gallery" className="link">
+            <div className="sidebar-menu-item hidden-sidebar-item">
+              <img src={gallery} alt="User" />
+            </div>
+          </Link>
+          <Link to="/messages" className="link">
+            <div className="sidebar-menu-item hidden-sidebar-item">
+              <img src={message} alt="User" />
+            </div>
+          </Link>
+          <Link to="/courses" className="link">
+            <div className="sidebar-menu-item hidden-sidebar-item">
+              <img src={courses} alt="User" />
             </div>
           </Link>
         </div>
