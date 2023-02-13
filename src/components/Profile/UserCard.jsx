@@ -4,7 +4,7 @@ import { Instagram, YouTube } from "@mui/icons-material";
 import React from "react";
 import blog from "../../images/blog.png";
 
-export const UserCard = () => {
+export const UserCard = (currentUser) => {
   return (
     <div className="user-card">
       <div className="details">
@@ -13,7 +13,7 @@ export const UserCard = () => {
           <FontAwesomeIcon icon={faEdit} className="edit-btn" />
         </div>
         <div className="details-content">
-          <span className="details-span">E-mail: </span>
+          <span className="details-span">E-mail: {currentUser.email} </span>
         </div>
       </div>
 
@@ -23,7 +23,7 @@ export const UserCard = () => {
           <FontAwesomeIcon icon={faEdit} className="edit-btn" />
         </div>
         <div className="details-content">
-          <span className="details-span"> ... </span>
+          <span className="details-span"> {currentUser.motto}</span>
         </div>
       </div>
 
@@ -33,7 +33,7 @@ export const UserCard = () => {
           <FontAwesomeIcon icon={faEdit} className="edit-btn" />
         </div>
         <div className="details-content">
-          <span className="details-span"> ... </span>
+          <span className="details-span">{currentUser.biography} </span>
         </div>
       </div>
 

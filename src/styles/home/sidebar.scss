@@ -7,20 +7,37 @@
     margin-right: 1rem;
     flex:1.1;
 
-    .logo-wrapper {
-        margin:auto;
-        width: 50%;
-        .logo {
-            @include dim(7rem, 7rem);
-            padding: 0.5rem 0 3rem 0;
-            cursor: pointer;
-            
-            @include monitor() {
-                @include dim(8rem, 8rem);
+    .sidebar-header {
+        @include flexbox(flex, center, space-around);
+       
+        .logo-wrapper {
+            margin:auto;
+            width: 50%;
+            .logo {
+                @include dim(6rem, 6rem);
+                padding: 0.5rem 0 3rem 0;
+                cursor: pointer;
+                
+                @include monitor() {
+                    @include dim(7rem, 7rem);
+                }
             }
         }
+        .menu-icon {
+            @include dim(1.5rem, 1.5rem);
+            color: $dark_magenta;
+            padding:0 1rem 7.5rem 0;
+            cursor: pointer;
+        }
+        .close-icon {
+            @include dim(1.5rem, 1.5rem);
+            color: $grayish_purple;
+            padding:0 1rem 7rem 0;
+            cursor: pointer;
+        }
+        
     }
-
+   
     .sidebar-menu {
         @include flexbox-direction(flex, left, column, space-between);
         gap:2rem;
@@ -41,7 +58,7 @@
             }
 
             span {
-                font-size:$l;
+                font-size:$m;
             }
             &:hover {
                 font-weight: $regular;
@@ -51,4 +68,8 @@
             }
         }
     }
+}
+.hidden-sidebar {
+    flex: none;
+    padding:3rem 0 0 1rem;
 }

@@ -9,13 +9,12 @@ export const UserProfile = () => {
 
   return (
     <div className="user-profile">
-      <span className="title"> Profile </span>
       <div className="header">
         <img src={currentUser.photoURL} alt="User" className="user-image" />
         <span className="username"> {currentUser.displayName} </span>
         <FontAwesomeIcon icon={faEdit} className="edit-btn" />
       </div>
-      <UserCard />
+      <UserCard {...currentUser} />
     </div>
   );
 };
