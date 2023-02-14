@@ -15,7 +15,7 @@
             width: 50%;
             .logo {
                 @include dim(6rem, 6rem);
-                padding: 0.5rem 0 3rem 0;
+                padding: 0.5rem 0 7.5rem 0;
                 cursor: pointer;
                 
                 @include monitor() {
@@ -26,14 +26,23 @@
         .menu-icon {
             @include dim(1.5rem, 1.5rem);
             color: $dark_magenta;
-            padding-bottom:7.5rem;
+            padding-bottom: 12rem;
             cursor: pointer;
+            padding-top:2rem;
+            &:hover {
+                color: $purple;
+            }
         }
+      
         .close-icon {
             @include dim(1.5rem, 1.5rem);
-            color: $grayish_purple;
-            padding:0 1rem 7rem 0;
+            color: $dark_magenta;
+            padding:0 1rem 10rem 0;
             cursor: pointer;
+
+            &:hover {
+            color: $purple;
+            }
         }
         
     }
@@ -49,12 +58,13 @@
         }
         .sidebar-menu-item {
             @include flexbox(flex, center, flex-start);
-            gap:3rem;
+            gap:2rem;
             padding: 0.5rem 1rem 0.5rem 1rem;
             margin: 0 2.5rem 0 2rem;
 
-            img {
-                @include dim(2rem, 2rem);
+            .sidebar-img {
+                @include dim(1.5rem, 1.5rem);
+                color:$magenta;
             }
 
             span {
@@ -63,7 +73,7 @@
             &:hover {
                 font-weight: $regular;
                 background-color: rgb(174,145,197, 0.3);
-                border-radius: 20px;
+                border-radius: 5px;
 
             }
         }
@@ -71,13 +81,12 @@
             padding: 0.25rem 0.75rem;
             margin: 0 0.5rem 0 0.25rem;
 
-            img {
-                @include dim(1.7rem, 1.7rem);
+            .sidebar-img {
+                @include dim(1.5rem, 1.5rem);
             }
         }
     }
 }
 .hidden-sidebar {
     flex: none;
-    padding-top:3rem;
 }

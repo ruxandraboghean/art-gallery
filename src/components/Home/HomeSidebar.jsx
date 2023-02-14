@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import logo from "../../images/logo_purple_light.png";
-import user from "../../images/user.png";
-import gallery from "../../images/gallery.png";
-import message from "../../images/message.png";
-import courses from "../../images/courses.png";
 import { Link } from "react-router-dom";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
+import * as FcIcons from "react-icons/fc";
+import * as TfiIcons from "react-icons/tfi";
+import * as BsIcons from "react-icons/bs";
+import * as MdIcons from "react-icons/md";
 
 export const HomeSidebar = () => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -38,25 +38,25 @@ export const HomeSidebar = () => {
         <div className="sidebar-menu">
           <Link to="/profile" className="link">
             <div className="sidebar-menu-item">
-              <img src={user} alt="User" />
+              <FaIcons.FaUser className="sidebar-img" />
               <span>Profile</span>
             </div>
           </Link>
           <Link to="/gallery" className="link">
             <div className="sidebar-menu-item">
-              <img src={gallery} alt="User" />
+              <TfiIcons.TfiGallery className="sidebar-img" />
               <span>Gallery</span>
             </div>
           </Link>
           <Link to="/messages" className="link">
             <div className="sidebar-menu-item">
-              <img src={message} alt="User" />
+              <BsIcons.BsChatDotsFill className="sidebar-img" />
               <span>Messages</span>
             </div>
           </Link>
           <Link to="/courses" className="link">
             <div className="sidebar-menu-item">
-              <img src={courses} alt="User" />
+              <MdIcons.MdOutlineVideoLibrary className="sidebar-img" />
               <span>Courses</span>
             </div>
           </Link>
@@ -65,22 +65,22 @@ export const HomeSidebar = () => {
         <div className="sidebar-menu">
           <Link to="/profile" className="link">
             <div className="sidebar-menu-item hidden-sidebar-item">
-              <img src={user} alt="User" />
+              <FaIcons.FaUser className="sidebar-img" />
             </div>
           </Link>
           <Link to="/gallery" className="link">
             <div className="sidebar-menu-item hidden-sidebar-item">
-              <img src={gallery} alt="User" />
+              <TfiIcons.TfiGallery className="sidebar-img" />
             </div>
           </Link>
           <Link to="/messages" className="link">
             <div className="sidebar-menu-item hidden-sidebar-item">
-              <img src={message} alt="User" />
+              <BsIcons.BsChatDotsFill className="sidebar-img" />
             </div>
           </Link>
           <Link to="/courses" className="link">
             <div className="sidebar-menu-item hidden-sidebar-item">
-              <img src={courses} alt="User" />
+              <MdIcons.MdOutlineVideoLibrary className="sidebar-img" />
             </div>
           </Link>
         </div>

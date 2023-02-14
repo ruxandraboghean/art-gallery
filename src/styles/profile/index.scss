@@ -1,5 +1,6 @@
 @import '../index.scss';
 @import './user_profile.scss';
+@import './modal.scss';
 
 .profile-container {
     @include flexbox(flex, center, space-between);

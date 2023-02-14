@@ -29,7 +29,6 @@ export const Chats = () => {
     dispatch({ type: "CHANGE_USER", payload: user });
   };
 
-  // Object.entries(userChats).map((chat) => console.log(chat));
   return (
     <div className="chats">
       {Object.entries(userChats)

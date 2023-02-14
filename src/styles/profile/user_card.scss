@@ -7,11 +7,10 @@
     background-color: $base_color;
 
     .details {
-        @include flexbox-direction(flex, center,column, space-between);
-
+        @include flexbox-direction(flex, center,column, space-around);
 
         .details-header {
-            @include flexbox(flex, center, space-between);
+            @include flexbox(flex, center, space-around);
             gap:2rem;
             padding: 0 0 1rem 2rem; 
 
@@ -20,7 +19,6 @@
                 color: $dark_magenta;
             }
           
-
             .edit-btn {
                 @include dim(1rem, 1rem);
                 color: $medium_purple;
@@ -32,7 +30,10 @@
             }
         }
 
-        .details-content {    
+        .details-content {  
+            @include flexbox-direction(flex, left, column, space-around);
+            gap: 1rem;
+
             span {
                 @include font($roboto-mono, $normal, $xs);
             }
@@ -50,13 +51,13 @@
                 }
 
                 .youtube {
-                    @include dim(1.5rem, 1.5rem);
+                    @include dim(1.75rem, 1.75rem);
                     color: $magenta;
                 }
 
                 .blog {
-                    @include dim(1.5rem, 1.5rem);
-
+                    @include dim(1.25rem, 1.25rem);
+                    color: $dark_magenta;
                 }
             }
         }
