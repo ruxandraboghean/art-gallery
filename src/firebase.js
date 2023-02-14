@@ -1,6 +1,6 @@
-import { getAuth } from "firebase/auth";
+import { getAuth, updateProfile } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -17,3 +17,17 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
 export const storage = getStorage();
 export const db = getFirestore(app);
+
+export async function upload(file, currentUser, setLoading) {
+  const fileRef = ref(storage, currentUser.uid + ".png");
+
+  setLoading(true);
+
+  const snapshot = await uploadBytes(fileRef, file);
+
+  const photoURL = await getDownloadURL(fileRef);
+
+  updateProfile(currentUser, { photoURL });
+  setLoading(false);
+  alert("File uploaded");
+}

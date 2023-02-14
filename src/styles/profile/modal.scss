@@ -31,16 +31,7 @@
         }
 
         .btn-close {
-            transform: translate(10px, -20px);
-            padding: 0.5rem 0.7rem;
-            color: $grayish_purple;
-            border-radius: 100px;
-            cursor: pointer;
-            @include dim(1.25rem, 1.25rem);
-
-            &:hover {
-                color: $dark_magenta;
-            }
+            @include close-button;
         }
     }
 

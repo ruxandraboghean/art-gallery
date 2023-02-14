@@ -6,36 +6,38 @@
   
     .navbar {
         @include flexbox(flex, center, center);
-        gap: 3rem;
+        gap: 1rem;
        
         .link {
+            @include flexbox(flex, center, center);
             text-decoration: none;
-        }
-        .works {
-            font-size: $m;
+            @include font($brittany, $regular, $m);
             cursor: pointer;
-            padding: 0.8rem 2rem;
-            border-radius: 20px;
-           
-             &:hover {
-              color:$magenta;
-              font-weight: $regular;
-              background-color: rgb(174,145,197, 0.3);
-             }
-          }
-      
-          .artists {
-              font-size: $m;
-              cursor: pointer;
-              padding: 0.8rem 2rem;
-              border-radius: 20px;
+            border-radius: 10px;
+            letter-spacing: 2px;
 
+            img {
+                padding-left: 0.5rem;
+                @include dim(1.5rem, 1.5rem);
+            }
+            .works {
+                padding: 0.3rem 1.2rem;
+            }
       
-              &:hover {
-                  color:$magenta;
-                  font-weight: $regular;
-                  background-color: rgb(174,145,197, 0.3);
-              }
-          }
+            .artists {
+                padding: 0.3rem 1.2rem;
+            }
+
+          &:hover {
+            color:$dark_magenta;
+            font-weight: $bold;
+            background-color: rgb(174,145,197, 0.3);
+           }
+           &:focus {
+            color:$dark_magenta;
+            font-weight: $bold;
+            background-color: rgb(174,145,197, 0.3);
+           }
+        }
     }
 }

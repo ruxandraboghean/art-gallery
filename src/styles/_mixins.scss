@@ -65,3 +65,15 @@
     margin      : auto;
     text-align  : center;
 }
+
+@mixin close-button {
+    transform: translate(0px, -10px);
+    color: $grayish_purple;
+    cursor: pointer;
+    @include dim(1.25rem, 1.25rem);
+
+    &:hover {
+        color: $dark_magenta;
+    }
+    
+}

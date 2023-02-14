@@ -24,7 +24,7 @@
             }
         }
         .menu-icon {
-            @include dim(1.5rem, 1.5rem);
+            @include dim(2rem, 2rem);
             color: $dark_magenta;
             padding-bottom: 12rem;
             cursor: pointer;
@@ -35,14 +35,10 @@
         }
       
         .close-icon {
+            @include close-button;
             @include dim(1.5rem, 1.5rem);
-            color: $dark_magenta;
             padding:0 1rem 10rem 0;
             cursor: pointer;
-
-            &:hover {
-            color: $purple;
-            }
         }
         
     }

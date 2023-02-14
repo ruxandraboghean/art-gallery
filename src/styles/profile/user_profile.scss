@@ -13,23 +13,64 @@
             margin: 0 1rem 1.5rem 0;
             border-radius: 100px;
             object-fit: cover;
-            border: 1px solid $dark_magenta;
+            border: 1px solid $dark_magenta;  
         }
-
-        .username {
-            @include font($roboto-mono, $bold, $l);
-            color: $magenta;
-            padding: 0 1rem 0 1rem;
-        }
-
-        .edit-btn {
-            @include dim(1rem, 1rem);
-            color: $medium_purple;
-            cursor: pointer;
-            
-            &:hover {
-                color: $magenta;
+        .user-image{
+            &:hover{
+                filter: blur(0.75px); 
             }
         }
+        .file-input-btn {
+            top:47.5%;
+            left:14%;
+            position: absolute;
+            color: $magenta;
+            cursor: pointer;
+            z-index: 2;
+    
+            &:hover {
+                color: $medium_purple;
+            }
+
+            .edit-btn {
+                cursor: pointer;
+                @include dim(1.5rem, 1.5rem);
+            }
+        }
+
+        .upload-btn {
+            @include font($roboto-mono, $normal, $xxs);
+            outline: none;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            color: $dark_magenta;
+            background: $base_color;
+            border:none;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            font-weight: $regular;
+            margin-bottom: 1rem;
+
+            &:hover {
+                color:$base_color;
+                background-color: $dark_magenta;
+            }
+        }
+        .user-info {
+            @include flexbox(flex, flex-start, center);
+
+            .username {
+                @include font($brittany, $bold, $l);
+                letter-spacing: 2px;
+                color: $magenta;
+                padding: 0 1rem 0 1rem;
+            }
+            .abstract-icon {
+                @include dim(2rem, 2rem);
+                border-radius: 0;
+                border:0;
+            }
+        }
+        
     }
 }
