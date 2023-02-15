@@ -7,7 +7,7 @@ export const Artists = () => {
   return (
     <div className="home">
       <HomeSidebar />
-      <div className="navbar">
+      <div className="content">
         <HomeNavbar />
         <div className="artists-container">
           <div className="artists-wrapper">

@@ -8,7 +8,7 @@ import { UserInfoModal } from "./UserInfoModal";
 import { MottoModal } from "./MottoModal";
 import { BiographyModal } from "./BiographyModal";
 import { SocialLinksModal } from "./SocialLinksModal";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const UserCard = (currentUser) => {
   const [isOpenInfoModal, setIsOpenInfoModal] = useState(false);

@@ -8,7 +8,7 @@ export const Works = () => {
   return (
     <div className="home">
       <HomeSidebar />
-      <div className="navbar">
+      <div className="content">
         <HomeNavbar />
         <div className="works-container">
           <div className="works-wrapper">

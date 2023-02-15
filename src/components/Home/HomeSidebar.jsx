@@ -7,14 +7,25 @@ import onlineCourse from "../../images/online-course.png";
 import messages from "../../images/messages.png";
 import * as FaIcons from "react-icons/fa";
 import * as IoIcons from "react-icons/io";
+import GallerySubmenu from "./GallerySubmenu";
+import { useOnHoverOutside } from "../../hooks/useOnHoverOutside";
+import { useRef } from "react";
 
 export const HomeSidebar = () => {
+  const dropdownRef = useRef(null);
   const [showSidebar, setShowSidebar] = useState(false);
+  const [isMenuDropdownOpen, setMenuDropdownOpen] = useState(false);
 
   const handleClick = () => {
     setShowSidebar(!showSidebar);
-    console.log(showSidebar);
   };
+
+  const closeHoverMenu = () => {
+    setMenuDropdownOpen(false);
+  };
+
+  useOnHoverOutside(dropdownRef, closeHoverMenu);
+
   return (
     <div className={`home-sidebar ${!showSidebar ? "hidden-sidebar" : ""}`}>
       <div className="sidebar-header">
@@ -42,9 +53,16 @@ export const HomeSidebar = () => {
       {showSidebar ? (
         <div className="sidebar-menu">
           <Link to="/gallery" className="link">
-            <div className="sidebar-menu-item">
+            <div
+              className="sidebar-menu-item"
+              ref={dropdownRef}
+              onMouseOver={() => setMenuDropdownOpen(true)}
+            >
               <img src={gallery} alt="Gallery" className="sidebar-img" />
               <span>Gallery</span>
+              {isMenuDropdownOpen && (
+                <GallerySubmenu showSidebar={showSidebar} />
+              )}
             </div>
           </Link>
           <Link to="/messages" className="link">
@@ -67,8 +85,15 @@ export const HomeSidebar = () => {
       ) : (
         <div className="sidebar-menu">
           <Link to="/gallery" className="link">
-            <div className="sidebar-menu-item hidden-sidebar-item">
+            <div
+              className="sidebar-menu-item hidden-sidebar-item"
+              ref={dropdownRef}
+              onMouseOver={() => setMenuDropdownOpen(true)}
+            >
               <img src={gallery} alt="Gallery" className="sidebar-img" />
+              {isMenuDropdownOpen && (
+                <GallerySubmenu showSidebar={showSidebar} />
+              )}
             </div>
           </Link>
           <Link to="/messages" className="link">

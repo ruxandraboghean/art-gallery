@@ -6,7 +6,7 @@ export const Gallery = () => {
   return (
     <div className="home">
       <HomeSidebar />
-      <div className="navbar">
+      <div className="content">
         <HomeNavbar />
         <div className="gallery-container">
           <div className="gallery-wrapper">Gallery</div>

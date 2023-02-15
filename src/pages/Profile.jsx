@@ -7,7 +7,7 @@ export const Profile = () => {
   return (
     <div className="home">
       <HomeSidebar />
-      <div className="navbar">
+      <div className="content">
         <HomeNavbar />
         <div className="profile-container">
           <div className="profile-wrapper">

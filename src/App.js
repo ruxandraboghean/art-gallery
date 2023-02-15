@@ -18,6 +18,8 @@ import { Works } from "./pages/Works";
 import { Artists } from "./pages/Artists";
 import { Sidebar } from "./components/Chat/Sidebar";
 import { HomeSidebar } from "./components/Home/HomeSidebar";
+import { AddArtwork } from "./pages/AddArtwork";
+import { ManageArtwork } from "./pages/ManageArtwork";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -100,6 +102,26 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Works />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="/add-artwork">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <AddArtwork />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="/manage-artwork">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <ManageArtwork />
                   </ProtectedRoute>
                 }
               />

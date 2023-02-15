@@ -1,0 +1,53 @@
+.form-container {
+    height: 90%;
+    margin: 2rem;
+    padding: 2rem;
+    flex:1;
+
+    .form {
+        border: 1px solid $base_color_pink;
+        border-radius: 20px;
+        overflow: hidden;
+        padding: 0.5rem;
+
+        .input-item {
+            margin: 0.5rem;
+            width: 90%;
+
+            label {
+                @include font($roboto-mono, $light, $xs);
+                padding-bottom: 0.5rem;
+                display: inline-block;
+                clear: left;
+                width: 250px;
+                text-align: center;
+                width: 100%;
+            }
+
+            input{
+                @include form-input;
+                display: inline-block;
+                width: 100%;
+
+                &:focus {
+                    background: $base_color_pink;
+                }
+             }
+             
+        }
+        .art-details {
+            @include flexbox(flex, center, space-around);
+
+            input{
+                @include form-input;
+                display: inline-block;
+                width: 70%;
+                &:focus {
+                    background: $base_color_pink;
+                }
+            }
+                
+        }
+    }
+    
+}

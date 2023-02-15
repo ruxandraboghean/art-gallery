@@ -8,7 +8,7 @@ export const Messages = () => {
   return (
     <div className="home">
       <HomeSidebar />
-      <div className="navbar">
+      <div className="content">
         <HomeNavbar />
         <div className="home-chat">
           <div className="container">

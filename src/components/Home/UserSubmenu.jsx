@@ -7,7 +7,7 @@ import { auth } from "../../firebase";
 import { AccountCircle } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-export default function UserMenu() {
+export default function UserSubmenu() {
   return (
     <>
       <div className="dropdown-menu">

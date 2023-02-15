@@ -1,0 +1,67 @@
+.dropdown-menu-gallery {
+    @include flexbox-direction(flex, center, column, space-around);
+    position: absolute;
+    top: 16rem;
+    right: 105rem;
+    width: 30px;
+    gap: 1rem;
+   
+    &:hover {
+        opacity: 1;
+      }
+
+    @include mobile() {
+        @include dim (1rem, 1rem);
+        margin: 4rem 1.55rem 1rem 1rem;
+    }
+
+    @include monitor() {
+        @include dim(1rem, 1rem);
+     }
+
+    .add-btn{
+        @include dim (2.5rem, 2.5rem);
+        background-color: $medium_purple;
+        color: $base_color;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+        overflow: hidden;
+
+        @include mobile() {
+           @include dim(1rem, 1rem);
+        }
+
+        &:hover {
+            background-color: $dark_magenta;
+            color: $base_color_pink;
+        }
+    }
+    .account-btn{
+        @include dim (2.5rem, 2.5rem);
+        background-color: $medium_purple;
+        color: $base_color;
+        padding: 1rem;
+
+        @include mobile() {
+           @include dim(1rem, 1rem);
+        }
+
+        &:hover {
+            background-color: $dark_magenta;
+            color: $base_color_pink;
+        }
+    }
+}
+
+.hidden-sidebar{
+    top: 16.5rem;
+    right: 115rem;
+
+    ._add-btn{
+        @include dim (1.75rem, 1.5rem);
+    }
+    
+    ._account-btn{
+        @include dim (1.75rem, 1.5rem);
+    }
+}

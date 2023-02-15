@@ -1,4 +1,7 @@
 @import '../index.scss';
+@import './image_upload.scss';
+@import './artwork_form.scss';
+@import './buttons.scss';
 
 .gallery-container {
     @include flexbox(flex, center, space-between);
@@ -7,8 +10,10 @@
     flex: 5;
    
     .gallery-wrapper {
+        @include flexbox(flex, center, center);
+
         @include dim (98.5%, 97.5%);
-        border: 1px solid $purple;
+        border: 1px solid $base_color_pink;
         border-radius: 50px;
         display: flex;
         overflow: hidden;

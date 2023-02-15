@@ -1,11 +1,14 @@
 @import "../index.scss";
+@import "./navbar.scss";
+@import "./sidebar.scss";
+@import "./submenu.scss";
 
 .home {
     @include flexbox(flex, center, space-between);
     background-color: $base_color;
     height: 100vh;
 
-    .navbar {
+    .content {
         flex:6;
     }
     .home-container {
