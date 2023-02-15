@@ -43,7 +43,7 @@ export const UserProfile = () => {
             style={{ display: "none" }}
             type="file"
             id="file"
-            onChange={(e) => handleChange(e)}
+            onChange={handleChange}
           />
           <label htmlFor="file">
             <FontAwesomeIcon icon={faEdit} className="edit-btn" />

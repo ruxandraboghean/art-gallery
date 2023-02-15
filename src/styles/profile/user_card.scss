@@ -7,10 +7,10 @@
     background-color: $base_color;
 
     .details {
-        @include flexbox-direction(flex, center,column, space-around);
+        @include flexbox-direction(flex, left,column, center);
 
         .details-header {
-            @include flexbox(flex, center, space-around);
+            @include flexbox(flex, center, flex-start);
             gap:2rem;
             padding: 0 0 1rem 2rem; 
 
@@ -31,7 +31,7 @@
         }
 
         .details-content {  
-            @include flexbox-direction(flex, left, column, space-around);
+            @include flexbox-direction(flex, left, column, center);
             gap: 1rem;
 
             span {
@@ -42,8 +42,9 @@
             }
 
             .social-links {
-                @include flexbox(flex, center, space-around);
+                @include flexbox(flex, center, center);
                 gap:1rem;
+                cursor: pointer;
 
                 .instagram {
                     @include dim(1.5rem, 1.5rem);

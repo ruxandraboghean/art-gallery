@@ -25,17 +25,17 @@ export const HomeSidebar = () => {
             </Link>
           </div>
         )}
-        {!showSidebar ? (
+        {showSidebar ? (
+          <IoIcons.IoMdCloseCircle
+            className="close-icon"
+            onClick={handleClick}
+          />
+        ) : (
           <img
             src={menu}
             alt="Menu"
             onClick={handleClick}
             className="menu-icon"
-          />
-        ) : (
-          <IoIcons.IoMdCloseCircle
-            className="close-icon"
-            onClick={handleClick}
           />
         )}
       </div>

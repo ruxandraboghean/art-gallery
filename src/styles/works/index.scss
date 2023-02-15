@@ -2,16 +2,17 @@
 @import './work.scss';
 
 .works-container {
-    @include flexbox(flex, center, space-between);
+    @include flexbox(flex, center, space-around);
     background-color: $base_color;
     height: 90vh;
     flex: 5;
    
     .works-wrapper {
-        @include flexbox(flex, center, space-between);
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(3, 2fr);
+        grid-template-rows: repeat(8, 35rem);
         @include dim (98.5%, 97.5%);
-        border: 1px solid $purple;
+        border: 1px solid $base_color_pink;
         border-radius: 50px;
         background-color: $light_purple;
         overflow: scroll;

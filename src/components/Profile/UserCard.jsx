@@ -1,14 +1,21 @@
 import { Instagram, YouTube } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "../../firebase";
 import * as FaIcons from "react-icons/fa";
 import * as ImIcons from "react-icons/im";
-import { EditModal } from "./EditModal";
-import { getDoc, doc, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase";
+import { UserInfoModal } from "./UserInfoModal";
+import { MottoModal } from "./MottoModal";
+import { BiographyModal } from "./BiographyModal";
+import { SocialLinksModal } from "./SocialLinksModal";
+import { Link, useNavigate } from "react-router-dom";
 
 export const UserCard = (currentUser) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [isOpenInfoModal, setIsOpenInfoModal] = useState(false);
+  const [isOpenMottoModal, setIsOpenMottoModal] = useState(false);
+  const [isOpenBiographyModal, setIsOpenBiographyModal] = useState(false);
+  const [isOpenSocialLinksModal, setIsOpenSocialLinksModal] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   const getUserData = async () => {
     const docRef = doc(db, "users", currentUser.uid);
@@ -16,12 +23,14 @@ export const UserCard = (currentUser) => {
 
     if (docSnap.exists()) {
       setUserData(docSnap.data());
-      // console.log("Document data:", docSnap.data());
     } else {
       console.log("No such document!");
     }
   };
-  getUserData();
+  useEffect(() => {
+    getUserData();
+    console.log(userData?.instagram, "instaa");
+  }, []);
 
   return (
     <div className="user-card">
@@ -30,13 +39,13 @@ export const UserCard = (currentUser) => {
           <span className="details-span">User Info</span>
           <FaIcons.FaEdit
             className="edit-btn"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setIsOpenInfoModal(!isOpenInfoModal)}
           />
-          {isOpen && (
-            <EditModal
+          {isOpenInfoModal && (
+            <UserInfoModal
               user={currentUser}
               userData={userData}
-              setIsOpen={setIsOpen}
+              setIsOpen={setIsOpenInfoModal}
             />
           )}
         </div>
@@ -55,33 +64,69 @@ export const UserCard = (currentUser) => {
       <div className="details">
         <div className="details-header">
           <span className="details-span">Motto </span>
-          <FaIcons.FaEdit className="edit-btn" />
+          <FaIcons.FaEdit
+            className="edit-btn"
+            onClick={() => setIsOpenMottoModal(!isOpenMottoModal)}
+          />
+          {isOpenMottoModal && (
+            <MottoModal
+              user={currentUser}
+              userData={userData}
+              setIsOpen={setIsOpenMottoModal}
+            />
+          )}
         </div>
         <div className="details-content">
-          <span className="details-span"> {userData.motto}</span>
+          <span className="details-span"> {userData?.motto}</span>
         </div>
       </div>
 
       <div className="details">
         <div className="details-header">
           <span className="details-span">Biography</span>
-          <FaIcons.FaEdit className="edit-btn" />
+          <FaIcons.FaEdit
+            className="edit-btn"
+            onClick={() => setIsOpenBiographyModal(!isOpenBiographyModal)}
+          />
+          {isOpenBiographyModal && (
+            <BiographyModal
+              user={currentUser}
+              userData={userData}
+              setIsOpen={setIsOpenBiographyModal}
+            />
+          )}
         </div>
         <div className="details-content">
-          <span className="details-span">{userData.biography} </span>
+          <span className="details-span">{userData?.biography} </span>
         </div>
       </div>
 
       <div className="details">
         <div className="details-header">
           <span className="details-span">Social Links</span>
-          <FaIcons.FaEdit className="edit-btn" />
+          <FaIcons.FaEdit
+            className="edit-btn"
+            onClick={() => setIsOpenSocialLinksModal(!isOpenSocialLinksModal)}
+          />
+          {isOpenSocialLinksModal && (
+            <SocialLinksModal
+              user={currentUser}
+              userData={userData}
+              setIsOpen={setIsOpenSocialLinksModal}
+            />
+          )}
         </div>
         <div className="details-content">
           <div className="social-links">
-            <Instagram size="medium" className="instagram" />
-            <YouTube className="youtube" />
-            <ImIcons.ImBlog className="blog" />
+            <Link to={userData?.instagram || "#"}>
+              <Instagram size="medium" className="instagram" name="instagram" />
+            </Link>
+            <Link to={userData?.youtube || "#"}>
+              <YouTube className="youtube" name="youtube" />
+            </Link>
+            <Link to={userData?.blog || "#"}>
+              <ImIcons.ImBlog className="blog" name="blog" />
+            </Link>
           </div>
         </div>
       </div>

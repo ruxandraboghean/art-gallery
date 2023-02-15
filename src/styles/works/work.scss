@@ -1,12 +1,53 @@
 .work-container {
-    @include dim(10%, 30%);
-    flex: 1 0 15%;
-    padding: 2rem;
-    margin: 2rem;
-    border: 1px solid $grayish_blue;
-    border-radius: 20px;
-
-    .photo {
-        color:$magenta;
+    @include flexbox-direction(flex, center, column, space-around);
+    padding: 2.5rem 4rem;
+  
+    .image {
+        @include dim(25rem, 25rem);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50px;
     }
+    .painting-details {
+      display: none;
+    }
+
+    &:hover {
+      .painting-details {
+        @include font($longa-iberica, $normal, $xxl);
+        background-color: $base_color_pink;
+        letter-spacing: 1px;
+        padding: 2rem 6rem;
+        position: absolute;
+        display: inline;
+        color: $dark_magenta;
+        text-align: center;
+        cursor: pointer;
+        border-radius: 10px;
+        z-index: 2;
+
+          .title {
+            @include font($frank-ruhl-libre, $light, 3rem);
+              color: $dark_magenta;
+              padding-bottom: 0.5rem;
+          }
+          .info-btn {
+            @include font($longa-iberica, $normal, $xxl);
+              margin-top: 1rem;
+              padding:0.1rem 0.75rem;
+              background: $base_color_pink;
+              color:$dark_magenta;
+              outline: none;
+              border: 1px solid $dark_magenta;
+              border-radius: 20px;
+
+              &:hover{
+                background: $dark_magenta; 
+                color: $base_color;
+            }
+          }
+      }
+  }
 }
+

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import * as IoIcons from "react-icons/io";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase";
 import { updateProfile } from "firebase/auth";
 
-export const EditModal = ({ user, userData, setIsOpen }) => {
+export const UserInfoModal = ({ user, userData, setIsOpen }) => {
   const [modalData, setModalData] = useState({
     displayName: userData?.displayName,
     email: userData?.email,
@@ -49,7 +49,7 @@ export const EditModal = ({ user, userData, setIsOpen }) => {
       address: modalData?.address,
     };
     updateUserData();
-    await setDoc(userRef, docData)
+    await updateDoc(userRef, docData)
       .then(() => {
         console.log("Document updated successfully");
         console.log(modalData.displayName);
