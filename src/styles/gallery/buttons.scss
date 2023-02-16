@@ -1,8 +1,9 @@
 .buttons {
-    @include flexbox-direction(flex, center, column, space-around);
-    margin-right: 10rem;
+    @include flexbox(flex, center, center);
+    margin-top: 2rem;
+    gap:1rem;
+
     button {
-        margin:0.5rem;   
         @include upload-btn; 
         @include dim(6em, 2rem);
     }
@@ -17,20 +18,5 @@
             background-color: green;
         }
       
-    }
-    @include laptop {
-        margin-right: 3rem;
-    }
-    @include bigger-laptop {
-        margin-right: 5rem;
-
-    }
-    @include tablet {
-       flex-direction: row;;
-       margin:0;
-    }
-    @include mobile {
-       flex-direction: row;;
-        margin:0;
     }
 }

@@ -1,14 +1,17 @@
 .form-container {
+    @include flexbox(flex, center, space-around);
+    gap: 5rem;
     height: 90%;
     margin: 2rem;
     padding: 2rem;
-    flex:1;
+    overflow: scroll;
 
     .form {
         border: 1px solid $base_color_pink;
         border-radius: 20px;
-        overflow: hidden;
         padding: 0.5rem;
+        flex:5;
+
 
         .input-item {
             margin: 0.5rem;
@@ -19,7 +22,6 @@
                 padding-bottom: 0.5rem;
                 display: inline-block;
                 clear: left;
-                width: 250px;
                 text-align: center;
                 width: 100%;
             }
@@ -32,22 +34,55 @@
                 &:focus {
                     background: $base_color_pink;
                 }
+                @include tablet {
+                    height: 0.5rem;
+                 }
+                @include mobile {
+                   height: 0.5rem;
+                }
              }
              
         }
         .art-details {
-            @include flexbox(flex, center, space-around);
+            @include flexbox(flex, center, center);
+            width: 90%;
 
             input{
                 @include form-input;
                 display: inline-block;
-                width: 70%;
                 &:focus {
                     background: $base_color_pink;
                 }
+                width: 80%;
+                @include laptop {
+                    width: 65%;
+                 }
             }
+            @include laptop {
+                width: 100%;
+             }
                 
         }
     }
-    
+
+    @include laptop {
+        flex-direction: row;
+    }
+
+    @include tablet {
+        margin: 0.25rem;
+        padding: 0.5rem;
+        gap: 1rem;
+        flex-direction: column;
+    }
+    @include mobile {
+        margin: 0.15rem;
+        padding: 0.25rem;
+        gap: 0.5rem;
+        flex-direction: column;
+    }
+
+    &::-webkit-scrollbar { 
+        display: none;
+    }
 }

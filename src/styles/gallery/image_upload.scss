@@ -1,8 +1,7 @@
 .image-container {
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='21' ry='21' stroke='%23BBAED1FF' stroke-width='4' stroke-dasharray='11%2c 9' stroke-dashoffset='34' stroke-linecap='square'/%3e%3c/svg%3e");
-    flex:0.3;
+    flex:1;
     border-radius: 21px;
-    margin:2rem 2rem 2rem 5rem;
     padding: 0.05rem 2rem;
   
     .upload-container {
@@ -39,35 +38,37 @@
         @include dim (100%, 100%);
         object-fit: cover;
         border-radius: 21px; 
+
     }
 
     .remove-icon {
-        @include dim(3rem, 3rem);
-        position:absolute;
-        top:41rem;
-        right:100rem;
+        @include dim(2.5rem, 2.5rem);
+        top:30rem;
+        right:77.5rem;
         cursor: pointer;
+
+        @include tablet {
+            @include dim(2rem, 2rem);
+        }
+        @include mobile {
+            @include dim(1.75rem, 1.75rem);
+        }
     }
 
     @include bigger-laptop {
-        padding: 0.05rem 2rem;
-        margin-left:5rem;
-
+        @include dim(10.35rem, 10.35rem);
     }
     @include laptop {
-        padding: 0.05rem 2rem;
-        margin-left:3rem;
+        @include dim(10.35rem, 10.35rem);
     }
-    @include monitor {
-        margin:2rem 2rem 2rem 10rem;
-    } 
+  
     @include tablet {
-        margin:2rem;
+        @include dim(9.5rem, 9.5rem);
     }
-
     @include mobile {
-        margin-top:2rem;
-   }
+        @include dim(8.5rem, 9rem);
 
-}
+    }
+       
+ }
 

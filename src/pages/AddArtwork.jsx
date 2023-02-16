@@ -1,7 +1,6 @@
 import React from "react";
+import { useState } from "react";
 import { ArtworkForm } from "../components/Gallery/ArtworkForm";
-import { Buttons } from "../components/Gallery/Buttons";
-import { ImageUpload } from "../components/Gallery/ImageUpload";
 import { HomeNavbar } from "../components/Home/HomeNavbar";
 import { HomeSidebar } from "../components/Home/HomeSidebar";
 
@@ -13,9 +12,7 @@ export const AddArtwork = () => {
         <HomeNavbar />
         <div className="gallery-container">
           <div className="gallery-wrapper">
-            <ImageUpload />
             <ArtworkForm />
-            <Buttons />
           </div>
         </div>
       </div>
