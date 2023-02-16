@@ -18,6 +18,22 @@
         display: flex;
         overflow: hidden;
         background-color: $light_purple;
+
+        
+        @include mobile {
+            @include flexbox-direction(flex, center, column, space-between);
+            overflow: scroll;
+            &::-webkit-scrollbar { 
+                display: none;
+            }
+        }
+        @include tablet {
+            @include flexbox-direction(flex, center, column, space-between);
+            overflow: scroll;
+            &::-webkit-scrollbar { 
+                display: none;
+            }
+        }
     }
 }
    

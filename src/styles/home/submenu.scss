@@ -1,8 +1,8 @@
 .dropdown-menu-gallery {
     @include flexbox-direction(flex, center, column, space-around);
     position: absolute;
-    top: 16rem;
-    right: 105rem;
+    top: 13rem;
+    right: 82.5rem;
     width: 30px;
     gap: 1rem;
    
@@ -12,11 +12,22 @@
 
     @include mobile() {
         @include dim (1rem, 1rem);
-        margin: 4rem 1.55rem 1rem 1rem;
+        top: 15rem;
+        right: 19rem;
     }
 
     @include monitor() {
-        @include dim(1rem, 1rem);
+        @include dim (1rem, 1rem);
+        top: 16rem;
+        right: 105rem;
+     }
+     @include bigger-laptop() {
+        top: 13rem;
+        right: 80rem;
+     }
+     @include laptop() {
+        top: 13rem;
+        right: 60rem;
      }
 
     .add-btn{
@@ -30,6 +41,8 @@
         @include mobile() {
            @include dim(1rem, 1rem);
         }
+
+       
 
         &:hover {
             background-color: $dark_magenta;
@@ -54,8 +67,8 @@
 }
 
 .hidden-sidebar{
-    top: 16.5rem;
-    right: 115rem;
+    top: 15rem;
+    right: 91rem;
 
     ._add-btn{
         @include dim (1.75rem, 1.5rem);
@@ -64,4 +77,24 @@
     ._account-btn{
         @include dim (1.75rem, 1.5rem);
     }
+    @include monitor() {
+        top: 16.5rem;
+        right: 115rem;
+     }
+     @include bigger-laptop() {
+        top: 15rem;
+        right: 88.5rem;
+     }
+     @include laptop() {
+        top: 15rem;
+        right: 69rem;
+     }
+     @include tablet() {
+        top: 15rem;
+        right: 42.5rem;
+     }
+     @include mobile() {
+        top: 16.5rem;
+        right: 31rem;
+     }
 }

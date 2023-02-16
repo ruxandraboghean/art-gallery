@@ -2,9 +2,8 @@
     background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='21' ry='21' stroke='%23BBAED1FF' stroke-width='4' stroke-dasharray='11%2c 9' stroke-dashoffset='34' stroke-linecap='square'/%3e%3c/svg%3e");
     flex:0.3;
     border-radius: 21px;
-    margin:2rem 2rem 2rem 10rem;
-    padding: 0.75rem ;
-
+    margin:2rem 2rem 2rem 5rem;
+    padding: 0.05rem 2rem;
   
     .upload-container {
         @include flexbox-direction(flex, center, column, space-around);
@@ -29,6 +28,8 @@
         .upload-btn {
             @include upload-btn;
         }
+
+       
     }
     .upload-container-none {
         display: none;
@@ -47,6 +48,26 @@
         right:100rem;
         cursor: pointer;
     }
+
+    @include bigger-laptop {
+        padding: 0.05rem 2rem;
+        margin-left:5rem;
+
+    }
+    @include laptop {
+        padding: 0.05rem 2rem;
+        margin-left:3rem;
+    }
+    @include monitor {
+        margin:2rem 2rem 2rem 10rem;
+    } 
+    @include tablet {
+        margin:2rem;
+    }
+
+    @include mobile {
+        margin-top:2rem;
+   }
 
 }
 

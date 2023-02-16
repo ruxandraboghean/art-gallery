@@ -18,4 +18,19 @@
         }
       
     }
+    @include laptop {
+        margin-right: 3rem;
+    }
+    @include bigger-laptop {
+        margin-right: 5rem;
+
+    }
+    @include tablet {
+       flex-direction: row;;
+       margin:0;
+    }
+    @include mobile {
+       flex-direction: row;;
+        margin:0;
+    }
 }
