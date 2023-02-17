@@ -58,10 +58,67 @@
                     width: 65%;
                  }
             }
+            
+            .input-item {
+                width: auto;
+                .dd-header {
+                    @include dd-header;       
+                }
+                .dd-list{
+                    @include dd-list;       
+                }
+                option{
+                    border: none;
+                    @include dim(3rem, 3rem);
+                }
+            }
+
             @include laptop {
                 width: 100%;
-             }
-                
+            }    
+        }
+        .art-details-types {
+            @include flexbox(flex, center, center);
+            width: 100%;
+
+            label {
+                @include font($roboto-mono, $light, $xs);
+                padding-bottom: 0.5rem;
+                display: inline-block;
+                clear: left;
+                text-align: left;
+                width: 100%;
+            }
+    
+            input{
+                @include form-input;
+                display: inline-block;
+                &:focus {
+                    background: $base_color_pink;
+                }
+                width: 100%;
+                @include laptop {
+                    width: 65%;
+                 }
+            }
+            
+            .input-item {
+                width: auto;
+                .dd-header {
+                    @include dd-header;       
+                }
+                .dd-list{
+                    @include dd-list;       
+                }
+                option{
+                    border: none;
+                    @include dim(5rem, 5rem);
+                }
+            }
+    
+            @include laptop {
+                width: 100%;
+            }    
         }
     }
 

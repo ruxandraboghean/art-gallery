@@ -1,0 +1,45 @@
+
+@mixin dd-header {
+    @include font($roboto-mono, $light, $xs);
+    @include form-input;
+    @include flexbox(flex, center, center);
+    padding: 0;
+    line-height: 2rem;
+
+    &:focus {
+       background: $base_color_pink;
+    }
+    width: 100%;
+
+    @include laptop {
+        width: 95%;
+     }
+     svg {
+        transform: scale(0.7);
+        filter: invert(28%) sepia(20%) saturate(2476%) hue-rotate(86deg) brightness(18%) contrast(9%);
+    }
+}
+
+@mixin dd-list{
+    background: $base_color;
+
+    .dd-list-item{
+        @include font($roboto-mono, $light, $xs);
+
+        &:hover{
+            background: $dark_magenta;
+            opacity:0.5;
+        } 
+    }
+
+    .dd-scroll-list {
+        &::-webkit-scrollbar { 
+            display: none;
+        
+        }
+        svg {
+            transform: scale(0.75);
+            filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(19%);
+        }
+    }   
+}

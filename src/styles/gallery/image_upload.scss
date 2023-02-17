@@ -28,6 +28,21 @@
             @include upload-btn;
         }
 
+        @include bigger-laptop {
+            gap:0.5rem;
+            padding: 1.5rem 0.5rem;
+            margin-top: 0rem;
+        }
+        @include laptop {
+            gap:0.25rem;
+            padding: 1.5rem 0.5rem;
+            margin-top: 0rem;
+        }
+        @include mobile {
+            gap:0.25rem;
+            padding: 1rem 0.5rem;
+            margin-top: 0rem;
+        }
        
     }
     .upload-container-none {

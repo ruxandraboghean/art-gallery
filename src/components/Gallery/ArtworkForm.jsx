@@ -2,17 +2,20 @@ import {
   arrayUnion,
   collection,
   doc,
-  onSnapshot,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
 import React, { useContext, useState, useRef } from "react";
-import { useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { db, storage } from "../../firebase";
 import * as ImIcons from "react-icons/im";
 import * as FcIcons from "react-icons/fc";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  ref as sRef,
+  uploadBytesResumable,
+} from "firebase/storage";
+import { Dropdown } from "reactjs-dropdown-component";
 
 const initialState = {
   title: "",
@@ -22,9 +25,30 @@ const initialState = {
   width: "",
   depth: "",
   unit: "",
-  tehnique: "",
+  technique: "",
   genre: "",
 };
+
+let units = [
+  { label: "cm", value: "cm" },
+  { label: "inch", value: "inch" },
+];
+
+let techniques = [
+  { label: "acrylic", value: "acrylic" },
+  { label: "oil", value: "oil" },
+  { label: "watercolor", value: "watercolor" },
+  { label: "sculpture", value: "sculpture" },
+  { label: "digital art", value: "digital art" },
+];
+
+let genres = [
+  { label: "abstract", value: "abstract" },
+  { label: "boho", value: "boho" },
+  { label: "moderm", value: "moderm" },
+  { label: "romanticism", value: "romanticism" },
+  { label: "realist", value: "realist" },
+];
 
 export const ArtworkForm = () => {
   const [isImageUploaded, setIsImageUploaded] = useState(false);
@@ -32,7 +56,6 @@ export const ArtworkForm = () => {
   const [imageSrc, setImageSrc] = useState(null);
   const image = useRef();
   const [artworkData, setArtworkData] = useState(initialState);
-  const [userArtworks, setUserArtworks] = useState(null);
 
   const handleChange = (e) => {
     setArtworkData({ ...artworkData, [e.target.name]: e.target.value });
@@ -57,19 +80,6 @@ export const ArtworkForm = () => {
     window.location.reload(false);
   }
 
-  useEffect(() => {
-    const getArtworks = () => {
-      const unSub = onSnapshot(doc(db, "users", currentUser.uid), (doc) => {
-        setUserArtworks(doc.data().artworks);
-      });
-
-      return () => {
-        unSub();
-      };
-    };
-    currentUser.uid && getArtworks();
-  }, [currentUser.uid]);
-
   async function saveArtwork(e) {
     e.preventDefault();
 
@@ -83,7 +93,7 @@ export const ArtworkForm = () => {
       });
 
       try {
-        const storageRef = ref(storage, artId);
+        const storageRef = sRef(storage, artId);
 
         await uploadBytesResumable(storageRef, photo).then(() => {
           getDownloadURL(storageRef).then(async (downloadURL) => {
@@ -113,6 +123,10 @@ export const ArtworkForm = () => {
 
   const handleRemoveImg = () => {
     refreshPage();
+  };
+  const onSelectedDataChange = (value, action) => {
+    console.log(action, "action");
+    setArtworkData({ ...artworkData, [action]: value.value });
   };
 
   return (
@@ -217,40 +231,44 @@ export const ArtworkForm = () => {
               onChange={handleChange}
             />
           </div>
+
           <div className="input-item">
             <label htmlFor="unit">unit</label>
-            <input
-              type="text"
-              id="unit"
+            <Dropdown
               name="unit"
-              placeholder="unit"
-              value={artworkData?.unit}
-              onChange={handleChange}
+              title="Select..."
+              list={units}
+              value={units.find((u) => u.value === artworkData.unit)}
+              onChange={onSelectedDataChange}
+              className="dropdown-input"
             />
           </div>
         </div>
-        <div className="input-item">
-          <label htmlFor="tehnique">tehnique</label>
-          <input
-            type="text"
-            id="tehnique"
-            name="tehnique"
-            placeholder="tehnique"
-            value={artworkData?.tehnique}
-            onChange={handleChange}
-          />
+        <div className="art-details-types">
+          <div className="input-item">
+            <label htmlFor="technique">technique</label>
+            <Dropdown
+              name="technique"
+              title="Select..."
+              list={techniques}
+              value={techniques.find((u) => u.value === artworkData.technique)}
+              onChange={onSelectedDataChange}
+              className="dropdown-input"
+            />
+          </div>
+          <div className="input-item">
+            <label htmlFor="genre">genre</label>
+            <Dropdown
+              name="genre"
+              title="Select..."
+              list={genres}
+              value={genres.find((u) => u.value === artworkData.genre)}
+              onChange={onSelectedDataChange}
+              className="dropdown-input"
+            />
+          </div>
         </div>
-        <div className="input-item">
-          <label htmlFor="genre">genre</label>
-          <input
-            type="text"
-            id="genre"
-            name="genre"
-            placeholder="genre"
-            value={artworkData?.genre}
-            onChange={handleChange}
-          />
-        </div>
+
         <div className="buttons">
           <button className="cancel" name="cancel" onClick={refreshPage}>
             Cancel

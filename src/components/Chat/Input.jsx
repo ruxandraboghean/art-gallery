@@ -1,8 +1,4 @@
-import {
-  faCameraRetro,
-  faPaperclip,
-  faPaperPlane,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { arrayUnion, serverTimestamp, Timestamp } from "firebase/firestore";
 import React, { useState, useContext } from "react";
@@ -11,7 +7,11 @@ import { ChatContext } from "../../context/ChatContext";
 import { doc, updateDoc } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
 import { db, storage } from "../../firebase";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  getDownloadURL,
+  ref as sRef,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 export const Input = () => {
   const [text, setText] = useState("");
@@ -23,7 +23,7 @@ export const Input = () => {
 
   const handleSend = async () => {
     if (img) {
-      const storageRef = ref(storage, uuid());
+      const storageRef = sRef(storage, uuid());
 
       const uploadTask = uploadBytesResumable(storageRef, img);
 

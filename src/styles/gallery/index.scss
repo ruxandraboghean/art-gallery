@@ -2,6 +2,7 @@
 @import './image_upload.scss';
 @import './artwork_form.scss';
 @import './buttons.scss';
+@import './manage_artworks.scss';
 
 .gallery-container {
     @include flexbox(flex, center, space-between);

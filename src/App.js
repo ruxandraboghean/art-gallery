@@ -5,21 +5,19 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import "./App.scss";
 import { AuthContext } from "./context/AuthContext";
 import { Register } from "./pages/Register";
 import { Profile } from "./pages/Profile";
 import { Login } from "./pages/Login";
 import { Gallery } from "./pages/Gallery";
 import { Courses } from "./pages/Courses";
-import "./App.scss";
 import { Home } from "./pages/Home";
 import { Messages } from "./pages/Messages";
 import { Works } from "./pages/Works";
 import { Artists } from "./pages/Artists";
-import { Sidebar } from "./components/Chat/Sidebar";
-import { HomeSidebar } from "./components/Home/HomeSidebar";
 import { AddArtwork } from "./pages/AddArtwork";
-import { ManageArtwork } from "./pages/ManageArtwork";
+import { ManageArtworks } from "./pages/ManageArtworks";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -121,14 +119,14 @@ function App() {
                 index
                 element={
                   <ProtectedRoute>
-                    <ManageArtwork />
+                    <ManageArtworks />
                   </ProtectedRoute>
                 }
               />
             </Route>
 
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </Router>
       </header>

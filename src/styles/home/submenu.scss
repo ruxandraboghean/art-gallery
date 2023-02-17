@@ -1,52 +1,45 @@
-.dropdown-menu-gallery {
-    @include flexbox-direction(flex, center, column, space-around);
+.dropdown-menu {
+    @include flexbox-direction(flex, center, column, space-evenly);
     position: absolute;
-    top: 13rem;
-    right: 82.5rem;
-    width: 30px;
-    gap: 1rem;
-   
+    margin: 0.5rem 4.5rem 0 0;
+    top: 0;
+    right: 0;
+    width: 15rem;
+    list-style: none;
+    transition: ease-in-out all .4s;
+    display: table;
+
     &:hover {
+        width: 7.5rem;
         opacity: 1;
       }
 
     @include mobile() {
         @include dim (1rem, 1rem);
-        top: 15rem;
-        right: 19rem;
+        margin: 4rem 1.55rem 1rem 1rem;
     }
 
     @include monitor() {
-        @include dim (1rem, 1rem);
-        top: 16rem;
-        right: 105rem;
-     }
-     @include bigger-laptop() {
-        top: 13rem;
-        right: 80rem;
-     }
-     @include laptop() {
-        top: 13rem;
-        right: 60rem;
+        @include dim(1rem, 1rem);
+        margin: 1rem 4.6rem 0 0rem;
      }
 
-    .add-btn{
+    .signout-btn{
         @include dim (2.5rem, 2.5rem);
         background-color: $medium_purple;
         color: $base_color;
-        padding: 1rem;
-        margin-bottom: 0.5rem;
-        overflow: hidden;
+        margin-bottom: 1rem;
+        transform: rotate(180deg);
+        
 
         @include mobile() {
            @include dim(1rem, 1rem);
         }
 
-       
-
         &:hover {
             background-color: $dark_magenta;
             color: $base_color_pink;
+           
         }
     }
     .account-btn{
@@ -54,6 +47,7 @@
         background-color: $medium_purple;
         color: $base_color;
         padding: 1rem;
+        margin-bottom: 0.5rem;
 
         @include mobile() {
            @include dim(1rem, 1rem);
@@ -64,37 +58,4 @@
             color: $base_color_pink;
         }
     }
-}
-
-.hidden-sidebar{
-    top: 15rem;
-    right: 91rem;
-
-    ._add-btn{
-        @include dim (1.75rem, 1.5rem);
-    }
-    
-    ._account-btn{
-        @include dim (1.75rem, 1.5rem);
-    }
-    @include monitor() {
-        top: 16.5rem;
-        right: 115rem;
-     }
-     @include bigger-laptop() {
-        top: 15rem;
-        right: 88.5rem;
-     }
-     @include laptop() {
-        top: 15rem;
-        right: 69rem;
-     }
-     @include tablet() {
-        top: 15rem;
-        right: 42.5rem;
-     }
-     @include mobile() {
-        top: 16.5rem;
-        right: 31rem;
-     }
 }
