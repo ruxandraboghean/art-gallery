@@ -1,5 +1,5 @@
-.artworks-wrapper {
-    @include flexbox-direction(flex, center,column, flex-start);
+.artworks-container {
+    @include flexbox-direction(flex, left,column, flex-start);
     width: 100%;
     height: 100%;
     margin: 1.5rem;
@@ -12,53 +12,132 @@
         letter-spacing: 2px;
         padding-top: 1rem;
         padding-bottom: 3rem;
+        text-align: center;
     }
    
 
     .filter {
-        @include flexbox(flex, left, space-between);
+        @include flexbox-direction(flex, center, column, flex-start);
         @include font($roboto-mono, $normal, $s);
-        width: 100%;
         gap:1rem;
         padding: 0.25rem;
         border-radius:10px;
-        margin-bottom: 3rem;
+      
 
-        .filter-item {
-            @include flexbox-direction(flex, center,column, flex-start);
+        .inputs {
+            @include flexbox(flex, center, flex-start);
+            gap:2rem;
+            .filter-item {
+                @include flexbox-direction(flex, center,column, flex-start);
+                label {
+                    padding-bottom: 1rem;
+                    font-size: $xs;
+                }
+    
+                input {
+                    @include form-input;
+                    border:1px solid $grayish_purple;
+                    padding: 0.2rem 1rem;
+                }
 
-            label {
-                padding-bottom: 1rem;
-                font-size: $xs;
+                @include bigger-laptop{
+                   @include flexbox-direction(flex, center, row, space-around);
+                   gap:0.5rem;
+                    label {
+                        display: inline-block;
+                        float: left;
+                        clear: left;
+                        width: 10rem;
+                        text-align: right;
+                    }
+        
+                    input {
+                        float: left;
+                    }
+                }
+      @include monitor {
+            width:auto;
+        }
+                @include tablet {
+                    label {
+                        display: none;
+                    }
+                }
+                @include mobile {
+                    label {
+                        display: none;
+                    }
+                }
+            }@include monitor {
+                width:auto;
             }
+            @include bigger-laptop{
+                width:auto;
+                flex-direction: column;
+                gap:0.5rem;
 
-            input {
-                @include form-input;
-                border:1px solid $grayish_purple;
-                padding: 0.2rem 1rem;
+            }
+            @include laptop {
+                width:auto;
+            }
+            @include tablet {
+                width:auto;
+                justify-content: center;
+            }
+            @include mobile {
+                justify-content: center;
             }
         }
-        .search-btn {
-            @include upload-btn;
-            padding: 0.75rem;
-            margin-top: 1rem;
+
+        .buttons {
+            @include flexbox(flex, center, flex-start);
+            gap:2rem;
+            margin-bottom: 3rem;
+          
+            .search-btn {
+                @include upload-btn;
+            }
+            .show-all-btn {
+                @include upload-btn;
+            }
+            .add-artwork {
+                @include upload-btn;
+            }
+            @include tablet{
+                flex-direction: column;
+                justify-content: end;
+                gap:0.5rem;
+            }
+            @include mobile{
+                flex-direction: column;
+                justify-content: end;
+                gap:0.5rem;
+            }
         }
-        .show-all-btn {
-            @include upload-btn;
-            padding: 0.75rem;
-            margin-top: 1rem;
+        @include monitor {
+            width:auto;
         }
-        .add-artwork {
-            @include upload-btn;
-            padding: 0.75rem;
-            margin-top: 1rem;
+        @include bigger-laptop{
+            width:auto;
+            flex-direction: row;
+            gap:1rem;
+        }
+        @include laptop {
+            width:auto;
+        }
+        @include tablet {
+            width:auto;
+            justify-content: center;
+        }
+        @include mobile {
+            width:auto;
+            justify-content: center;
         }
     }
 
     .header {
         @include flexbox(flex, center, space-between);
         @include font($roboto-mono, $normal, $s);
-        width: 100%;
         gap:1rem;
         padding: 0.25rem;
         border-radius:10px;
@@ -66,12 +145,27 @@
         .header-item {
             margin: 0 1rem;
         }
+        @include monitor {
+            width:auto;
+        }
+        @include bigger-laptop {
+            width:auto;
+        }
+        @include laptop {
+            width:auto;
+        }
+        @include tablet {
+            width:auto;
+        }
+        @include mobile {
+            width:auto;
+        }
     }
-
+    
+.artworks-wrapper {
     .artwork {
         @include flexbox(flex, center, space-between);
         margin-top:1rem;
-        width: calc(100% - 1.5rem);
         gap:1rem;
         border:1px solid $grayish_purple;
         padding: 0.5rem;
@@ -84,15 +178,58 @@
             border-radius:10px;
         }
 
-        .settings-icon {
-            margin: 0 1rem;
-            @include dim(1.5rem, 1.5rem);
-            color:$dark_magenta;
-            cursor: pointer;
+        .actions{
+            .settings-icon {
+                margin: 0 1rem;
+                @include dim(1.5rem, 1.5rem);
+                color:$dark_magenta;
+                cursor: pointer;
 
-            &:hover {
-                color:$magenta;
+                &:hover {
+                    color:$magenta;
+                }
             }
+            .actions-dropdown-menu {
+                @include flexbox-direction(flex, center, column, center);
+                @include dim (0.5rem, 0.8rem);
+              
+                &:hover {
+                    opacity: 1;
+                  }
+         
+                  .css-1af8mx8 {
+                    margin:0.5rem;
+                    margin-bottom: 2rem;
+                }
+                .action-btn{
+                    @include dim (2.5rem, 2.5rem);
+                    background-color: $medium_purple;
+                    color: $base_color;
+                    margin-right: 2rem;
+                   
+            
+                    &:hover {
+                        background-color: $dark_magenta;
+                        color: $base_color_pink;
+                    }
+                    
+                }    
+            }
+
+           
+            @include monitor {
+                width:auto;
+            }
+
+            .notransition {
+                -webkit-transition: none !important;
+                -moz-transition: none !important;
+                -o-transition: none !important;
+                transition: none !important;
+              }
         }
+
+        
     }
+}
 }

@@ -104,7 +104,7 @@ function App() {
                 }
               />
             </Route>
-            <Route path="/add-artwork">
+            <Route path="/add-artwork/:id?">
               <Route
                 index
                 element={

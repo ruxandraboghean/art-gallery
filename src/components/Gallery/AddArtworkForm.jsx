@@ -2,10 +2,11 @@ import {
   arrayUnion,
   collection,
   doc,
+  getDoc,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { db, storage } from "../../firebase";
 import * as ImIcons from "react-icons/im";
@@ -16,6 +17,7 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { Dropdown } from "reactjs-dropdown-component";
+import { useParams } from "react-router-dom";
 
 const initialState = {
   title: "",
@@ -27,6 +29,7 @@ const initialState = {
   unit: "",
   technique: "",
   genre: "",
+  status: "",
 };
 
 let units = [
@@ -50,18 +53,19 @@ let genres = [
   { label: "realist", value: "realist" },
 ];
 
-export const ArtworkForm = () => {
+export const AddArtworkForm = () => {
   const [isImageUploaded, setIsImageUploaded] = useState(false);
   const [photo, setPhoto] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
   const image = useRef();
   const [artworkData, setArtworkData] = useState(initialState);
-
-  const handleChange = (e) => {
-    setArtworkData({ ...artworkData, [e.target.name]: e.target.value });
-  };
-
   const { currentUser } = useContext(AuthContext);
+  const params = useParams();
+  const unitDropdownRef = useRef();
+  const techniqueDropdownRef = useRef();
+  const genreDropdownRef = useRef();
+
+  // const refs = useRef({});
 
   function loadFile(e) {
     setPhoto(e.target.files[0]);
@@ -74,60 +78,136 @@ export const ArtworkForm = () => {
     setArtworkData(initialState);
     setIsImageUploaded(false);
     setImageSrc(null);
+    // unitDropdownRef.current.clearSelection();
+    // techniqueDropdownRef.current.clearSelection();
+    // genreDropdownRef.current.clearSelection();
   };
 
   function refreshPage() {
     window.location.reload(false);
   }
 
+  const handleRemoveImg = () => {
+    refreshPage();
+  };
+
+  const handleChange = (e) => {
+    setArtworkData({ ...artworkData, [e.target.name]: e.target.value });
+  };
+
+  const onSelectedDataChange = (value, action) => {
+    setArtworkData({ ...artworkData, [action]: value.value });
+  };
+
+  //SAVE AS DRAFT
   async function saveArtwork(e) {
     e.preventDefault();
 
     try {
-      const docRef = doc(collection(db, "artworks"));
-      const artId = docRef.id;
-
-      await setDoc(docRef, {
-        id: artId,
-        artworkInfo: artworkData,
-      });
-
-      try {
-        const storageRef = sRef(storage, artId);
-
-        await uploadBytesResumable(storageRef, photo).then(() => {
-          getDownloadURL(storageRef).then(async (downloadURL) => {
-            try {
-              await updateDoc(doc(db, "artworks", artId), {
-                photoURL: downloadURL,
-              });
-              await updateDoc(doc(db, "users", currentUser.uid), {
-                artworks: arrayUnion({
-                  id: artId,
-                  artworkInfo: artworkData,
-                  photoURL: downloadURL,
-                }),
-              });
-            } catch (err) {
-              console.log(err.message);
-            }
-          });
+      const artworkId = params.id;
+      if (artworkId !== undefined && artworkId !== "") {
+        const docRef = doc(db, "artworks", artworkId);
+        console.log(docRef, "docRef");
+        await updateDoc(docRef, {
+          artworkInfo: artworkData,
         });
-      } catch {}
-      resetState(e);
-      console.log("Document written with ID: ", docRef.id);
+
+        resetState();
+      } else {
+        const docRef = doc(collection(db, "artworks"));
+        const artId = docRef.id;
+
+        await setDoc(docRef, {
+          id: artId,
+          artworkInfo: artworkData,
+        });
+        try {
+          const storageRef = sRef(storage, artId);
+
+          await uploadBytesResumable(storageRef, photo).then(() => {
+            getDownloadURL(storageRef).then(async (downloadURL) => {
+              try {
+                await updateDoc(doc(db, "artworks", artId), {
+                  photoURL: downloadURL,
+                  status: "draft",
+                });
+                await updateDoc(doc(db, "users", currentUser.uid), {
+                  artworks: arrayUnion({
+                    id: artId,
+                    status: "draft",
+                  }),
+                });
+              } catch (err) {
+                console.log(err.message);
+              }
+            });
+          });
+        } catch {}
+
+        resetState(e);
+        console.log("Document written with ID: ", docRef.id);
+      }
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   }
 
-  const handleRemoveImg = () => {
-    refreshPage();
+  //PUBLISH
+  const publishArtwork = async () => {
+    const docRef = doc(collection(db, "artworks"));
+    const artId = docRef.id;
+
+    try {
+      await updateDoc(doc(db, "artworks", artId), {
+        status: "published",
+      });
+      await updateDoc(doc(db, "users", currentUser.uid), {
+        artworks: arrayUnion({
+          status: "published",
+        }),
+      });
+    } catch (err) {
+      console.log(err.message);
+    }
   };
-  const onSelectedDataChange = (value, action) => {
-    console.log(action, "action");
-    setArtworkData({ ...artworkData, [action]: value.value });
+
+  //EDIT ARTWORK
+  const editHandler = async () => {
+    const artworkId = params.id;
+    try {
+      const docRef = doc(db, "artworks", artworkId);
+
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        setArtworkData(docSnap.data().artworkInfo);
+        unitDropdownRef.current.selectSingleItem({
+          label: artworkData?.unit,
+          value: artworkData?.unit,
+        });
+        techniqueDropdownRef.current.selectSingleItem({
+          label: artworkData?.technique,
+          value: artworkData?.technique,
+        });
+        genreDropdownRef.current.selectSingleItem({
+          label: artworkData?.genre,
+          value: artworkData?.genre,
+        });
+      } else {
+        console.log("No such document!");
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
   };
+
+  useEffect(() => {
+    const artworkId = params.id;
+    if (artworkId !== undefined && artworkId !== "") {
+      editHandler();
+      console.log(artworkData);
+    }
+  }, []);
 
   return (
     <div className="form-container">
@@ -237,8 +317,9 @@ export const ArtworkForm = () => {
             <Dropdown
               name="unit"
               title="Select..."
+              ref={unitDropdownRef}
               list={units}
-              value={units.find((u) => u.value === artworkData.unit)}
+              value={units.find((u) => u.value === artworkData?.unit)}
               onChange={onSelectedDataChange}
               className="dropdown-input"
             />
@@ -250,8 +331,9 @@ export const ArtworkForm = () => {
             <Dropdown
               name="technique"
               title="Select..."
+              ref={techniqueDropdownRef}
               list={techniques}
-              value={techniques.find((u) => u.value === artworkData.technique)}
+              value={techniques.find((u) => u.value === artworkData?.technique)}
               onChange={onSelectedDataChange}
               className="dropdown-input"
             />
@@ -261,8 +343,9 @@ export const ArtworkForm = () => {
             <Dropdown
               name="genre"
               title="Select..."
+              ref={genreDropdownRef}
               list={genres}
-              value={genres.find((u) => u.value === artworkData.genre)}
+              value={genres.find((u) => u.value === artworkData?.genre)}
               onChange={onSelectedDataChange}
               className="dropdown-input"
             />
@@ -275,6 +358,9 @@ export const ArtworkForm = () => {
           </button>
           <button className="save" name="save" onClick={saveArtwork}>
             Save
+          </button>
+          <button className="publish" name="publish" onClick={publishArtwork}>
+            Publish
           </button>
         </div>
       </form>

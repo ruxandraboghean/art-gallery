@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import { ArtworkForm } from "../components/Gallery/ArtworkForm";
+import { AddArtworkForm } from "../components/Gallery/AddArtworkForm";
 import { HomeNavbar } from "../components/Home/HomeNavbar";
 import { HomeSidebar } from "../components/Home/HomeSidebar";
 
-export const AddArtwork = () => {
+export const AddArtwork = ({ artworkId }) => {
   return (
     <div className="home">
       <HomeSidebar />
@@ -12,7 +12,7 @@ export const AddArtwork = () => {
         <HomeNavbar />
         <div className="gallery-container">
           <div className="gallery-wrapper">
-            <ArtworkForm />
+            <AddArtworkForm artworkId={artworkId} />
           </div>
         </div>
       </div>
