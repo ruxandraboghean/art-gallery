@@ -1,3 +1,9 @@
+import React, { useContext, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import * as ImIcons from "react-icons/im";
+import * as FcIcons from "react-icons/fc";
+
+// firebase
 import {
   arrayUnion,
   collection,
@@ -6,18 +12,16 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
-import React, { useContext, useState, useRef, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { db, storage } from "../../firebase";
-import * as ImIcons from "react-icons/im";
-import * as FcIcons from "react-icons/fc";
 import {
   getDownloadURL,
   ref as sRef,
   uploadBytesResumable,
 } from "firebase/storage";
-import { Dropdown } from "reactjs-dropdown-component";
-import { useParams } from "react-router-dom";
+
+// components
+import Select from 'react-select';
 
 const initialState = {
   title: "",
@@ -26,18 +30,18 @@ const initialState = {
   height: "",
   width: "",
   depth: "",
-  unit: "",
-  technique: "",
-  genre: "",
+  unit: null,
+  technique: null,
+  genre: null,
   status: "",
 };
 
-let units = [
+let unitOptions = [
   { label: "cm", value: "cm" },
   { label: "inch", value: "inch" },
 ];
 
-let techniques = [
+let techniqueOptions = [
   { label: "acrylic", value: "acrylic" },
   { label: "oil", value: "oil" },
   { label: "watercolor", value: "watercolor" },
@@ -45,7 +49,7 @@ let techniques = [
   { label: "digital art", value: "digital art" },
 ];
 
-let genres = [
+let genreOption = [
   { label: "abstract", value: "abstract" },
   { label: "boho", value: "boho" },
   { label: "moderm", value: "moderm" },
@@ -54,33 +58,25 @@ let genres = [
 ];
 
 export const AddArtworkForm = () => {
-  const [isImageUploaded, setIsImageUploaded] = useState(false);
-  const [photo, setPhoto] = useState(null);
-  const [imageSrc, setImageSrc] = useState(null);
-  const image = useRef();
+  const [photo, setPhoto] = useState(null); // {imgSrc: "", file: ""}
   const [artworkData, setArtworkData] = useState(initialState);
   const { currentUser } = useContext(AuthContext);
   const params = useParams();
-  const unitDropdownRef = useRef();
-  const techniqueDropdownRef = useRef();
-  const genreDropdownRef = useRef();
 
-  // const refs = useRef({});
+  // derrived state
+  const isImageUploaded = photo !== null;
 
   function loadFile(e) {
-    setPhoto(e.target.files[0]);
-    setImageSrc(URL.createObjectURL(e.target.files[0]));
-    setIsImageUploaded(true);
+    setPhoto({
+      imageSrc: URL.createObjectURL(e.target.files[0]),
+      file: e.target.files[0]
+    })
   }
 
   const resetState = (e) => {
     e.preventDefault();
     setArtworkData(initialState);
-    setIsImageUploaded(false);
-    setImageSrc(null);
-    // unitDropdownRef.current.clearSelection();
-    // techniqueDropdownRef.current.clearSelection();
-    // genreDropdownRef.current.clearSelection();
+    setPhoto(null);
   };
 
   function refreshPage() {
@@ -95,9 +91,9 @@ export const AddArtworkForm = () => {
     setArtworkData({ ...artworkData, [e.target.name]: e.target.value });
   };
 
-  const onSelectedDataChange = (value, action) => {
-    setArtworkData({ ...artworkData, [action]: value.value });
-  };
+  const handleDropdownChange = (dropdownLabel, { label, value }) => {
+    setArtworkData({ ...artworkData, [dropdownLabel]: { label, value } });
+  }
 
   //SAVE AS DRAFT
   async function saveArtwork(e) {
@@ -109,7 +105,7 @@ export const AddArtworkForm = () => {
         const docRef = doc(db, "artworks", artworkId);
         console.log(docRef, "docRef");
         await updateDoc(docRef, {
-          artworkInfo: artworkData,
+          artworkInfo: {...artworkData, unit: artworkData?.value},
         });
 
         resetState();
@@ -119,12 +115,12 @@ export const AddArtworkForm = () => {
 
         await setDoc(docRef, {
           id: artId,
-          artworkInfo: artworkData,
+          artworkInfo: {...artworkData, unit: artworkData?.value},
         });
         try {
           const storageRef = sRef(storage, artId);
 
-          await uploadBytesResumable(storageRef, photo).then(() => {
+          await uploadBytesResumable(storageRef, photo?.file).then(() => {
             getDownloadURL(storageRef).then(async (downloadURL) => {
               try {
                 await updateDoc(doc(db, "artworks", artId), {
@@ -142,7 +138,7 @@ export const AddArtworkForm = () => {
               }
             });
           });
-        } catch {}
+        } catch { }
 
         resetState(e);
         console.log("Document written with ID: ", docRef.id);
@@ -181,18 +177,6 @@ export const AddArtworkForm = () => {
 
       if (docSnap.exists()) {
         setArtworkData(docSnap.data().artworkInfo);
-        unitDropdownRef.current.selectSingleItem({
-          label: artworkData?.unit,
-          value: artworkData?.unit,
-        });
-        techniqueDropdownRef.current.selectSingleItem({
-          label: artworkData?.technique,
-          value: artworkData?.technique,
-        });
-        genreDropdownRef.current.selectSingleItem({
-          label: artworkData?.genre,
-          value: artworkData?.genre,
-        });
       } else {
         console.log("No such document!");
       }
@@ -213,9 +197,8 @@ export const AddArtworkForm = () => {
     <div className="form-container">
       <div className="image-container">
         <div
-          className={`upload-container ${
-            isImageUploaded && "upload-container-none"
-          }`}
+          className={`upload-container ${isImageUploaded && "upload-container-none"
+            }`}
         >
           <ImIcons.ImDownload className="drag-icon" />
           <p>Drag & Drop your artwork here.</p>
@@ -234,7 +217,7 @@ export const AddArtworkForm = () => {
         <div>
           {isImageUploaded && (
             <>
-              <img ref={image} src={imageSrc} className="img-uploaded" />
+              <img src={photo?.imageSrc} className="img-uploaded" />
               <FcIcons.FcRemoveImage
                 className="remove-icon"
                 onClick={handleRemoveImg}
@@ -314,41 +297,24 @@ export const AddArtworkForm = () => {
 
           <div className="input-item">
             <label htmlFor="unit">unit</label>
-            <Dropdown
-              name="unit"
-              title="Select..."
-              ref={unitDropdownRef}
-              list={units}
-              value={units.find((u) => u.value === artworkData?.unit)}
-              onChange={onSelectedDataChange}
-              className="dropdown-input"
+            <Select
+              styles={{ width: 400 }}
+              value={artworkData.unit}
+              onChange={({ label, value }) => handleDropdownChange("unit", { label, value })}
+              options={unitOptions}
             />
+
           </div>
         </div>
         <div className="art-details-types">
           <div className="input-item">
             <label htmlFor="technique">technique</label>
-            <Dropdown
-              name="technique"
-              title="Select..."
-              ref={techniqueDropdownRef}
-              list={techniques}
-              value={techniques.find((u) => u.value === artworkData?.technique)}
-              onChange={onSelectedDataChange}
-              className="dropdown-input"
-            />
+            <div>Dropdown placeholder</div>
+
           </div>
           <div className="input-item">
             <label htmlFor="genre">genre</label>
-            <Dropdown
-              name="genre"
-              title="Select..."
-              ref={genreDropdownRef}
-              list={genres}
-              value={genres.find((u) => u.value === artworkData?.genre)}
-              onChange={onSelectedDataChange}
-              className="dropdown-input"
-            />
+            <div>Dropdown placeholder</div>
           </div>
         </div>
 
