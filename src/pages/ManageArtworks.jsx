@@ -49,7 +49,7 @@ export const ManageArtworks = () => {
 
   const handleSearch = async () => {
     const q = query(
-      collection(db, "artworks"),
+      collection(db, "users"),
       where(`title`, "==", filterData.title.toLowerCase())
     );
 

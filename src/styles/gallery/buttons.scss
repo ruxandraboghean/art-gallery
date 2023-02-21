@@ -6,17 +6,25 @@
     button {
         @include upload-btn; 
         @include dim(6em, 2rem);
-    }
-    .cancel {
-        &:hover {
-            background-color: orange;
-        }
-    }
 
-    .save {
-        &:hover {
-            background-color: green;
+        .cancel {
+            &:hover {
+                background-color: orange;
+            }
         }
-      
+    
+        .save {
+            &:hover {
+                background-color: green;
+            }
+          
+        }
+    }
+}
+
+div {
+    .spinner {
+        color: $magenta;
+        text-align: center;
     }
 }

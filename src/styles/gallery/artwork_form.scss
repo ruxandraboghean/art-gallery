@@ -177,6 +177,14 @@
                 width: 100%;
             }    
         }
+        @include tablet {
+           height: 30%;
+           border:none;
+        }
+        @include mobile {
+            height: 50%;
+            border:none;
+         }
     }
 
     @include laptop {
@@ -184,14 +192,10 @@
     }
 
     @include tablet {
-        margin: 0.25rem;
-        padding: 0.5rem;
         gap: 1rem;
         flex-direction: column;
     }
     @include mobile {
-        margin: 0.15rem;
-        padding: 0.25rem;
         gap: 0.5rem;
         flex-direction: column;
     }

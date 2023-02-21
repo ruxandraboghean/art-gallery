@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as ImIcons from "react-icons/im";
-import * as FcIcons from "react-icons/fc";
+import * as TiIcons from "react-icons/ti";
 
 // firebase
 import {
@@ -21,7 +21,8 @@ import {
 } from "firebase/storage";
 
 // components
-import Select from 'react-select';
+import Select from "react-select";
+import { ClipLoader } from "react-spinners";
 
 const initialState = {
   title: "",
@@ -34,6 +35,7 @@ const initialState = {
   technique: null,
   genre: null,
   status: "",
+  photoURL: null,
 };
 
 let unitOptions = [
@@ -58,25 +60,27 @@ let genreOptions = [
 ];
 
 export const AddArtworkForm = () => {
-  const [photo, setPhoto] = useState(null); // {imgSrc: "", file: ""}
   const [artworkData, setArtworkData] = useState(initialState);
+  const [isLoading, setIsLoading] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const params = useParams();
 
   // derrived state
-  const isImageUploaded = photo !== null;
+  const isImageUploaded = artworkData?.photoURL !== null;
 
   function loadFile(e) {
-    setPhoto({
-      imageSrc: URL.createObjectURL(e.target.files[0]),
-      file: e.target.files[0],
+    setArtworkData({
+      ...artworkData,
+      photoURL: {
+        imageSrc: URL.createObjectURL(e.target.files[0]),
+        file: e.target.files[0],
+      },
     });
   }
 
   const resetState = (e) => {
     e.preventDefault();
     setArtworkData(initialState);
-    setPhoto(null);
   };
 
   function refreshPage() {
@@ -100,10 +104,11 @@ export const AddArtworkForm = () => {
     e.preventDefault();
 
     try {
+      setIsLoading(true);
+
       const artworkId = params.id;
       if (artworkId !== undefined && artworkId !== "") {
         const docRef = doc(db, "artworks", artworkId);
-        console.log("@@ artwork");
         await updateDoc(docRef, {
           ...artworkData,
           unit: artworkData?.unit.value,
@@ -117,44 +122,50 @@ export const AddArtworkForm = () => {
         const artId = docRef.id;
 
         await setDoc(docRef, {
-          id: artId,
           ...artworkData,
+          id: artId,
           unit: artworkData?.unit.value,
           technique: artworkData?.technique.value,
           genre: artworkData?.genre.value,
+          status: "draft",
         });
         try {
           const storageRef = sRef(storage, artId);
 
-          await uploadBytesResumable(storageRef, photo?.file).then(() => {
+          await uploadBytesResumable(
+            storageRef,
+            artworkData?.photoURL?.file
+          ).then(() => {
             getDownloadURL(storageRef).then(async (downloadURL) => {
               try {
                 await updateDoc(doc(db, "artworks", artId), {
+                  ...artworkData,
                   photoURL: downloadURL,
-                  status: "draft",
                 });
                 await updateDoc(doc(db, "users", currentUser.uid), {
                   artworks: arrayUnion({
                     id: artId,
-                    status: "draft",
                     ...artworkData,
                     unit: artworkData?.unit.value,
                     technique: artworkData?.technique.value,
                     genre: artworkData?.genre.value,
+                    photoURL: downloadURL,
+                    status: "draft",
                   }),
                 });
               } catch (err) {
-                console.log(err.message);
+                console.log("Can't update doc:", err.message);
               }
             });
           });
         } catch (err) {
-          console.log(err.message);
+          console.log("Can't update doc:", err.message);
         }
 
         resetState(e);
         console.log("Document written with ID: ", docRef.id);
       }
+      setIsLoading(false);
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -166,6 +177,7 @@ export const AddArtworkForm = () => {
     const artId = docRef.id;
 
     try {
+      setIsLoading(true);
       await updateDoc(doc(db, "artworks", artId), {
         status: "published",
       });
@@ -174,6 +186,7 @@ export const AddArtworkForm = () => {
           status: "published",
         }),
       });
+      setIsLoading(false);
     } catch (err) {
       console.log(err.message);
     }
@@ -188,16 +201,22 @@ export const AddArtworkForm = () => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        const data = docSnap.data().artworkInfo;
+        const data = docSnap.data();
         setArtworkData({
           ...data,
           unit: { label: data.unit, value: data.unit },
           technique: { label: data.technique, value: data.technique },
           genre: { label: data.genre, value: data.genre },
+          photoURL: {
+            imageSrc: data.photoURL,
+            file: data.photoURL,
+          },
         });
       } else {
         console.log("No such document!");
       }
+
+      console.log("@@photo: ", artworkData?.photoURL);
     } catch (err) {
       console.log(err.message);
     }
@@ -232,13 +251,16 @@ export const AddArtworkForm = () => {
           </label>
         </div>
 
-        <div>
+        <div className="img-wrapper">
           {isImageUploaded && (
             <>
-              <img src={photo?.imageSrc} className="img-uploaded" />
-              <FcIcons.FcRemoveImage
+              <TiIcons.TiDelete
                 className="remove-icon"
                 onClick={handleRemoveImg}
+              />
+              <img
+                src={artworkData?.photoURL?.imageSrc}
+                className="img-uploaded"
               />
             </>
           )}
@@ -364,6 +386,11 @@ export const AddArtworkForm = () => {
             Publish
           </button>
         </div>
+        {isLoading && (
+          <div className="spinner">
+            <ClipLoader size={30} aria-label="Loading Spinner" />
+          </div>
+        )}
       </form>
     </div>
   );

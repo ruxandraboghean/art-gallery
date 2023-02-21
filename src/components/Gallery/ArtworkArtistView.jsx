@@ -13,6 +13,8 @@ export const ArtworkArtistView = ({ artwork }) => {
 
   useOnHoverOutside(dropdownRef, closeHoverMenu);
 
+  console.log(artwork);
+
   return (
     <div className="artworks-wrapper">
       <div className="artwork">
