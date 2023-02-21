@@ -1,6 +1,5 @@
 import painting1 from "../images/paintings/painting1.png";
 import painting2 from "../images/paintings/painting2.png";
-import painting from "../images/painting.png";
 export const paintings = [
   {
     id: 1,

@@ -1,12 +1,15 @@
+import React, { useState, useContext } from "react";
+
 import { faPaperclip, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { arrayUnion, serverTimestamp, Timestamp } from "firebase/firestore";
-import React, { useState, useContext } from "react";
+
 import { AuthContext } from "../../context/AuthContext";
 import { ChatContext } from "../../context/ChatContext";
-import { doc, updateDoc } from "firebase/firestore";
 import { v4 as uuid } from "uuid";
+
 import { db, storage } from "../../firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, serverTimestamp, Timestamp } from "firebase/firestore";
 import {
   getDownloadURL,
   ref as sRef,
@@ -16,7 +19,6 @@ import {
 export const Input = () => {
   const [text, setText] = useState("");
   const [img, setImg] = useState(null);
-  const [err, setErr] = useState(false);
 
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
@@ -29,7 +31,7 @@ export const Input = () => {
 
       uploadTask.on(
         (error) => {
-          setErr(true);
+          console.log(error);
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {

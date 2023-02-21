@@ -34,7 +34,7 @@ export const Message = ({ message }) => {
       </div>
       <div className="message-content">
         <p> {message.text} </p>
-        {message.image && <img src={message.image} />}
+        {message.image && <img src={message.image} alt="message-img" />}
       </div>
     </div>
   );

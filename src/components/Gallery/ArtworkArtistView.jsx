@@ -1,8 +1,6 @@
-import React from "react";
-import { useRef } from "react";
-import { useState } from "react";
-import * as MdIcons from "react-icons/md";
+import React, { useRef, useState } from "react";
 import { useOnHoverOutside } from "../../hooks/useOnHoverOutside";
+import * as MdIcons from "react-icons/md";
 import { ActionButtons } from "./ActionButtons";
 
 export const ArtworkArtistView = ({ artwork }) => {
@@ -18,8 +16,8 @@ export const ArtworkArtistView = ({ artwork }) => {
   return (
     <div className="artworks-wrapper">
       <div className="artwork">
-        <img src={artwork.photoURL} />
-        <p>{artwork?.artworkInfo?.title}</p>
+        <img src={artwork.photoURL} alt="artwork" />
+        <p>{artwork?.title}</p>
         <p>{artwork?.status}</p>
         <div className="actions" ref={dropdownRef}>
           <MdIcons.MdOutlineSettingsSuggest

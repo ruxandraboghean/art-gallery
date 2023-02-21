@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import { AddArtworkForm } from "../components/Gallery/AddArtworkForm";
 import { HomeNavbar } from "../components/Home/HomeNavbar";
 import { HomeSidebar } from "../components/Home/HomeSidebar";

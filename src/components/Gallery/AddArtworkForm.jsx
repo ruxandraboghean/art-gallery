@@ -49,10 +49,10 @@ let techniqueOptions = [
   { label: "digital art", value: "digital art" },
 ];
 
-let genreOption = [
+let genreOptions = [
   { label: "abstract", value: "abstract" },
   { label: "boho", value: "boho" },
-  { label: "moderm", value: "moderm" },
+  { label: "modern", value: "modern" },
   { label: "romanticism", value: "romanticism" },
   { label: "realist", value: "realist" },
 ];
@@ -69,8 +69,8 @@ export const AddArtworkForm = () => {
   function loadFile(e) {
     setPhoto({
       imageSrc: URL.createObjectURL(e.target.files[0]),
-      file: e.target.files[0]
-    })
+      file: e.target.files[0],
+    });
   }
 
   const resetState = (e) => {
@@ -93,29 +93,35 @@ export const AddArtworkForm = () => {
 
   const handleDropdownChange = (dropdownLabel, { label, value }) => {
     setArtworkData({ ...artworkData, [dropdownLabel]: { label, value } });
-  }
+  };
 
   //SAVE AS DRAFT
-  async function saveArtwork(e) {
+  async function handleSaveArtwork(e) {
     e.preventDefault();
 
     try {
       const artworkId = params.id;
       if (artworkId !== undefined && artworkId !== "") {
         const docRef = doc(db, "artworks", artworkId);
-        console.log(docRef, "docRef");
+        console.log("@@ artwork");
         await updateDoc(docRef, {
-          artworkInfo: {...artworkData, unit: artworkData?.value},
+          ...artworkData,
+          unit: artworkData?.unit.value,
+          technique: artworkData?.technique.value,
+          genre: artworkData?.genre.value,
         });
 
-        resetState();
+        resetState(e);
       } else {
         const docRef = doc(collection(db, "artworks"));
         const artId = docRef.id;
 
         await setDoc(docRef, {
           id: artId,
-          artworkInfo: {...artworkData, unit: artworkData?.value},
+          ...artworkData,
+          unit: artworkData?.unit.value,
+          technique: artworkData?.technique.value,
+          genre: artworkData?.genre.value,
         });
         try {
           const storageRef = sRef(storage, artId);
@@ -131,6 +137,10 @@ export const AddArtworkForm = () => {
                   artworks: arrayUnion({
                     id: artId,
                     status: "draft",
+                    ...artworkData,
+                    unit: artworkData?.unit.value,
+                    technique: artworkData?.technique.value,
+                    genre: artworkData?.genre.value,
                   }),
                 });
               } catch (err) {
@@ -138,7 +148,9 @@ export const AddArtworkForm = () => {
               }
             });
           });
-        } catch { }
+        } catch (err) {
+          console.log(err.message);
+        }
 
         resetState(e);
         console.log("Document written with ID: ", docRef.id);
@@ -176,7 +188,13 @@ export const AddArtworkForm = () => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        setArtworkData(docSnap.data().artworkInfo);
+        const data = docSnap.data().artworkInfo;
+        setArtworkData({
+          ...data,
+          unit: { label: data.unit, value: data.unit },
+          technique: { label: data.technique, value: data.technique },
+          genre: { label: data.genre, value: data.genre },
+        });
       } else {
         console.log("No such document!");
       }
@@ -189,16 +207,16 @@ export const AddArtworkForm = () => {
     const artworkId = params.id;
     if (artworkId !== undefined && artworkId !== "") {
       editHandler();
-      console.log(artworkData);
     }
-  }, []);
+  }, [params.id]);
 
   return (
     <div className="form-container">
       <div className="image-container">
         <div
-          className={`upload-container ${isImageUploaded && "upload-container-none"
-            }`}
+          className={`upload-container ${
+            isImageUploaded && "upload-container-none"
+          }`}
         >
           <ImIcons.ImDownload className="drag-icon" />
           <p>Drag & Drop your artwork here.</p>
@@ -300,21 +318,38 @@ export const AddArtworkForm = () => {
             <Select
               styles={{ width: 400 }}
               value={artworkData.unit}
-              onChange={({ label, value }) => handleDropdownChange("unit", { label, value })}
+              onChange={({ label, value }) =>
+                handleDropdownChange("unit", { label, value })
+              }
               options={unitOptions}
+              className="dropdown-input"
             />
-
           </div>
         </div>
         <div className="art-details-types">
           <div className="input-item">
             <label htmlFor="technique">technique</label>
-            <div>Dropdown placeholder</div>
-
+            <Select
+              styles={{ width: 400 }}
+              value={artworkData.technique}
+              onChange={({ label, value }) =>
+                handleDropdownChange("technique", { label, value })
+              }
+              options={techniqueOptions}
+              className="dropdown-input"
+            />
           </div>
           <div className="input-item">
             <label htmlFor="genre">genre</label>
-            <div>Dropdown placeholder</div>
+            <Select
+              styles={{ width: 400 }}
+              value={artworkData.genre}
+              onChange={({ label, value }) =>
+                handleDropdownChange("genre", { label, value })
+              }
+              options={genreOptions}
+              className="dropdown-input"
+            />
           </div>
         </div>
 
@@ -322,7 +357,7 @@ export const AddArtworkForm = () => {
           <button className="cancel" name="cancel" onClick={refreshPage}>
             Cancel
           </button>
-          <button className="save" name="save" onClick={saveArtwork}>
+          <button className="save" name="save" onClick={handleSaveArtwork}>
             Save
           </button>
           <button className="publish" name="publish" onClick={publishArtwork}>

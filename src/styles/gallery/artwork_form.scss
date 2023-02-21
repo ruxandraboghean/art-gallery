@@ -12,7 +12,6 @@
         padding: 0.5rem;
         flex:5;
 
-
         .input-item {
             margin: 0.5rem;
             width: 90%;
@@ -45,7 +44,7 @@
         }
         .art-details {
             @include flexbox(flex, center, center);
-            width: 90%;
+            width: 94%;
 
             input{
                 @include form-input;
@@ -60,16 +59,50 @@
             }
             
             .input-item {
-                width: auto;
-                .dd-header {
-                    @include dd-header;       
-                }
-                .dd-list{
-                    @include dd-list;       
-                }
-                option{
-                    border: none;
-                    @include dim(3rem, 3rem);
+                width: 90%;
+                border: none !important;
+
+                .dropdown-input {    
+                    @include form-input;        
+                    border: none !important;
+                    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
+                    line-height: 1rem;
+                    padding: 0;
+                    background-color: $base_color !important;
+
+                    .css-13cymwt-control {
+                        border: none !important;
+
+                        &:hover {
+                            border: none !important;
+                        }
+                    }
+
+                    .css-t3ipsp-control {
+                        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
+                        border:none !important;
+                        &:hover {
+                            border:none !important;
+                        }
+                        &:focus {
+                            background-color: $light_purple !important;
+                        }
+                    }
+                    
+                    .css-d7l1ni-option {
+                        background-color: $base_color;
+                        &:hover {
+                            background-color: $base_color_pink;
+                        }
+                    }
+                    .css-tr4s17-option{
+                        background-color: $dark_magenta;
+                        
+                    }
+                    &::-webkit-scrollbar { 
+                        display: none !important; 
+                    }
+                                 
                 }
             }
 
@@ -79,40 +112,64 @@
         }
         .art-details-types {
             @include flexbox(flex, center, center);
-            width: 100%;
+            width: 94%;
 
             label {
                 @include font($roboto-mono, $light, $xs);
                 padding-bottom: 0.5rem;
                 display: inline-block;
                 clear: left;
-                text-align: left;
-                width: 100%;
-            }
-    
-            input{
-                @include form-input;
-                display: inline-block;
-                &:focus {
-                    background: $base_color_pink;
-                }
-                width: 100%;
-                @include laptop {
-                    width: 65%;
-                 }
+                text-align: center;
+                width: 94%;
             }
             
             .input-item {
-                width: auto;
-                .dd-header {
-                    @include dd-header;       
-                }
-                .dd-list{
-                    @include dd-list;       
-                }
-                option{
-                    border: none;
-                    @include dim(5rem, 5rem);
+                width: 90%;
+                border: none !important;
+
+                .dropdown-input {    
+                    @include form-input;        
+                    border: none !important;
+                    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
+                    line-height: 1rem;
+                    padding: 0;
+                    background-color: $base_color !important;
+
+                    .css-13cymwt-control {
+                        border: none !important;
+
+                        &:hover {
+                            border: none !important;
+                        }
+                    }
+
+                    .css-t3ipsp-control {
+                        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
+                        border:none !important;
+                        &:hover {
+                            border:none !important;
+                        }
+                        &:focus {
+                            background-color: $light_purple !important;
+                        }
+                    }
+
+                    .css-d7l1ni-option {
+                        background-color: $base_color;
+                        &:hover {
+                            background-color: $base_color_pink;
+                        }
+                    }
+
+                    .css-tr4s17-option{
+                        background-color: $dark_magenta;
+                        
+                    }
+
+                    &::-webkit-scrollbar { 
+                        display: none !important; 
+                    }
+                                 
                 }
             }
     

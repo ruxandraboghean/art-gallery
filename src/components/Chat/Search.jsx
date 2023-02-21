@@ -129,7 +129,7 @@ export const Search = () => {
 
       {user && (
         <div ref={ref} onClick={handleSelect} className="user-chat">
-          <img src={user.photoURL} />
+          <img src={user.photoURL} alt="avatar" />
           <div className="user-chat-info">
             <span> {user.displayName}</span>
           </div>
@@ -137,8 +137,7 @@ export const Search = () => {
       )}
       {err && (
         <span ref={ref} className="not-found">
-          {" "}
-          User not found{" "}
+          User not found
         </span>
       )}
     </div>

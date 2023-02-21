@@ -7,6 +7,7 @@
     &::-webkit-scrollbar { 
         display: none;
     }
+
     .title {
         @include font($frank-ruhl-libre, $regular, $l);
         letter-spacing: 2px;
@@ -14,35 +15,80 @@
         padding-bottom: 3rem;
         text-align: center;
     }
-   
 
     .filter {
         @include flexbox-direction(flex, center, column, flex-start);
         @include font($roboto-mono, $normal, $s);
         gap:1rem;
         padding: 0.25rem;
-        border-radius:10px;
-      
+        border-radius:10px;  
 
         .inputs {
             @include flexbox(flex, center, flex-start);
-            gap:2rem;
+            gap:3rem;
             .filter-item {
                 @include flexbox-direction(flex, center,column, flex-start);
                 label {
-                    padding-bottom: 1rem;
+                    // padding-bottom: 1rem;
                     font-size: $xs;
                 }
+
+                #title {
+                    padding: 0.6rem 0.2rem;
+                    border:none;
+                    outline:none;
+                    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+                    text-indent:0.3rem;
+                }
     
-                input {
-                    @include form-input;
-                    border:1px solid $grayish_purple;
-                    padding: 0.2rem 1rem;
+                .dropdown-input {    
+                    @include form-input;        
+                    border: none !important;
+                    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
+                    line-height: 1rem;
+                    padding: 0;
+                    background-color: $base_color !important;
+                    width: 11rem;
+
+                    .css-13cymwt-control {
+                        border: none !important;
+
+                        &:hover {
+                            border: none !important;
+                        }
+                    }
+
+                    .css-t3ipsp-control {
+                        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
+                        border:none !important;
+                        &:hover {
+                            border:none !important;
+                        }
+                        &:focus {
+                            background-color: $light_purple !important;
+                        }
+                    }
+                    
+                    .css-d7l1ni-option {
+                        background-color: $base_color;
+                        &:hover {
+                            background-color: $base_color_pink;
+                        }
+                    }
+                    .css-tr4s17-option{
+                        background-color: $dark_magenta;
+                        
+                    }
+                    &::-webkit-scrollbar { 
+                        display: none !important; 
+                    }
+                                 
                 }
 
                 @include bigger-laptop{
                    @include flexbox-direction(flex, center, row, space-around);
-                   gap:0.5rem;
+                   gap:1rem;
+
                     label {
                         display: inline-block;
                         float: left;
@@ -55,20 +101,26 @@
                         float: left;
                     }
                 }
-      @include monitor {
-            width:auto;
-        }
+
+                @include monitor {
+                    width:auto;
+                }
+
                 @include tablet {
                     label {
                         display: none;
                     }
                 }
+
                 @include mobile {
                     label {
                         display: none;
                     }
                 }
-            }@include monitor {
+            }
+            
+            
+            @include monitor {
                 width:auto;
             }
             @include bigger-laptop{
@@ -78,6 +130,7 @@
 
             }
             @include laptop {
+
                 width:auto;
             }
             @include tablet {
@@ -162,74 +215,59 @@
         }
     }
     
-.artworks-wrapper {
-    .artwork {
-        @include flexbox(flex, center, space-between);
-        margin-top:1rem;
-        gap:1rem;
-        border:1px solid $grayish_purple;
-        padding: 0.5rem;
-        border-radius:10px;
-        font-size: $xs;
-        
-        img {
-            @include dim(8rem, 10rem);
-            object-fit: cover;
+    .artworks-wrapper {
+        .artwork {
+            @include flexbox(flex, center, space-between);
+            border:1px solid $grayish_purple;
             border-radius:10px;
-        }
-
-        .actions{
-            .settings-icon {
-                margin: 0 1rem;
-                @include dim(1.5rem, 1.5rem);
-                color:$dark_magenta;
-                cursor: pointer;
-
-                &:hover {
-                    color:$magenta;
-                }
-            }
-            .actions-dropdown-menu {
-                @include flexbox-direction(flex, center, column, center);
-                @include dim (0.5rem, 0.8rem);
-              
-                &:hover {
-                    opacity: 1;
-                  }
-         
-                  .css-1af8mx8 {
-                    margin:0.5rem;
-                    margin-bottom: 2rem;
-                }
-                .action-btn{
-                    @include dim (2.5rem, 2.5rem);
-                    background-color: $medium_purple;
-                    color: $base_color;
-                    margin-right: 2rem;
-                   
+            margin-top:1rem;
+            padding: 0.5rem;
+            font-size: $xs;
+            gap:1rem;
             
+            img {
+                @include dim(8rem, 10rem);
+                object-fit: cover;
+                border-radius:10px;
+            }
+
+            .actions{
+                .settings-icon {
+                    @include dim(1.5rem, 1.5rem);
+                    margin: 0 1rem;
+                    color:$dark_magenta;
+                    cursor: pointer;
+
                     &:hover {
-                        background-color: $dark_magenta;
-                        color: $base_color_pink;
+                        color:$light_purple;
                     }
+                }
+                .actions-dropdown-menu {
+                    @include flexbox-direction(flex, center, column, center);
+                    @include dim (0.5rem, 0rem);
+                
+                    &:hover {
+                        opacity: 3;
+                    }
+
+                    .action-btn{
+                        @include dim (2.5rem, 2.5rem);
+                        background-color: $medium_purple;
+                        color: $base_color;
+                        margin-right: 2rem;
                     
-                }    
-            }
+                
+                        &:hover {
+                            background-color: $dark_magenta;
+                            color: $base_color_pink;
+                        }
+                    }    
+                }
 
-           
-            @include monitor {
-                width:auto;
+                @include monitor {
+                    width:auto;
+                }
             }
-
-            .notransition {
-                -webkit-transition: none !important;
-                -moz-transition: none !important;
-                -o-transition: none !important;
-                transition: none !important;
-              }
         }
-
-        
     }
-}
 }

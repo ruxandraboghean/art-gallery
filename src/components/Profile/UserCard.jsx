@@ -1,14 +1,18 @@
-import { Instagram, YouTube } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import { getDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
+
+import { Instagram, YouTube } from "@mui/icons-material";
+
 import * as FaIcons from "react-icons/fa";
 import * as ImIcons from "react-icons/im";
+
 import { UserInfoModal } from "./UserInfoModal";
 import { MottoModal } from "./MottoModal";
 import { BiographyModal } from "./BiographyModal";
 import { SocialLinksModal } from "./SocialLinksModal";
-import { Link } from "react-router-dom";
 
 export const UserCard = (currentUser) => {
   const [isOpenInfoModal, setIsOpenInfoModal] = useState(false);
@@ -27,9 +31,9 @@ export const UserCard = (currentUser) => {
       console.log("No such document!");
     }
   };
+
   useEffect(() => {
     getUserData();
-    console.log(userData?.instagram, "instaa");
   }, []);
 
   return (

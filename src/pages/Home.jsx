@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { HomeNavbar } from "../components/Home/HomeNavbar";
 import { HomeSidebar } from "../components/Home/HomeSidebar";
 
 export const Home = () => {
-
   return (
     <div className="home">
       <HomeSidebar />

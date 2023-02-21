@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as IoIcons from "react-icons/io";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 export const BiographyModal = ({ user, userData, setIsOpen }) => {

@@ -1,5 +1,5 @@
-import { useOnHoverOutside } from "../../hooks/useOnHoverOutside";
 import React, { useRef, useState, useContext } from "react";
+import { useOnHoverOutside } from "../../hooks/useOnHoverOutside";
 import { AuthContext } from "../../context/AuthContext";
 import UserSubmenu from "./UserSubmenu";
 
@@ -20,6 +20,7 @@ export function MenuHeader() {
         src={currentUser.photoURL}
         className="current-user"
         onMouseOver={() => setMenuDropdownOpen(true)}
+        alt="Avatar"
       />
       {isMenuDropdownOpen && <UserSubmenu />}
     </div>

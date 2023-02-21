@@ -1,10 +1,7 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
-import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
-import DeleteIcon from "@mui/icons-material/Delete";
 import { Link, useNavigate } from "react-router-dom";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { Box, Fab } from "@mui/material";
+import { DeleteForever, RemoveRedEye, EditOutlined } from "@mui/icons-material";
 
 export const ActionButtons = ({ artworkId }) => {
   const navigate = useNavigate();
@@ -12,35 +9,42 @@ export const ActionButtons = ({ artworkId }) => {
   const handleEditButtonClick = () => {
     navigate(`/add-artwork/${artworkId}`);
   };
+
+  const handleSeeGalleryButtonClick = () => {
+    navigate("/gallery");
+  };
+
   return (
     <>
       <div className="actions-dropdown-menu notransition">
-        <Box sx={{ "& > :not(style)": { m: 2 } }}>
-          {/* <Link to="/add-artwork"> */}
+        <Box sx={{ width: 100, height: 200 }}>
           <Fab
             color="secondary"
             aria-label="edit"
             className="action-btn"
             onClick={handleEditButtonClick}
+            sx={{ mb: 1 }}
           >
-            <ModeEditOutlineIcon />
+            <EditOutlined sx={{ fontSize: 20 }} />
           </Fab>
-          {/* </Link> */}
           <Fab
             color="secondary"
             aria-label="edit"
             className="action-btn"
-            onClick={() => console.log("remove")}
+            onClick={handleSeeGalleryButtonClick}
+            sx={{ mb: 1 }}
           >
-            <DeleteIcon />
+            <RemoveRedEye sx={{ fontSize: 20 }} />
           </Fab>
           <Link to="/gallery">
             <Fab
               color="secondary"
               aria-label="edit"
               className="action-btn notransition"
+              onClick={() => console.log("remove")}
+              sx={{ mb: 1 }}
             >
-              <RemoveRedEyeIcon />
+              <DeleteForever sx={{ fontSize: 20 }} />
             </Fab>
           </Link>
         </Box>
