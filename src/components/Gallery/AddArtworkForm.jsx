@@ -9,6 +9,7 @@ import {
   collection,
   doc,
   getDoc,
+  serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -36,6 +37,7 @@ const initialState = {
   genre: null,
   status: "",
   photoURL: null,
+  date: null,
 };
 
 let unitOptions = [
@@ -105,6 +107,7 @@ export const AddArtworkForm = () => {
 
     try {
       setIsLoading(true);
+      console.log();
 
       const artworkId = params.id;
       if (artworkId !== undefined && artworkId !== "") {
@@ -128,9 +131,12 @@ export const AddArtworkForm = () => {
           technique: artworkData?.technique.value,
           genre: artworkData?.genre.value,
           status: "draft",
+          photoURL: "",
+          date: serverTimestamp(),
         });
         try {
           const storageRef = sRef(storage, artId);
+          console.log("PHOTO:", artworkData.photoURL.file);
 
           await uploadBytesResumable(
             storageRef,
@@ -215,8 +221,6 @@ export const AddArtworkForm = () => {
       } else {
         console.log("No such document!");
       }
-
-      console.log("@@photo: ", artworkData?.photoURL);
     } catch (err) {
       console.log(err.message);
     }

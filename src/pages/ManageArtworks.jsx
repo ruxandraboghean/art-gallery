@@ -8,6 +8,7 @@ import {
   doc,
   getDoc,
   getDocs,
+  orderBy,
   query,
   where,
 } from "firebase/firestore";
@@ -17,15 +18,8 @@ import { HomeNavbar } from "../components/Home/HomeNavbar";
 import { HomeSidebar } from "../components/Home/HomeSidebar";
 import Select from "react-select";
 
-const initialState = {
-  title: "",
-  sortBy: null,
-  order: null,
-};
-
 const sortOptions = [
-  { label: "date", value: "date" },
-  { label: "artist", value: "artist" },
+  { label: "year", value: "year" },
   { label: "title", value: "title" },
 ];
 
@@ -37,24 +31,71 @@ const orderOptions = [
 export const ManageArtworks = () => {
   const { currentUser } = useContext(AuthContext);
   const [artworks, setArtworks] = useState(null);
-  const [filterData, setFilterData] = useState(initialState);
+  const [searchedTitle, setSearchedTitle] = useState("");
+  const [filteredData, setFilteredData] = useState([]);
+  const [sortData, setSortData] = useState(null);
 
   const handleChange = (e) => {
-    setFilterData({ ...filterData, [e.target.name]: e.target.value });
+    setSearchedTitle(e.target.value);
   };
 
   const handleDropdownChange = (dropdownLabel, { label, value }) => {
-    setFilterData({ ...filterData, [dropdownLabel]: { label, value } });
+    setSortData({ ...sortData, [dropdownLabel]: { label, value } });
   };
+
+  const handleReset = () => {
+    console.log("reseting");
+    setSearchedTitle("");
+    setSortData(null);
+  };
+
+  useEffect(() => {
+    const artCollection = collection(db, "artworks");
+
+    if (
+      sortData?.sortBy === null ||
+      sortData?.order === null ||
+      sortData === null
+    ) {
+      console.log("SORT data is null");
+    } else {
+      const sortType = sortData?.sortBy?.label;
+      const orderType = sortData?.order?.label;
+
+      const getSortedArtworks = async (sortType, orderType) => {
+        if (orderType === "desc") {
+          const data = await getDocs(
+            query(artCollection, orderBy(sortType, "desc"))
+          );
+          const newData = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setArtworks(newData);
+        } else {
+          const data = await getDocs(
+            query(artCollection, orderBy(sortType, "asc"))
+          );
+          const newData = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setArtworks(newData);
+        }
+      };
+
+      getSortedArtworks(sortType, orderType);
+    }
+  }, [sortData]);
 
   const handleSearch = async () => {
     const q = query(
-      collection(db, "users"),
-      where(`title`, "==", filterData.title.toLowerCase())
+      collection(db, "artworks"),
+      where("title", "==", searchedTitle)
     );
 
     if (!q.res) {
-      setFilterData({ ...filterData, title: "" });
+      setFilteredData([]);
       console.log("...not found");
     }
 
@@ -62,17 +103,22 @@ export const ManageArtworks = () => {
       const querySnapshot = await getDocs(q);
 
       querySnapshot.forEach((doc) => {
-        setFilterData({ ...filterData, title: doc.data() });
-        console.log(doc.data(), "found");
+        setFilteredData((filteredData) => [...filteredData, doc.data()]);
       });
+
+      console.log("FOUND DATA: ", filteredData);
+      console.log(
+        " DATA: ",
+        filteredData.length === 0 ? artworks : filteredData
+      );
     } catch (err) {
       console.log(err.message);
     }
   };
 
-  // const handleKey = (e) => {
-  //   e.code === "Enter" && handleSearch();
-  // };
+  const handleKey = (e) => {
+    e.code === "Enter" && handleSearch();
+  };
 
   useEffect(() => {
     async function getArtworks() {
@@ -82,7 +128,6 @@ export const ManageArtworks = () => {
 
       if (docSnap.exists()) {
         setArtworks(docSnap.data().artworks);
-        console.log("Doc data: ", docSnap.data().artworks);
       } else {
         console.log("No such document!");
       }
@@ -90,14 +135,6 @@ export const ManageArtworks = () => {
 
     getArtworks();
   }, [currentUser.uid]);
-
-  useEffect(() => {
-    setFilterData({
-      ...filterData,
-      sortBy: { label: "sortBy", value: filterData.sortBy },
-      order: { label: "order", value: filterData.order },
-    });
-  }, []);
 
   return (
     <div className="home">
@@ -113,12 +150,18 @@ export const ManageArtworks = () => {
                 <div className="inputs">
                   <div className="filter-item">
                     <label htmlFor="title">TITLE</label>
-                    <input type="text" id="title" onChange={handleChange} />
+                    <input
+                      name="title"
+                      type="text"
+                      id="title"
+                      onChange={handleChange}
+                      onKeyDown={handleKey}
+                    />
                   </div>
                   <div className="filter-item">
                     <label htmlFor="sort">SORT BY</label>
                     <Select
-                      value={filterData?.sortBy}
+                      value={sortData?.sortBy}
                       onChange={({ label, value }) =>
                         handleDropdownChange("sortBy", { label, value })
                       }
@@ -127,9 +170,9 @@ export const ManageArtworks = () => {
                     />
                   </div>
                   <div className="filter-item">
-                    <label htmlFor="order">ORDER</label>
+                    <label htmlFor="sort">ORDER</label>
                     <Select
-                      value={filterData?.order}
+                      value={sortData?.order}
                       onChange={({ label, value }) =>
                         handleDropdownChange("order", { label, value })
                       }
@@ -139,10 +182,9 @@ export const ManageArtworks = () => {
                   </div>
                 </div>
                 <div className="buttons">
-                  <button className="search-btn" onClick={handleSearch}>
-                    SEARCH
+                  <button className="show-all-btn" onClick={handleReset}>
+                    RESET
                   </button>
-                  <button className="show-all-btn"> RESET </button>
                   <Link to="/add-artwork">
                     <button className="add-artwork">ADD NEW</button>
                   </Link>
@@ -151,12 +193,15 @@ export const ManageArtworks = () => {
               <div className="header">
                 <div className="header-item">IMAGE</div>
                 <div className="header-item">TITLE</div>
+                <div className="header-item">YEAR</div>
                 <div className="header-item">STATUS</div>
                 <div className="header-item">ACTIONS</div>
               </div>
-              {artworks?.map((artwork) => (
-                <ArtworkArtistView artwork={artwork} key={artwork.id} />
-              ))}
+              {(filteredData.length === 0 ? artworks : filteredData)?.map(
+                (artwork) => (
+                  <ArtworkArtistView artwork={artwork} key={artwork.id} />
+                )
+              )}
             </div>
           </div>
         </div>

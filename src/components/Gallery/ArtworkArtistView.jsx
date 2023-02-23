@@ -13,13 +13,12 @@ export const ArtworkArtistView = ({ artwork }) => {
 
   useOnHoverOutside(dropdownRef, closeHoverMenu);
 
-  console.log(artwork);
-
   return (
     <div className="artworks-wrapper">
       <div className="artwork">
         <img src={artwork.photoURL} alt="artwork" />
         <p>{artwork?.title}</p>
+        <p>{artwork?.year}</p>
         <p>{artwork?.status}</p>
         <div className="actions" ref={dropdownRef}>
           <MdIcons.MdOutlineSettingsSuggest
