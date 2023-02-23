@@ -47,46 +47,8 @@ export const ManageArtworks = () => {
     console.log("reseting");
     setSearchedTitle("");
     setSortData(null);
+    setFilteredData([]);
   };
-
-  useEffect(() => {
-    const artCollection = collection(db, "artworks");
-
-    if (
-      sortData?.sortBy === null ||
-      sortData?.order === null ||
-      sortData === null
-    ) {
-      console.log("SORT data is null");
-    } else {
-      const sortType = sortData?.sortBy?.label;
-      const orderType = sortData?.order?.label;
-
-      const getSortedArtworks = async (sortType, orderType) => {
-        if (orderType === "desc") {
-          const data = await getDocs(
-            query(artCollection, orderBy(sortType, "desc"))
-          );
-          const newData = data.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
-          setArtworks(newData);
-        } else {
-          const data = await getDocs(
-            query(artCollection, orderBy(sortType, "asc"))
-          );
-          const newData = data.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
-          setArtworks(newData);
-        }
-      };
-
-      getSortedArtworks(sortType, orderType);
-    }
-  }, [sortData]);
 
   const handleSearch = async () => {
     const q = query(
@@ -136,6 +98,45 @@ export const ManageArtworks = () => {
     getArtworks();
   }, [currentUser.uid]);
 
+  useEffect(() => {
+    const artCollection = collection(db, "artworks");
+
+    if (
+      sortData?.sortBy === null ||
+      sortData?.order === null ||
+      sortData === null
+    ) {
+      console.log("SORT data is null");
+    } else {
+      const sortType = sortData?.sortBy?.label;
+      const orderType = sortData?.order?.label;
+
+      const getSortedArtworks = async (sortType, orderType) => {
+        if (orderType === "desc") {
+          const data = await getDocs(
+            query(artCollection, orderBy(sortType, "desc"))
+          );
+          const newData = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setArtworks(newData);
+        } else {
+          const data = await getDocs(
+            query(artCollection, orderBy(sortType, "asc"))
+          );
+          const newData = data.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }));
+          setArtworks(newData);
+        }
+      };
+
+      getSortedArtworks(sortType, orderType);
+    }
+  }, [sortData]);
+
   return (
     <div className="home">
       <HomeSidebar />
@@ -151,6 +152,7 @@ export const ManageArtworks = () => {
                   <div className="filter-item">
                     <label htmlFor="title">TITLE</label>
                     <input
+                      value={searchedTitle}
                       name="title"
                       type="text"
                       id="title"
@@ -161,7 +163,7 @@ export const ManageArtworks = () => {
                   <div className="filter-item">
                     <label htmlFor="sort">SORT BY</label>
                     <Select
-                      value={sortData?.sortBy}
+                      value={sortData?.sortBy || null}
                       onChange={({ label, value }) =>
                         handleDropdownChange("sortBy", { label, value })
                       }
@@ -172,7 +174,7 @@ export const ManageArtworks = () => {
                   <div className="filter-item">
                     <label htmlFor="sort">ORDER</label>
                     <Select
-                      value={sortData?.order}
+                      value={sortData?.order || null}
                       onChange={({ label, value }) =>
                         handleDropdownChange("order", { label, value })
                       }
