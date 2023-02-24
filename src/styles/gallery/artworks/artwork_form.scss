@@ -177,6 +177,12 @@
                 width: 100%;
             }    
         }
+
+        .error {
+            @include font($roboto-mono, $normal, $xxs);
+            text-align: center;
+            color: tomato;
+        }
         @include tablet {
            height: 30%;
            border:none;

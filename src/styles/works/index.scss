@@ -9,8 +9,8 @@
    
     .works-wrapper {
         display: grid;
-        grid-template-columns: repeat(3, 2fr);
-        grid-template-rows: repeat(8, 35rem);
+        grid-template-columns: repeat(2, 2fr);
+        grid-template-rows: repeat(4, 35rem);
         @include dim (98.5%, 97.5%);
         border: 1px solid $base_color_pink;
         border-radius: 50px;
@@ -19,6 +19,20 @@
 
         &::-webkit-scrollbar { 
             display: none;
+        }
+        
+        @include laptop {
+            grid-template-columns: repeat(1, 2fr);
+            grid-template-rows: repeat(4, 35rem);
+        }
+
+        @include tablet {
+            grid-template-columns: repeat(1, 2fr);
+            grid-template-rows: repeat(4, 35rem);
+        }
+        @include mobile {
+            grid-template-columns: repeat(1, 2fr);
+            grid-template-rows: repeat(4, 35rem);
         }
     }
 }

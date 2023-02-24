@@ -1,0 +1,52 @@
+.exhibition-header-wrapper {
+    @include flexbox(flex, flex-end, space-between);
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative; 
+    height: 35vh;
+    width: 100%;
+    background-image: url("../../../images/exhibitions/header-background.png");
+    background-size: cover;
+    border-radius: 40px;
+    margin-bottom: 1rem;
+    
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        background-color: rgba(0,0,0,0.65);
+        border-radius: 40px;
+
+    }
+
+    .info-wrapper {
+        @include flexbox-direction(flex, center, column, space-between);
+        gap: 1rem;
+        @include font ($roboto-mono, $light, $l);
+        position: relative;
+        z-index: 10;
+        padding: 2rem;
+        filter:none;
+        color: $base_color;
+
+        .date {
+            font-size: $m;
+        }
+
+        .artist {
+            font-weight: $regular;
+
+        }
+    }
+
+    .dots{
+        @include font ($roboto-mono, $regular, 4rem);
+        letter-spacing: -10px;
+        color: $base_color;
+        padding: 2rem;
+        z-index: 10;
+    }
+}

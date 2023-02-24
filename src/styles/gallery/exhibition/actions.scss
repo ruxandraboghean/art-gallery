@@ -1,0 +1,30 @@
+.actions-dropdown-menu {
+    @include flexbox-direction(flex, center, column, center);
+    @include dim (0.5rem, 0rem);
+    background-color: $light_purple;
+
+    &:hover {
+        opacity: 1;
+      }
+
+    &:hover {
+        opacity: 3;
+    }
+
+    .add-category-btn{
+        @include dim (2.5rem, 2.5rem);
+        background-color: $medium_purple;
+        color: $base_color;
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+
+        @include mobile() {
+           @include dim(1rem, 1rem);
+        }
+
+        &:hover {
+            background-color: $dark_magenta;
+            color: $base_color_pink;
+        }
+    }    
+}

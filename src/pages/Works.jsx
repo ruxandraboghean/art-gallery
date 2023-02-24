@@ -2,7 +2,7 @@ import { Work } from "../components/Work";
 import React from "react";
 import { HomeNavbar } from "../components/Home/HomeNavbar";
 import { HomeSidebar } from "../components/Home/HomeSidebar";
-import { paintings } from "../mockData/paintings";
+import { Exhibition } from "../components/Gallery/Exhibition/Exhibition";
 
 export const Works = () => {
   return (
@@ -12,9 +12,11 @@ export const Works = () => {
         <HomeNavbar />
         <div className="works-container">
           <div className="works-wrapper">
-            {paintings?.map((painting) => (
-              <Work painting={painting} key={painting.id} />
-            ))}
+            {/* <Paintings /> */}
+            <Exhibition />
+            {/* <Sculpture /> */}
+            {/* <Prints /> */}
+            {/* <TraditionalArt /> */}
           </div>
         </div>
       </div>

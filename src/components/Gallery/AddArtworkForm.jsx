@@ -1,7 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as ImIcons from "react-icons/im";
 import * as TiIcons from "react-icons/ti";
+
+import { unitOptions } from "../../mockData/unitOptions";
+import { techniqueOptions } from "../../mockData/techniqueOptions";
+import { genreOptions } from "../../mockData/genreOptions";
+import { categoryOptions } from "../../mockData/categoryOptions";
 
 // firebase
 import {
@@ -9,7 +14,6 @@ import {
   collection,
   doc,
   getDoc,
-  serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -37,34 +41,15 @@ const initialState = {
   genre: null,
   status: "",
   photoURL: null,
-  date: null,
+  category: null,
 };
-
-let unitOptions = [
-  { label: "cm", value: "cm" },
-  { label: "inch", value: "inch" },
-];
-
-let techniqueOptions = [
-  { label: "acrylic", value: "acrylic" },
-  { label: "oil", value: "oil" },
-  { label: "watercolor", value: "watercolor" },
-  { label: "sculpture", value: "sculpture" },
-  { label: "digital art", value: "digital art" },
-];
-
-let genreOptions = [
-  { label: "abstract", value: "abstract" },
-  { label: "boho", value: "boho" },
-  { label: "modern", value: "modern" },
-  { label: "romanticism", value: "romanticism" },
-  { label: "realist", value: "realist" },
-];
 
 export const AddArtworkForm = () => {
   const [artworkData, setArtworkData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
+  const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
+  const navigate = useNavigate();
   const params = useParams();
 
   // derrived state
@@ -107,9 +92,11 @@ export const AddArtworkForm = () => {
 
     try {
       setIsLoading(true);
-      console.log();
 
       const artworkId = params.id;
+      const docRef = doc(collection(db, "artworks"));
+      const artId = docRef.id;
+
       if (artworkId !== undefined && artworkId !== "") {
         const docRef = doc(db, "artworks", artworkId);
         await updateDoc(docRef, {
@@ -117,59 +104,82 @@ export const AddArtworkForm = () => {
           unit: artworkData?.unit.value,
           technique: artworkData?.technique.value,
           genre: artworkData?.genre.value,
+          category: artworkData?.category.value,
+          photoURL: artworkData?.photoURL.imageSrc,
+        });
+
+        await updateDoc(doc(db, "users", currentUser.uid), {
+          artworks: arrayUnion({
+            ...artworkData,
+            unit: artworkData?.unit.value,
+            technique: artworkData?.technique.value,
+            genre: artworkData?.genre.value,
+            category: artworkData?.category.value,
+            photoURL: artworkData?.photoURL.imageSrc,
+          }),
         });
 
         resetState(e);
+        setErr(false);
+        console.log("Document written with ID: ", docRef.id);
+        navigate("/gallery");
       } else {
-        const docRef = doc(collection(db, "artworks"));
-        const artId = docRef.id;
-
-        await setDoc(docRef, {
-          ...artworkData,
-          id: artId,
-          unit: artworkData?.unit.value,
-          technique: artworkData?.technique.value,
-          genre: artworkData?.genre.value,
-          status: "draft",
-          photoURL: "",
-          date: serverTimestamp(),
-        });
         try {
           const storageRef = sRef(storage, artId);
-          console.log("PHOTO:", artworkData.photoURL.file);
+          console.log("STORAGE: ", storageRef);
 
-          await uploadBytesResumable(
-            storageRef,
-            artworkData?.photoURL?.file
-          ).then(() => {
-            getDownloadURL(storageRef).then(async (downloadURL) => {
-              try {
-                await updateDoc(doc(db, "artworks", artId), {
-                  ...artworkData,
-                  photoURL: downloadURL,
-                });
-                await updateDoc(doc(db, "users", currentUser.uid), {
-                  artworks: arrayUnion({
-                    id: artId,
-                    ...artworkData,
-                    unit: artworkData?.unit.value,
-                    technique: artworkData?.technique.value,
-                    genre: artworkData?.genre.value,
-                    photoURL: downloadURL,
-                    status: "draft",
-                  }),
-                });
-              } catch (err) {
-                console.log("Can't update doc:", err.message);
-              }
+          if (artworkData?.photoURL?.imageSrc) {
+            await setDoc(docRef, {
+              ...artworkData,
+              id: artId,
+              unit: artworkData?.unit.value,
+              technique: artworkData?.technique.value,
+              genre: artworkData?.genre.value,
+              category: artworkData?.category.value,
+              status: "draft",
+              photoURL: artworkData?.photoURL?.imageSrc || "",
             });
-          });
+
+            await uploadBytesResumable(
+              storageRef,
+              artworkData?.photoURL?.file
+            ).then(() => {
+              getDownloadURL(storageRef).then(async (downloadURL) => {
+                try {
+                  await updateDoc(doc(db, "artworks", artId), {
+                    ...artworkData,
+                    photoURL: downloadURL,
+                  });
+                  await updateDoc(doc(db, "users", currentUser.uid), {
+                    artworks: arrayUnion({
+                      id: artId,
+                      ...artworkData,
+                      unit: artworkData?.unit.value,
+                      technique: artworkData?.technique.value,
+                      genre: artworkData?.genre.value,
+                      category: artworkData?.category.value,
+                      photoURL: downloadURL,
+                      status: "draft",
+                    }),
+                  });
+                  console.log("Document written with ID: ", docRef.id);
+                  navigate("/gallery");
+
+                  setErr(false);
+                  resetState(e);
+                } catch (err) {
+                  console.log("Can't update doc:", err.message);
+                  setErr(true);
+                }
+              });
+            });
+          } else {
+            setErr(true);
+          }
         } catch (err) {
           console.log("Can't update doc:", err.message);
+          setErr(true);
         }
-
-        resetState(e);
-        console.log("Document written with ID: ", docRef.id);
       }
       setIsLoading(false);
     } catch (e) {
@@ -213,6 +223,7 @@ export const AddArtworkForm = () => {
           unit: { label: data.unit, value: data.unit },
           technique: { label: data.technique, value: data.technique },
           genre: { label: data.genre, value: data.genre },
+          category: { label: data.category, value: data.category },
           photoURL: {
             imageSrc: data.photoURL,
             file: data.photoURL,
@@ -377,6 +388,18 @@ export const AddArtworkForm = () => {
               className="dropdown-input"
             />
           </div>
+          <div className="input-item">
+            <label htmlFor="category"> category </label>
+            <Select
+              styles={{ width: 400 }}
+              value={artworkData.category}
+              onChange={({ label, value }) =>
+                handleDropdownChange("category", { label, value })
+              }
+              options={categoryOptions}
+              className="dropdown-input"
+            />
+          </div>
         </div>
 
         <div className="buttons">
@@ -395,6 +418,7 @@ export const AddArtworkForm = () => {
             <ClipLoader size={30} aria-label="Loading Spinner" />
           </div>
         )}
+        {err && <p className="error">You have to upload an image</p>}
       </form>
     </div>
   );

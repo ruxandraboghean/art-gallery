@@ -1,5 +1,5 @@
 import React from "react";
-import message from "../../images/message.png";
+import message from "../../images/menu/message.png";
 
 export const Navbar = () => {
   return (

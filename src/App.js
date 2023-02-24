@@ -18,6 +18,7 @@ import { Works } from "./pages/Works";
 import { Artists } from "./pages/Artists";
 import { AddArtwork } from "./pages/AddArtwork";
 import { ManageArtworks } from "./pages/ManageArtworks";
+import { AddCategory } from "./components/Gallery/AddCategory";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -120,6 +121,16 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <ManageArtworks />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
+            <Route path="/add-category">
+              <Route
+                index
+                element={
+                  <ProtectedRoute>
+                    <AddCategory />
                   </ProtectedRoute>
                 }
               />

@@ -1,6 +1,6 @@
 import React from "react";
-import painting from "../../images/painting.png";
-import artist from "../../images/artist.png";
+import painting from "../../images/menu/painting.png";
+import artist from "../../images/menu/artist.png";
 import { Link } from "react-router-dom";
 import { MenuHeader } from "./MenuHeader";
 

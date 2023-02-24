@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import logo from "../../images/logo_purple_light.png";
+import logo from "../../images/logo/logo_purple_light.png";
 import { Link } from "react-router-dom";
-import gallery from "../../images/gallery.png";
-import menu from "../../images/menu.png";
-import onlineCourse from "../../images/online-course.png";
-import messages from "../../images/messages.png";
+import gallery from "../../images/menu/gallery.png";
+import menu from "../../images/menu/menu.png";
+import onlineCourse from "../../images/menu/online-course.png";
+import messages from "../../images/menu/messages.png";
 import * as IoIcons from "react-icons/io";
 
 export const HomeSidebar = () => {
