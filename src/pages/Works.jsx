@@ -12,11 +12,7 @@ export const Works = () => {
         <HomeNavbar />
         <div className="works-container">
           <div className="works-wrapper">
-            {/* <Paintings /> */}
             <Exhibition />
-            {/* <Sculpture /> */}
-            {/* <Prints /> */}
-            {/* <TraditionalArt /> */}
           </div>
         </div>
       </div>

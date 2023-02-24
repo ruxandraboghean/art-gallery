@@ -1,21 +1,20 @@
 import React from "react";
-import { artCategories } from "../../../mockData/art-categories";
+import { categoryOptions } from "../../../mockData/categoryOptions";
 
 export const CardExhibition = () => {
-  console.log(artCategories);
-  return (
-    <div className="exhibition-card-wrapper">
-      {artCategories.map((category) => {
-        <>
-          <p className="vertical-title">{category.title}</p>
-          <div
-            className="img-wrapper"
-            // style={{ backgroundImage: `url(${category.imageSRC})` }}
-          >
-            <span className="see-exhibition"> See all</span>
-          </div>
-        </>;
-      })}
+  const optionsList = categoryOptions.map((option) => (
+    <div className="exhibition-card-wrapper" key={option.value}>
+      <p className="vertical-title">{option.label}</p>
+      <div
+        className="img-wrapper"
+        style={{
+          backgroundImage: `url(${option.imageSRC})`,
+        }}
+      >
+        <span className="see-exhibition"> See all</span>
+      </div>
     </div>
-  );
+  ));
+
+  return <>{optionsList};</>;
 };

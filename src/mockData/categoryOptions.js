@@ -1,6 +1,27 @@
+import paintings from "../images/exhibitions/paintings.svg";
+import sculptures from "../images/exhibitions/sculptures.svg";
+import prints from "../images/exhibitions/prints.svg";
+import traditional from "../images/exhibitions/traditional.svg";
+
 export const categoryOptions = [
-  { label: "painting", value: "painting" },
-  { label: "sculpture", value: "sculpture" },
-  { label: "print", value: "print" },
-  { label: "traditional art", value: "traditional art" },
+  {
+    label: "paintings",
+    value: "paintings",
+    imageSRC: paintings,
+  },
+  {
+    label: "sculptures",
+    value: "sculptures",
+    imageSRC: sculptures,
+  },
+  {
+    label: "prints",
+    value: "prints",
+    imageSRC: prints,
+  },
+  {
+    label: "traditional",
+    value: "traditional",
+    imageSRC: traditional,
+  },
 ];
