@@ -17,8 +17,12 @@
         border: 1px solid $base_color_pink;
         border-radius: 50px;
         display: flex;
-        overflow: hidden;
+        overflow: scroll;
         background-color: $light_purple;
+
+        &::-webkit-scrollbar { 
+            display: none;
+        }
     }
 }
    
