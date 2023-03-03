@@ -9,8 +9,6 @@ export const Work = ({ painting }) => {
       <div className="painting-details">
         <div className="title">{painting.title}</div>
         <div className="description">{painting.description}</div>
-        {/* <div className="year">{painting.year}</div>
-        <div className="price">{painting.price} $</div> */}
         <button className="info-btn"> More info </button>
       </div>
     </div>

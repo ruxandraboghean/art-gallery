@@ -22,6 +22,6 @@ export const categoryOptions = [
   {
     label: "traditional",
     value: "traditional",
-    imageSRC: traditional,
+    imageSRC: paintings,
   },
 ];

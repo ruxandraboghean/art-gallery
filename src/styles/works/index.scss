@@ -2,24 +2,37 @@
 @import './work.scss';
 
 .works-container {
-    @include flexbox(flex, center, space-around);
     background-color: $base_color;
     height: 90vh;
-    flex: 5;
-   
-    .works-wrapper {
-        @include dim (98.5%, 97.5%);
-        border-radius: 50px;
-        background-color: $base_color;
-        overflow: scroll;
-
+    overflow-y: scroll;
         &::-webkit-scrollbar { 
             display: none;
-        }
+         }
 
+    .works-wrapper {
+        @include flexbox-direction(flex, start, column, space-between);
+        gap: 3rem;
+        margin-top: 10rem;
+        border-radius: 50px;
+        background-color: $base_color;
+        height:250%;
+       
         .exhibition-wrapper {
-            width: 95%;
-            height: 70vh;
+            @include flexbox(flex, start, space-between);
+            gap: 2rem;
+            height: 200%;
+            max-width: 1600px;
+            overflow-x:scroll;   
+            overflow-y: hidden;
+            margin: 0 auto;
+
+             &::-webkit-scrollbar { 
+               display: none;
+            }
+
+            @include monitor {
+                max-width: 1400px;
+            }
         }
     }
 }

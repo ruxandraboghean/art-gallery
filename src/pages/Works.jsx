@@ -13,6 +13,9 @@ export const Works = () => {
         <div className="works-container">
           <div className="works-wrapper">
             <Exhibition />
+            <Exhibition />
+            <Exhibition />
+            <Exhibition />
           </div>
         </div>
       </div>

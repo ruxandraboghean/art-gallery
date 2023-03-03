@@ -1,6 +1,6 @@
 .work-container {
     @include flexbox-direction(flex, center, column, space-around);
-    padding: 2.5rem 4rem;
+    // padding: 2.5rem 4rem;
   
     .image {
         @include dim(25rem, 25rem);
@@ -18,7 +18,7 @@
         @include font($longa-iberica, $normal, $xxl);
         background-color: $base_color_pink;
         letter-spacing: 1px;
-        padding: 2rem 6rem;
+        // padding: 2rem 6rem;
         position: absolute;
         display: inline;
         color: $dark_magenta;
