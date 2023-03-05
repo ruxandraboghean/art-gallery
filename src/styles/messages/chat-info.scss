@@ -1,9 +1,7 @@
 .chat-info {
     @include flexbox(flex, center, space-between);
-    background-color: $pale_purple;
     padding: 0 5% 0 5%;
     color: $magenta;
-    border-bottom: 1px solid lightgray;
     height: 10%;
     font-weight: $medium;
 

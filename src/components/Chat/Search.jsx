@@ -13,6 +13,7 @@ import {
 import { AuthContext } from "../../context/AuthContext";
 import { db } from "../../firebase";
 import { useOnOutsideClick } from "../../hooks/useOnOutsideClick";
+import * as IoIcons from "react-icons/io";
 
 export const Search = () => {
   const [username, setUsername] = useState("");
@@ -117,6 +118,7 @@ export const Search = () => {
     <div className="search">
       <div className="search-form">
         <div className="search-text">
+          <IoIcons.IoMdSearch />
           <input
             type="text"
             placeholder="Find a user"

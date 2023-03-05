@@ -1,0 +1,32 @@
+.chat-profile {
+    @include flexbox-direction(flex, center, column, space-between);
+    background-color: $grayish_purple;
+    border-radius: 100px 100px 0 0;
+    color: $dark_magenta;
+    padding: 1rem;
+    padding-bottom: 2.5rem;
+
+    .user-info {
+        @include flexbox-direction(flex, center, column, space-between);
+
+        .user-avatar{
+            margin-bottom: 1rem;
+            width: 10rem;
+            height: 10rem;
+            object-fit: cover;
+            border-radius: 100px;
+        }
+    }
+
+    .user-actions {
+        font-size: $xs;
+
+        .action {
+            @include flexbox(flex, center, space-between);
+        }
+        
+        .arrow-icon {
+            padding-left: 1rem;
+        }
+     }
+}

@@ -10,7 +10,7 @@
          }
 
     .works-wrapper {
-        @include flexbox-direction(flex, start, column, space-between);
+        @include flexbox-direction(flex, flex-start, column, space-between);
         gap: 3rem;
         margin-top: 10rem;
         border-radius: 50px;
@@ -18,7 +18,7 @@
         height:250%;
        
         .exhibition-wrapper {
-            @include flexbox(flex, start, space-between);
+            @include flexbox(flex, flex-start, space-between);
             gap: 2rem;
             height: 200%;
             max-width: 1600px;

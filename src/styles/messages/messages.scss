@@ -1,9 +1,10 @@
 .messages {
     background-color: $light_purple;
     padding: 1rem 0 0 1rem;
-    height: calc(100% - 10% - 5% - 1% - 1% - 1rem - 3%);
+    height: calc(100% - 5% - 1% - 1% - 1rem - 3%);
     overflow-x: hidden;
     overflow-y: visible;
+    border-radius: 0 50px 0 0;
 
     .message {
         display: flex;
@@ -35,6 +36,7 @@
                 border-radius: 0 10px 10px 10px;
                 color: $magenta;
                 font-size: $xs;
+                box-shadow: 5px 5px 5px $grayish_purple;
                
             }
 
@@ -51,8 +53,8 @@
 
                 p {
                     width: 50%;
-                    background-color: $magenta;
-                    color: $base_color;
+                    background-color: $grayish_purple;
+                    color: $dark_magenta;
                     border-radius: 10px 0 10px 10px;
                 }
             }
@@ -69,18 +71,17 @@
 .input {
     @include flexbox(flex, center, space-around);
     @include dim (90%, 5%);
-    background-color: $pale_purple;
     margin: 0 0 1% 1%;
     padding: 1% 0 1% 5%;
     border-radius: 100px;
-    border: 1px solid $grayish_purple;
+    border: 1px solid $pale_grayish_purple;
 
     input {
         @include border-outline-none;
         width: 80%;
-        color: black;
+        color: $magenta;
         font-size: 1rem;
-        background-color: $pale_purple;
+        background-color: $light_purple;
 
         @include monitor() {
             width: 75%;
@@ -143,26 +144,27 @@
         .attach {
             @include dim (1.25rem, 1.25rem);
             padding-right: 1rem;
-            color:$dark_magenta;
+            color:$magenta;
             cursor: pointer;
 
             &:hover {
-                color:#000;
+                color:$dark_magenta;
             }
         }
 
         button {
             @include border-outline-none;
             padding: 10% 20%;
-            color: $pale_purple;
-            background-color: $magenta;
+            color: $magenta;
+            background-color: $grayish_purple;
             cursor: pointer;
             border-radius: 10px;
             display: flex;
             gap: 10%;
 
             &:hover {
-                background-color: $dark_magenta;
+                background-color: $grayish_purple;
+                color: $dark_magenta;
             }
 
             @include laptop() {
