@@ -245,7 +245,7 @@ export const AddArtworkForm = () => {
   }, [params.id]);
 
   return (
-    <div className="form-container">
+    <div className="artwork-form-container">
       <div className="image-container">
         <div
           className={`upload-container ${

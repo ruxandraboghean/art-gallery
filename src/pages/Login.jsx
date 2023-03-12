@@ -5,7 +5,7 @@ import { auth } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ClipLoader from "react-spinners/ClipLoader";
-import logo from "../images/logo/logo_general.png";
+import logo from "../images/logo/logo_Login.png";
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -78,7 +78,6 @@ export const Login = () => {
             </div>
           )}
         </div>
-        <div className="image-wrapper divider"></div>
       </div>
     </>
   );

@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import ClipLoader from "react-spinners/ClipLoader";
-import logo from "../images/logo/logo_general.png";
+import logo from "../images/logo/logo_Login.png";
 import add from "../images/add.png";
 
 export const Register = () => {
@@ -122,8 +122,6 @@ export const Register = () => {
             </div>
           )}
         </div>
-
-        <div className="image-wrapper"></div>
       </div>
     </>
   );
