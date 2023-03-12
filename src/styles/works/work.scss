@@ -1,6 +1,5 @@
 .work-container {
     @include flexbox-direction(flex, center, column, space-around);
-    // padding: 2.5rem 4rem;
   
     .image {
         @include dim(25rem, 25rem);

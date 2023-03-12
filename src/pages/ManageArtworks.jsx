@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import { AuthContext } from "../context/AuthContext";
 // firebase
 import { db } from "../firebase";
@@ -17,7 +18,9 @@ import { ArtworkArtistView } from "../components/Gallery/ArtworkArtistView";
 import { HomeNavbar } from "../components/Home/HomeNavbar";
 import { HomeSidebar } from "../components/Home/HomeSidebar";
 import Select from "react-select";
-
+import { Box, Fab } from "@mui/material";
+import AddIcon from '@mui/icons-material/Add';
+import RotateLeftIcon from '@mui/icons-material/RotateLeft';
 const sortOptions = [
   { label: "year", value: "year" },
   { label: "title", value: "title" },
@@ -34,6 +37,7 @@ export const ManageArtworks = () => {
   const [searchedTitle, setSearchedTitle] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [sortData, setSortData] = useState(null);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setSearchedTitle(e.target.value);
@@ -49,6 +53,10 @@ export const ManageArtworks = () => {
     setSortData(null);
     setFilteredData([]);
   };
+
+  const handleAdd = () => {
+    navigate("/add-artwork");
+  }
 
   const handleSearch = async () => {
     const q = query(
@@ -182,16 +190,33 @@ export const ManageArtworks = () => {
                       className="dropdown-input"
                     />
                   </div>
-                </div>
-                <div className="buttons">
-                  <button className="show-all-btn" onClick={handleReset}>
-                    RESET
-                  </button>
-                  <Link to="/add-artwork">
-                    <button className="add-artwork">ADD NEW</button>
-                  </Link>
+                <div className="filter-dropdown-menu">
+                <Box sx={{ width: 100}}>
+                    <Fab
+                      color="secondary"
+                      aria-label="edit"
+                      className="action-btn"
+                      onClick={handleReset}
+                      sx={{ mb: 1 }}
+                    >
+                      <RotateLeftIcon sx={{ fontSize: 20 }} />
+                    </Fab>
+                  </Box>
+                  <Box sx={{ width: 100}}>
+                    <Fab
+                      color="secondary"
+                      aria-label="edit"
+                      className="action-btn"
+                      onClick={handleAdd}
+                      sx={{ mb: 1 }}
+                    >
+                      <AddIcon sx={{ fontSize: 20 }} />
+                    </Fab>
+                  </Box>
                 </div>
               </div>
+              </div>
+
               <div className="header">
                 <div className="header-item">IMAGE</div>
                 <div className="header-item">TITLE</div>
