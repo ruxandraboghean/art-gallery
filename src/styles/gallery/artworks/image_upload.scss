@@ -52,7 +52,7 @@
         display: none;
     }
     .img-wrapper {
-        @include flexbox-direction(flex, end, column, end);
+        @include flexbox-direction(flex, flex-end, column, flex-end);
         width: auto;
         height: auto;
 

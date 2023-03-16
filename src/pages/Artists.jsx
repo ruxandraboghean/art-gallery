@@ -12,14 +12,6 @@ export const Artists = () => {
         <div className="artists-container">
           <div className="artists-wrapper">
             <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
-            <Artist />
           </div>
         </div>
       </div>

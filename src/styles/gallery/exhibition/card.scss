@@ -1,5 +1,5 @@
 .exhibition-card-wrapper{
-    @include flexbox(flex, start, space-between);
+    @include flexbox(flex, flex-start, space-between);
     height:250%;
     width:100%;
 
@@ -12,7 +12,7 @@
         background-position: center;
         background-size: cover;
 
-        @include flexbox-direction(flex, end, column, space-between);
+        @include flexbox-direction(flex, flex-end, column, space-between);
         
 
         @include monitor {

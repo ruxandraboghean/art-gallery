@@ -10,8 +10,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import ClipLoader from "react-spinners/ClipLoader";
-import logo from "../images/logo/logo_Login.png";
-import add from "../images/add.png";
+import logo from "../images/logo/no_illusion_logo.png";
+
+import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 
 export const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -66,6 +67,7 @@ export const Register = () => {
     <>
       <div className="form-container">
         <div className="form-wrapper">
+          <div className="background-form">
           <div className="center">
             <img src={logo} alt="Logo" className="register-logo" />
           </div>
@@ -93,16 +95,28 @@ export const Register = () => {
             </div>
             <input style={{ display: "none" }} type="file" id="file" />
             <label htmlFor="file">
-              <img src={add} alt="Add" />
+              <AddPhotoAlternateIcon className="add-avatar"/>
               <span> Add an avatar </span>
             </label>
-            <button className="register-button">
-              <span className="text">Next</span>
-              <FontAwesomeIcon
-                icon={faCircleArrowRight}
-                className="arrow-right"
-              />
-            </button>
+            <div className='register-user'>
+          <div className="register-as">Register as</div>
+            <div className='users'>
+                <div className="user">user  
+                  <FontAwesomeIcon
+                      icon={faCircleArrowRight}
+                      className="arrow-right"
+                  />
+                </div>
+                <div className="expert">expert
+                  <Link to="/register-expert" className='arrow-right'> 
+                      <FontAwesomeIcon
+                          icon={faCircleArrowRight}
+                          className="arrow-right"
+                      />
+                    </Link>
+                </div>
+            </div>
+          </div>
             {err && <span> Something went wrong </span>}
           </form>
           <p>
@@ -112,6 +126,7 @@ export const Register = () => {
               Login
             </Link>
           </p>
+        
           {isLoading && (
             <div>
               <ClipLoader
@@ -121,6 +136,7 @@ export const Register = () => {
               />
             </div>
           )}
+        </div>
         </div>
       </div>
     </>

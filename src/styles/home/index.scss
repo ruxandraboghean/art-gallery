@@ -14,12 +14,12 @@
     .home-container {
         @include flexbox(flex, center, space-between);
         background-color: $base_color;
-        height: 90vh;
+        height: 95vh;
         flex: 5;
        
         .home-wrapper {
             @include dim (98.5%, 97.5%);
-            border: 1px solid $purple;
+            // border: 1px solid $purple;
             border-radius: 50px;
             display: flex;
             overflow: hidden;

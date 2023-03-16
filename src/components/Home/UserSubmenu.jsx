@@ -13,16 +13,6 @@ export default function UserSubmenu() {
     <>
       <div className="dropdown-menu">
         <Box sx={{ "& > :not(style)": { m: 1 } }}>
-          <Fab
-            color="secondary"
-            aria-label="edit"
-            className="signout-btn"
-            onClick={() => {
-              signOut(auth);
-            }}
-          >
-            <LogoutIcon />
-          </Fab>
           <Link to="/profile">
             <Fab color="secondary" aria-label="edit" className="account-btn">
               <AccountCircle />
@@ -38,6 +28,16 @@ export default function UserSubmenu() {
               <SettingsSystemDaydream />
             </Fab>
           </Link>
+          <Fab
+            color="secondary"
+            aria-label="edit"
+            className="signout-btn"
+            onClick={() => {
+              signOut(auth);
+            }}
+          >
+            <LogoutIcon />
+          </Fab>
         </Box>
       </div>
     </>

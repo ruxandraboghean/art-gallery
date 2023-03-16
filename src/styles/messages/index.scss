@@ -5,7 +5,7 @@
 
 .home-chat {
     @include flexbox(flex, center, space-between);
-    height: 90vh;
+    height: 95vh;
     flex: 5;
 
     .container {

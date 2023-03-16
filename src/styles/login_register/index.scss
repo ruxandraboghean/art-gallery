@@ -1,0 +1,227 @@
+@import '../index.scss';
+@import './register_first_step.scss';
+
+.form-container {
+    height: 100vh;
+    background-image: url("../../images/background/background.png");
+    background-size: cover;
+    
+    .form-wrapper {
+        @include center;
+        position: absolute;
+        top:50%;
+        transform: translateY(-50%);
+        margin: auto;
+        width: 100%;
+
+        .background-form {
+          margin: 0 35%;
+          background-color: rgb(243, 239, 250, 0.5);
+          padding: 1rem;
+          border-radius: 20px;
+
+          .logo {
+                @include dim(12rem, 8rem);
+                @include monitor() {
+                    @include dim(18rem, 12rem);
+                }
+            }
+            
+            .register-logo {
+                @include dim(12rem, 8rem);
+                
+                @include monitor() {
+                    @include dim(18rem, 12rem);
+                }
+            }
+
+            .form {
+                @include flexbox-direction(flex, center, column, space-around);
+                padding: 0.5rem;
+                border: none;
+                
+                div {
+                    .input-icons-register {
+                        i {
+                            @include dim(1rem, 1rem);
+                            position: absolute;
+                            padding:1.25rem 0 0 1.75rem;
+                            color: $dark_magenta;
+
+                            @include monitor() {
+                            padding:1.5rem 0 0 2rem;
+                            }
+                        }
+        
+                        input {
+                            @include font($roboto-mono, $light, $xxs);
+                            @include border-outline-none;
+                            @include dim(16rem, 2.5rem); 
+                            color: $dark_magenta;
+                            letter-spacing: 1px;
+                            margin: 1% 1% 2% 1%;
+                            background: #f3effa;
+                            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                            border-radius: 20px;
+                            padding-left: 5rem;
+            
+                            &::placeholder {
+                                color: $dark_magenta;
+                                opacity: 1;
+                                font-size: $xs;
+                            }
+            
+                            @include monitor() {
+                                @include dim(25rem, 2.8rem);
+                                font-size: $m;
+                            }
+                            
+                        }
+                    }
+                
+                    .input-icons {
+
+                        i {
+                            @include dim(1rem, 1rem);
+                            position: absolute;
+                            padding:1.25rem 0 0 1.75rem;
+                            color: $dark_magenta;
+
+                            @include monitor() {
+                            padding:1.5rem 0 0 2rem;
+                            }
+                        }
+        
+                        input {
+                            @include font($roboto-mono, $light, $xxs);
+                            @include border-outline-none;
+                            @include dim(20rem, 2.8rem); 
+                            color: $dark_magenta;;
+                            letter-spacing: 1px;
+                            margin: 1% 1% 2% 1%;
+                            background: #f3effa;
+                            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                            border-radius: 20px;
+                            padding-left: 5rem;
+                            font-size: $m;
+            
+                            &::placeholder {
+                                color: $dark_magenta;
+                                opacity: 1;
+                                font-size: $xs;
+                            }
+                            
+                            @include mobile() {
+                                @include dim(3rem, 2.8rem);
+                            }
+
+                            @include tablet() {
+                                @include dim(6rem, 2.8rem);
+                            }
+                            @include laptop() {
+                                @include dim(8rem, 2.8rem);
+                            }
+                            @include bigger-laptop() {
+                                @include dim(15rem, 2.8rem);
+                            }
+                            @include monitor() {
+                                @include dim(30rem, 3rem);
+                            }
+                        }
+                    }
+                }
+
+                label {
+                    @include flexbox (flex, center, space-between);
+                    gap: 1.5rem;
+                    margin-top: 1rem;
+                    cursor: pointer;
+
+                    .add-avatar {
+                        @include dim(2rem, 2rem);
+                        color: $dark_magenta;
+                    }
+
+                    span {
+                        color: $magenta;
+                        font-size: $xs;
+                    }
+                }
+
+                button {
+                    @include font(FontAwesome, $normal, $m);
+                    @include dim(20rem, 3rem);
+                    color: $base_color;
+                    letter-spacing: -0.133333px;
+                    margin: 2rem 0 0 0.5rem;
+                    background: $dark_magenta;
+                    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    text-align: center;
+
+                    .text {
+                        @include font($roboto-mono, $regular, $m);       
+                        letter-spacing: -0.133333px;
+                        color: $base_color;
+                        margin-right: 1.5rem;
+
+                        @include monitor() {
+                            font-size: 1.2rem;
+                        }
+                    }
+                    .arrow-right {
+                        @include dim(1.2rem, 1.2rem);
+                        color: $base_color;
+                        margin-right: 1rem;
+                    }
+
+                    @include monitor() {
+                        @include dim(25rem, 3rem);
+                        font-size: $l;
+                    }
+                }
+                .register-button {
+                    @include dim(20rem, 3rem);
+
+                    @include monitor() {
+                        @include dim(30rem, 2.8rem);
+                        font-size: $l;
+                    }
+                }
+
+                span {
+                    color: red;
+                    font-size: $xs;
+                }
+            }
+
+            p {
+                @include font($roboto-mono, $normal, $xs); 
+                text-align: center;
+                letter-spacing: -0.133333px;
+                color: $grayish_blue;
+
+                .link {
+                    color: $grayish_pink;
+                    font-weight: $medium;
+                    text-decoration: none;
+                    
+                    &:hover {
+                        color: $magenta;
+                    }
+                }
+                @include monitor() {
+                    font-size: $s;
+                }
+            }
+
+            div {
+                .spinner {
+                    color: $magenta;
+                }
+            }
+        }
+    }
+}

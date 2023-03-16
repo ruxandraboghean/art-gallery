@@ -5,7 +5,7 @@ import { auth } from "../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ClipLoader from "react-spinners/ClipLoader";
-import logo from "../images/logo/logo_Login.png";
+import logo from "../images/logo/no_illusion_logo.png";
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +33,7 @@ export const Login = () => {
     <>
       <div className="form-container">
         <div className="form-wrapper">
+        <div className="background-form">
           <div className="center">
             <img src={logo} alt="Logo" className="logo" />
           </div>
@@ -78,6 +79,7 @@ export const Login = () => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </>
   );

@@ -19,6 +19,7 @@ import { Artists } from "./pages/Artists";
 import { AddArtwork } from "./pages/AddArtwork";
 import { ManageArtworks } from "./pages/ManageArtworks";
 import { AddCategory } from "./components/Gallery/AddCategory";
+import { RegisterExpert } from "./pages/RegisterExpert";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -138,6 +139,7 @@ function App() {
 
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/register-expert" element={<RegisterExpert />} />
           </Routes>
         </Router>
       </header>

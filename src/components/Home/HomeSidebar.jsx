@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import logo from "../../images/logo/logo_purple_light.png";
 import { Link } from "react-router-dom";
-import gallery from "../../images/menu/gallery.png";
+import modern_art from "../../images/menu/modern-art.png";
 import menu from "../../images/menu/menu.png";
-import onlineCourse from "../../images/menu/online-course.png";
+import expert from "../../images/menu/expert.png";
 import messages from "../../images/menu/messages.png";
 import * as IoIcons from "react-icons/io";
 
@@ -40,10 +40,21 @@ export const HomeSidebar = () => {
       </div>
       {showSidebar ? (
         <div className="sidebar-menu">
-          <Link to="/gallery" className="link">
+          <Link to="/works" className="link">
             <div className="sidebar-menu-item">
-              <img src={gallery} alt="Gallery" className="sidebar-img" />
+              <img src={modern_art} alt="modernArt" className="sidebar-img" />
               <span>Gallery</span>
+            </div>
+          </Link>
+          
+          <Link to="/artists" className="link">
+            <div className="sidebar-menu-item">
+              <img
+                src={expert}
+                alt="Expert"
+                className="sidebar-img"
+              />
+              <span>Art specialists</span>
             </div>
           </Link>
           <Link to="/messages" className="link">
@@ -52,36 +63,27 @@ export const HomeSidebar = () => {
               <span>Messages</span>
             </div>
           </Link>
-          <Link to="/courses" className="link">
-            <div className="sidebar-menu-item">
-              <img
-                src={onlineCourse}
-                alt="onlineCourse"
-                className="sidebar-img"
-              />
-              <span>Courses</span>
-            </div>
-          </Link>
         </div>
       ) : (
         <div className="sidebar-menu">
-          <Link to="/gallery" className="link">
+          <Link to="/works" className="link">
             <div className="sidebar-menu-item hidden-sidebar-item">
-              <img src={gallery} alt="Gallery" className="sidebar-img" />
+              <img src={modern_art} alt="modernArt" className="sidebar-img" />
+            </div>
+          </Link>
+          
+          <Link to="/artists" className="link">
+            <div className="sidebar-menu-item hidden-sidebar-item">
+              <img
+                src={expert}
+                alt="expert"
+                className="sidebar-img"
+              />
             </div>
           </Link>
           <Link to="/messages" className="link">
             <div className="sidebar-menu-item hidden-sidebar-item">
               <img src={messages} alt="messages" className="sidebar-img" />
-            </div>
-          </Link>
-          <Link to="/courses" className="link">
-            <div className="sidebar-menu-item hidden-sidebar-item">
-              <img
-                src={onlineCourse}
-                alt="onlineCourse"
-                className="sidebar-img"
-              />
             </div>
           </Link>
         </div>

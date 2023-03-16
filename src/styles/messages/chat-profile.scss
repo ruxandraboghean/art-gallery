@@ -1,6 +1,6 @@
 .chat-profile {
     @include flexbox-direction(flex, center, column, space-between);
-    background-color: $grayish_purple;
+    background-color:rgb(163,68,167, 0.2);
     border-radius: 100px 100px 0 0;
     color: $dark_magenta;
     padding: 1rem;

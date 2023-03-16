@@ -7,7 +7,7 @@ import { MenuHeader } from "./MenuHeader";
 export const HomeNavbar = () => {
   return (
     <div className="home-navbar">
-      <div className="navbar">
+      {/* <div className="navbar">
         <Link to="/works" className="link">
           <img src={painting} alt="painting" />
           <div className="works">Works</div>
@@ -16,7 +16,7 @@ export const HomeNavbar = () => {
           <img src={artist} alt="artist" />
           <div className="artists">Artists</div>
         </Link>
-      </div>
+      </div> */}
       <MenuHeader />
     </div>
   );
