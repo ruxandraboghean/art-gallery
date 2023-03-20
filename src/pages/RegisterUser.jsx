@@ -13,9 +13,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import logo from "../images/logo/no_illusion_logo.png";
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import AttachmentIcon from "@mui/icons-material/Attachment";
 
-export const RegisterExpert = () => {
+export const RegisterUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
@@ -29,7 +28,6 @@ export const RegisterExpert = () => {
     const password = e.target[2].value;
     // const checkPassword = e.target[3].value;
     const file = e.target[4].files[0];
-    const certificate = e.target[5].files[0];
 
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -101,12 +99,7 @@ export const RegisterExpert = () => {
                   <AddPhotoAlternateIcon className="add-avatar" />
                   <span> Add an avatar </span>
                 </label>
-                <label htmlFor="file">
-                  <AttachmentIcon className="add-avatar" />
-                  <span> Add certificate </span>
-                </label>
               </div>
-
               <button className="form-button">
                 <span className="text">Register</span>
                 <FontAwesomeIcon

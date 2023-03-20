@@ -20,6 +20,7 @@ import { AddArtwork } from "./pages/AddArtwork";
 import { ManageArtworks } from "./pages/ManageArtworks";
 import { AddCategory } from "./components/Gallery/AddCategory";
 import { RegisterExpert } from "./pages/RegisterExpert";
+import { RegisterUser } from "./pages/RegisterUser";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -140,6 +141,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/register-expert" element={<RegisterExpert />} />
+            <Route path="/register-user" element={<RegisterUser />} />
           </Routes>
         </Router>
       </header>
