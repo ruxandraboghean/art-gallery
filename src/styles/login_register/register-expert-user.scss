@@ -150,7 +150,7 @@
 
                 button {
                     @include font(FontAwesome, $normal, $m);
-                    @include dim(20rem, 3rem);
+                    @include dim(25rem, 3rem);
                     color: $base_color;
                     letter-spacing: -0.133333px;
                     margin: 2rem 0 0 0.5rem;
@@ -178,7 +178,7 @@
                     }
 
                     @include monitor() {
-                        @include dim(25rem, 3rem);
+                        @include dim(30rem, 3rem);
                         font-size: $l;
                     }
                 }

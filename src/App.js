@@ -42,7 +42,7 @@ function App() {
                 index
                 element={
                   <ProtectedRoute>
-                    <Home />
+                    <Messages />
                   </ProtectedRoute>
                 }
               />

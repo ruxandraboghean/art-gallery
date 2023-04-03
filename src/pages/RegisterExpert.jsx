@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { auth, db, storage } from "../firebase";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
@@ -51,9 +51,26 @@ export const RegisterExpert = () => {
               photoURL: downloadURL,
             });
 
-            await setDoc(doc(db, "userChats", res.user.uid), {});
             setIsLoading(false);
-            navigate("/login");
+          } catch (err) {
+            setErr(true);
+          }
+        });
+      });
+      await uploadBytesResumable(storageRef, certificate).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            await updateProfile(res.user, {
+              displayName,
+              certificateURL: downloadURL,
+            });
+
+            await updateDoc(doc(db, "users", res.user.uid), {
+              certificateURL: downloadURL,
+            });
+
+            setIsLoading(false);
+            //your request has been registered
           } catch (err) {
             setErr(true);
           }

@@ -11,6 +11,7 @@ export const Works = () => {
       <div className="content">
         <HomeNavbar />
         <div className="works-container">
+          <div className="works-title">Exibitions</div>
           <div className="works-wrapper">
             <Exhibition />
             <Exhibition />

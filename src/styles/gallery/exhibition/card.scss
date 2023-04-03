@@ -5,8 +5,8 @@
 
     .img-wrapper {
         border-radius: 15px;
-        width: 720px;
-        height: 500px;
+        width: 580px;
+        height: 400px;
         text-align: right;
         background-repeat: no-repeat;
         background-position: center;
@@ -66,16 +66,4 @@
         height:200%;
         width:100%;
     }
-    // @include laptop {
-    //     height: 60vh;
-    //     width: 100%;
-    // }
-    // @include tablet {
-    //     height: 40vh;
-    //     width: 100%;
-    // }
-    // @include mobile {
-    //     height: 30vh;
-    //     width: 100%;
-    // }
 }

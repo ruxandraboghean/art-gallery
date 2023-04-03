@@ -8,6 +8,13 @@
         &::-webkit-scrollbar { 
             display: none;
          }
+    
+     .works-title{
+        @include font($brittany, normal, $xxl);
+        text-align: center;
+        color: $dark_magenta;
+        letter-spacing: 0.3rem;     
+    }
 
     .works-wrapper {
         @include flexbox-direction(flex, flex-start, column, space-between);
@@ -21,7 +28,7 @@
             @include flexbox(flex, flex-start, space-between);
             gap: 2rem;
             height: 200%;
-            max-width: 1600px;
+            max-width: 1400px;
             overflow-x:scroll;   
             overflow-y: hidden;
             margin: 0 auto;
@@ -32,6 +39,7 @@
 
             @include monitor {
                 max-width: 1400px;
+                height: 200%;
             }
         }
     }
