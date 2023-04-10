@@ -1,9 +1,9 @@
 import React from "react";
-import { Chat } from "../components/Chat/Chat";
-import { ChatProfile } from "../components/Chat/ChatProfile";
-import { Sidebar } from "../components/Chat/Sidebar";
-import { HomeNavbar } from "../components/Home/HomeNavbar";
-import { HomeSidebar } from "../components/Home/HomeSidebar";
+import { Chat } from "../../components/chat/Chat";
+import { ChatProfile } from "../../components/chat/ChatProfile";
+import { Sidebar } from "../../components/chat/Sidebar";
+import { HomeNavbar } from "../../components/home/HomeNavbar";
+import { HomeSidebar } from "../../components/home/HomeSidebar";
 
 export const Messages = () => {
   return (

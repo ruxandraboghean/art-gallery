@@ -1,0 +1,46 @@
+#add-exhibition {
+    position: relative;
+    margin:0;
+    z-index: 2;
+}
+
+#exhibition-form-container {
+    margin: 0 auto;
+    padding: 0;
+    width: 100%;
+
+    #exhibition-form {
+        margin: 0 auto;
+        padding: 0;
+        width: 60%;
+        border: none;
+        overflow: scroll;
+
+        .input-item {
+            margin: 0 auto;
+        }
+
+        .art-details-types {
+            width: 90%;
+            margin: 0 auto;
+            justify-content: space-between;
+
+            .fit-content {
+                width: 40%;
+                margin: 0;
+            }
+        }
+
+        .buttons {
+            margin:0 auto;
+
+            button {
+                margin:0;
+                margin: 2rem 1rem;
+            }
+        }
+         &::-webkit-scrollbar { 
+        display: none;
+    }
+    }
+}

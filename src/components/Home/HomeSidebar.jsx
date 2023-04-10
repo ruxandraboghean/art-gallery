@@ -19,7 +19,7 @@ export const HomeSidebar = () => {
       <div className="sidebar-header">
         {showSidebar && (
           <div className="logo-wrapper center">
-            <Link to="/works">
+            <Link to="/exhibitions">
               <img src={logo} alt="Logo" className="logo" />
             </Link>
           </div>
@@ -46,14 +46,10 @@ export const HomeSidebar = () => {
               <span>Gallery</span>
             </div>
           </Link>
-          
+
           <Link to="/artists" className="link">
             <div className="sidebar-menu-item">
-              <img
-                src={expert}
-                alt="Expert"
-                className="sidebar-img"
-              />
+              <img src={expert} alt="Expert" className="sidebar-img" />
               <span>Art specialists</span>
             </div>
           </Link>
@@ -66,19 +62,15 @@ export const HomeSidebar = () => {
         </div>
       ) : (
         <div className="sidebar-menu">
-          <Link to="/works" className="link">
+          <Link to="/exhibitions" className="link">
             <div className="sidebar-menu-item hidden-sidebar-item">
               <img src={modern_art} alt="modernArt" className="sidebar-img" />
             </div>
           </Link>
-          
+
           <Link to="/artists" className="link">
             <div className="sidebar-menu-item hidden-sidebar-item">
-              <img
-                src={expert}
-                alt="expert"
-                className="sidebar-img"
-              />
+              <img src={expert} alt="expert" className="sidebar-img" />
             </div>
           </Link>
           <Link to="/messages" className="link">

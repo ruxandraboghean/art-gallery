@@ -1,7 +1,7 @@
 import React from "react";
-import { AddArtworkForm } from "../components/Gallery/AddArtworkForm";
-import { HomeNavbar } from "../components/Home/HomeNavbar";
-import { HomeSidebar } from "../components/Home/HomeSidebar";
+import { AddArtworkForm } from "../../components/gallery/AddArtworkForm";
+import { HomeNavbar } from "../../components/home/HomeNavbar";
+import { HomeSidebar } from "../../components/home/HomeSidebar";
 
 export const AddArtwork = ({ artworkId }) => {
   return (

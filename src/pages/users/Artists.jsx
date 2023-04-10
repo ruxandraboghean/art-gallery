@@ -1,7 +1,7 @@
 import React from "react";
-import { Artist } from "../components/Artist";
-import { HomeNavbar } from "../components/Home/HomeNavbar";
-import { HomeSidebar } from "../components/Home/HomeSidebar";
+import { Artist } from "../../components/Artist";
+import { HomeNavbar } from "../../components/home/HomeNavbar";
+import { HomeSidebar } from "../../components/home/HomeSidebar";
 
 export const Artists = () => {
   return (

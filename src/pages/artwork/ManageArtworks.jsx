@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 // firebase
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import {
   collection,
   doc,
@@ -14,13 +14,13 @@ import {
   where,
 } from "firebase/firestore";
 //components
-import { ArtworkArtistView } from "../components/Gallery/ArtworkArtistView";
-import { HomeNavbar } from "../components/Home/HomeNavbar";
-import { HomeSidebar } from "../components/Home/HomeSidebar";
+import { ArtworkArtistView } from "../../components/gallery/ArtworkArtistView";
+import { HomeNavbar } from "../../components/home/HomeNavbar";
+import { HomeSidebar } from "../../components/home/HomeSidebar";
 import Select from "react-select";
 import { Box, Fab } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-import RotateLeftIcon from '@mui/icons-material/RotateLeft';
+import AddIcon from "@mui/icons-material/Add";
+import RotateLeftIcon from "@mui/icons-material/RotateLeft";
 const sortOptions = [
   { label: "year", value: "year" },
   { label: "title", value: "title" },
@@ -56,7 +56,7 @@ export const ManageArtworks = () => {
 
   const handleAdd = () => {
     navigate("/add-artwork");
-  }
+  };
 
   const handleSearch = async () => {
     const q = query(
@@ -190,31 +190,31 @@ export const ManageArtworks = () => {
                       className="dropdown-input"
                     />
                   </div>
-                <div className="filter-dropdown-menu">
-                <Box sx={{ width: 100}}>
-                    <Fab
-                      color="secondary"
-                      aria-label="edit"
-                      className="action-btn"
-                      onClick={handleReset}
-                      sx={{ mb: 1 }}
-                    >
-                      <RotateLeftIcon sx={{ fontSize: 20 }} />
-                    </Fab>
-                  </Box>
-                  <Box sx={{ width: 100}}>
-                    <Fab
-                      color="secondary"
-                      aria-label="edit"
-                      className="action-btn"
-                      onClick={handleAdd}
-                      sx={{ mb: 1 }}
-                    >
-                      <AddIcon sx={{ fontSize: 20 }} />
-                    </Fab>
-                  </Box>
+                  <div className="filter-dropdown-menu">
+                    <Box sx={{ width: 100 }}>
+                      <Fab
+                        color="secondary"
+                        aria-label="edit"
+                        className="action-btn"
+                        onClick={handleReset}
+                        sx={{ mb: 1 }}
+                      >
+                        <RotateLeftIcon sx={{ fontSize: 20 }} />
+                      </Fab>
+                    </Box>
+                    <Box sx={{ width: 100 }}>
+                      <Fab
+                        color="secondary"
+                        aria-label="edit"
+                        className="action-btn"
+                        onClick={handleAdd}
+                        sx={{ mb: 1 }}
+                      >
+                        <AddIcon sx={{ fontSize: 20 }} />
+                      </Fab>
+                    </Box>
+                  </div>
                 </div>
-              </div>
               </div>
 
               <div className="header">

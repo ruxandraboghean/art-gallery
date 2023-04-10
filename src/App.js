@@ -7,20 +7,18 @@ import {
 } from "react-router-dom";
 import "./App.scss";
 import { AuthContext } from "./context/AuthContext";
-import { Register } from "./pages/Register";
-import { Profile } from "./pages/Profile";
-import { Login } from "./pages/Login";
-import { Gallery } from "./pages/Gallery";
-import { Courses } from "./pages/Courses";
+import { Register } from "./pages/login_register/Register";
+import { Profile } from "./pages/users/Profile";
+import { Login } from "./pages/login_register/Login";
 import { Home } from "./pages/Home";
-import { Messages } from "./pages/Messages";
-import { Works } from "./pages/Works";
-import { Artists } from "./pages/Artists";
-import { AddArtwork } from "./pages/AddArtwork";
-import { ManageArtworks } from "./pages/ManageArtworks";
-import { AddCategory } from "./components/Gallery/AddCategory";
-import { RegisterExpert } from "./pages/RegisterExpert";
-import { RegisterUser } from "./pages/RegisterUser";
+import { Messages } from "./pages/chat/Messages";
+import { Exhibitions } from "./pages/exhibition/Exhibitions";
+import { Artists } from "./pages/users/Artists";
+import { AddArtwork } from "./pages/artwork/AddArtwork";
+import { ManageArtworks } from "./pages/artwork/ManageArtworks";
+import { RegisterExpert } from "./pages/login_register/RegisterExpert";
+import { RegisterUser } from "./pages/login_register/RegisterUser";
+import { Work } from "./pages/artwork/Work";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -57,32 +55,12 @@ function App() {
                 }
               />
             </Route>
-            <Route path="/gallery">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <Gallery />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
             <Route path="/messages">
               <Route
                 index
                 element={
                   <ProtectedRoute>
                     <Messages />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-            <Route path="/courses">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <Courses />
                   </ProtectedRoute>
                 }
               />
@@ -97,12 +75,12 @@ function App() {
                 }
               />
             </Route>
-            <Route path="/works">
+            <Route path="/exhibitions">
               <Route
                 index
                 element={
                   <ProtectedRoute>
-                    <Works />
+                    <Exhibitions />
                   </ProtectedRoute>
                 }
               />
@@ -127,12 +105,12 @@ function App() {
                 }
               />
             </Route>
-            <Route path="/add-category">
+            <Route path="/work">
               <Route
                 index
                 element={
                   <ProtectedRoute>
-                    <AddCategory />
+                    <Work />
                   </ProtectedRoute>
                 }
               />

@@ -1,5 +1,7 @@
 @import '../index.scss';
 @import './work.scss';
+@import './add-exhibition.scss';
+@import './exhibition-form.scss';
 
 .works-container {
     background-color: $base_color;
@@ -19,11 +21,11 @@
     .works-wrapper {
         @include flexbox-direction(flex, flex-start, column, space-between);
         gap: 3rem;
-        margin-top: 10rem;
+        margin-top: 5rem;
         border-radius: 50px;
         background-color: $base_color;
         height:250%;
-       
+      
         .exhibition-wrapper {
             @include flexbox(flex, flex-start, space-between);
             gap: 2rem;

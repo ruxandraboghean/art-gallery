@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Work = ({ painting }) => {
+export const ArtWork = ({ painting }) => {
   console.log(painting.title);
 
   return (

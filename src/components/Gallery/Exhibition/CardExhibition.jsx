@@ -2,6 +2,7 @@ import React from "react";
 import { categoryOptions } from "../../../mockData/categoryOptions";
 
 export const CardExhibition = () => {
+  const handleSeeExhibition = () => {};
   const optionsList = categoryOptions.map((option) => (
     <div className="exhibition-card-wrapper" key={option.value}>
       {/* <p className="vertical-title">{option.label}</p> */}
@@ -11,7 +12,10 @@ export const CardExhibition = () => {
           backgroundImage: `url(${option.imageSRC})`,
         }}
       >
-        <span className="see-exhibition"> See all</span>
+        <span className="see-exhibition" onClick={handleSeeExhibition}>
+          {" "}
+          See all
+        </span>
         <div className="info-wrapper">
           <div className="profile-info">
             <span>Name</span>
