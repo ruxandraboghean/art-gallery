@@ -1,4 +1,4 @@
-###osf_project
+### university thesis
 
 ### `npm start`
 
