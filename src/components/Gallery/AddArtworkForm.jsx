@@ -281,132 +281,135 @@ export const AddArtworkForm = () => {
           )}
         </div>
       </div>
-      <form className="form">
-        <div className="input-item">
-          <label htmlFor="title">title</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="title"
-            value={artworkData?.title}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="input-item">
-          <label htmlFor="year">year</label>
-          <input
-            type="text"
-            id="year"
-            name="year"
-            placeholder="year"
-            value={artworkData?.year}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="input-item">
-          <label htmlFor="description">description</label>
-          <input
-            type="text"
-            id="description"
-            name="description"
-            placeholder="description"
-            value={artworkData?.description}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="art-details">
+      <form className="form" id="exhibition-form">
+        <div className="inputs">
           <div className="input-item">
-            <label htmlFor="height">height</label>
+            {/* <label htmlFor="title">title</label> */}
             <input
               type="text"
-              id="height  "
-              name="height"
-              placeholder="height"
-              value={artworkData?.height}
+              id="title"
+              name="title"
+              placeholder="title"
+              value={artworkData?.title}
               onChange={handleChange}
             />
           </div>
           <div className="input-item">
-            <label htmlFor="width">width</label>
+            {/* <label htmlFor="year">year</label> */}
             <input
               type="text"
-              id="width"
-              name="width"
-              placeholder="width"
-              value={artworkData?.width}
+              id="year"
+              name="year"
+              placeholder="year"
+              value={artworkData?.year}
               onChange={handleChange}
             />
           </div>
           <div className="input-item">
-            <label htmlFor="depth">depth</label>
+            {/* <label htmlFor="description">description</label> */}
             <input
               type="text"
-              id="depth"
-              name="depth"
-              placeholder="depth"
-              value={artworkData?.depth}
+              id="description"
+              name="description"
+              placeholder="description"
+              value={artworkData?.description}
               onChange={handleChange}
             />
           </div>
+          <div className="art-details">
+            <div className="input-item">
+              {/* <label htmlFor="height">height</label> */}
+              <input
+                type="text"
+                id="height  "
+                name="height"
+                placeholder="height"
+                value={artworkData?.height}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-item">
+              {/* <label htmlFor="width">width</label> */}
+              <input
+                type="text"
+                id="width"
+                name="width"
+                placeholder="width"
+                value={artworkData?.width}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="input-item">
+              {/* <label htmlFor="depth">depth</label> */}
+              <input
+                type="text"
+                id="depth"
+                name="depth"
+                placeholder="depth"
+                value={artworkData?.depth}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="art-details-types">
+            <div className="input-item">
+              {/* <label htmlFor="unit">unit</label> */}
+              <Select
+                styles={{ width: 400 }}
+                value={artworkData.unit}
+                onChange={({ label, value }) =>
+                  handleDropdownChange("unit", { label, value })
+                }
+                options={unitOptions}
+                className="dropdown-input"
+              />
+            </div>
+            <div className="input-item">
+              {/* <label htmlFor="technique">technique</label> */}
+              <Select
+                styles={{ width: 400 }}
+                value={artworkData.technique}
+                onChange={({ label, value }) =>
+                  handleDropdownChange("technique", { label, value })
+                }
+                options={techniqueOptions}
+                className="dropdown-input"
+              />
+            </div>
+          </div>
+          <div className="art-details-types">
+            <div className="input-item">
+              {/* <label htmlFor="genre">genre</label> */}
+              <Select
+                styles={{ width: 400 }}
+                value={artworkData.genre}
+                onChange={({ label, value }) =>
+                  handleDropdownChange("genre", { label, value })
+                }
+                options={genreOptions}
+                className="dropdown-input"
+              />
+            </div>
 
-          <div className="input-item">
-            <label htmlFor="unit">unit</label>
-            <Select
-              styles={{ width: 400 }}
-              value={artworkData.unit}
-              onChange={({ label, value }) =>
-                handleDropdownChange("unit", { label, value })
-              }
-              options={unitOptions}
-              className="dropdown-input"
-            />
+            <div className="input-item">
+              {/* <label htmlFor="category"> category </label> */}
+              <Select
+                styles={{ width: 400 }}
+                value={artworkData.category}
+                onChange={({ label, value }) =>
+                  handleDropdownChange("category", { label, value })
+                }
+                options={categoryOptions}
+                className="dropdown-input"
+              />
+            </div>
           </div>
         </div>
-        <div className="art-details-types">
-          <div className="input-item">
-            <label htmlFor="technique">technique</label>
-            <Select
-              styles={{ width: 400 }}
-              value={artworkData.technique}
-              onChange={({ label, value }) =>
-                handleDropdownChange("technique", { label, value })
-              }
-              options={techniqueOptions}
-              className="dropdown-input"
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="genre">genre</label>
-            <Select
-              styles={{ width: 400 }}
-              value={artworkData.genre}
-              onChange={({ label, value }) =>
-                handleDropdownChange("genre", { label, value })
-              }
-              options={genreOptions}
-              className="dropdown-input"
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="category"> category </label>
-            <Select
-              styles={{ width: 400 }}
-              value={artworkData.category}
-              onChange={({ label, value }) =>
-                handleDropdownChange("category", { label, value })
-              }
-              options={categoryOptions}
-              className="dropdown-input"
-            />
-          </div>
-        </div>
-
         <div className="buttons">
-          <button className="cancel" name="cancel" onClick={refreshPage}>
+          <button id="cancel" name="cancel" onClick={refreshPage}>
             Cancel
           </button>
-          <button className="save" name="save" onClick={handleSaveArtwork}>
+          <button id="save" name="save" onClick={handleSaveArtwork}>
             Save
           </button>
           <button className="publish" name="publish" onClick={publishArtwork}>

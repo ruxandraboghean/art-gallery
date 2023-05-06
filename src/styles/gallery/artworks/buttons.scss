@@ -1,23 +1,18 @@
 .buttons {
     @include flexbox(flex, center, center);
-    margin-top: 2rem;
-    gap:1rem;
+    gap:2rem;
 
     button {
         @include upload-btn; 
-        @include dim(6em, 2rem);
+        @include dim(10rem, 2.5rem);
+        font-size: $s; 
 
-        .cancel {
-            &:hover {
-                background-color: orange;
-            }
-        }
-    
-        .save {
-            &:hover {
-                background-color: green;
-            }
-          
+        &#cancel:hover {
+            background-color: $danger_color;
+        } 
+
+         &#save:hover {
+            background-color: $success_color;
         }
     }
 }

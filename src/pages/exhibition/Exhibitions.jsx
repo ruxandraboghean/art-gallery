@@ -2,7 +2,6 @@ import React from "react";
 import { HomeNavbar } from "../../components/home/HomeNavbar";
 import { HomeSidebar } from "../../components/home/HomeSidebar";
 import { Exhibition } from "../../components/gallery/exhibition/Exhibition";
-import { AddExhibitionButton } from "../../components/gallery/exhibition/AddExhibitionButton";
 
 export const Exhibitions = () => {
   return (
@@ -13,7 +12,7 @@ export const Exhibitions = () => {
         <div className="works-container">
           <div className="works-title">Exhibitions</div>
           <div className="works-wrapper">
-            <AddExhibitionButton />
+            <a href="google.com" />
             <Exhibition />
             <Exhibition />
             <Exhibition />

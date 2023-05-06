@@ -40,7 +40,7 @@ function App() {
                 index
                 element={
                   <ProtectedRoute>
-                    <Messages />
+                    <Exhibitions />
                   </ProtectedRoute>
                 }
               />

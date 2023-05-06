@@ -17,7 +17,7 @@ $l  : 1.2rem;
 $xl : 1.4rem;
 $xxl: 2.0rem;
 
-$base_color             :  #FFF9FD !default;
+$base_color             :  #FFFFFF !default;
 $base_color_pink        :  #eedfe5 !default;
 $light_purple           :  #F3EFFA !default;
 $medium_purple          :  #af92c6 !default;
@@ -30,6 +30,8 @@ $magenta                :  #6D398E !default;
 $dark_magenta           :  #532351 !default;
 $pale_purple            :  #EFE7FF !default;
 $pale_grayish_purple    :  rgb(187,174,209, 0.2);
+$success_color          :  #9AB0A6;
+$danger_color           :  #C47A7A;
 
 $text-white             :  #FFF9FD !default;
 $text_purple            :  #6E6D90 !default;

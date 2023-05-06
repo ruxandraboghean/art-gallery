@@ -5,6 +5,7 @@ import { categoryOptions } from "../../../mockData/categoryOptions";
 
 import * as ImIcons from "react-icons/im";
 import * as TiIcons from "react-icons/ti";
+import * as AiIcons from "react-icons/ai";
 import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../../firebase";
 import {
@@ -123,110 +124,72 @@ export const ExhibitionForm = () => {
   return (
     <>
       <div className="artwork-form-container" id="exhibition-form-container">
-        <div className="image-container">
-          <div
-            className={`upload-container ${
-              isImageUploaded && "upload-container-none"
-            }`}
-          >
-            <ImIcons.ImDownload className="drag-icon" />
-            <p>Drag & Drop your artwork here.</p>
-            <input
-              type="file"
-              id="upload-btn"
-              accept="image/*"
-              className="input-upload"
-              onChange={loadFile}
-            />
-            <label htmlFor="upload-btn" className="upload-btn">
-              Upload
-            </label>
-          </div>
-
-          <div className="img-wrapper">
-            {isImageUploaded && (
-              <>
-                <TiIcons.TiDelete
-                  className="remove-icon"
-                  onClick={handleRemoveImg}
-                />
-                <img
-                  src={exhibition?.coverPhotoURL?.imageSrc}
-                  className="img-uploaded"
-                />
-              </>
-            )}
-          </div>
-        </div>
         <form className="form" id="exhibition-form">
-          <div className="input-item">
-            <label htmlFor="title">title</label>
-            <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="title"
-              value={exhibition?.title}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="year">year</label>
-            <input
-              type="text"
-              id="year"
-              name="year"
-              placeholder="year"
-              value={exhibition?.year}
-              className="exhibition-item"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="input-item">
-            <label htmlFor="description">description</label>
-            <input
-              type="text"
-              id="description"
-              name="description"
-              placeholder="description"
-              value={exhibition?.description}
-              className="exhibition-item"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="art-details-types">
-            <div className="input-item fit-content">
-              <label htmlFor="date">date</label>
+          <div className="inputs">
+            <div className="input-item">
               <input
-                type="date"
-                id="date"
-                name="date"
-                placeholder="date"
-                value={exhibition?.date}
-                className="exhibition-item"
-                onChange={handleDateChange}
+                type="text"
+                id="title"
+                name="title"
+                placeholder="title"
+                value={exhibition?.title}
+                onChange={handleChange}
               />
             </div>
-
-            <div className="input-item fit-content">
-              <label htmlFor="category"> category </label>
-              <Select
-                styles={{ width: 400 }}
-                value={exhibition.category}
-                onChange={({ label, value }) =>
-                  handleDropdownChange("category", { label, value })
-                }
-                options={categoryOptions}
-                className="dropdown-input"
+            <div className="input-item">
+              <input
+                type="text"
+                id="year"
+                name="year"
+                placeholder="year"
+                value={exhibition?.year}
+                className="exhibition-item"
+                onChange={handleChange}
               />
+            </div>
+            <div className="input-item">
+              <input
+                type="text"
+                id="description"
+                name="description"
+                placeholder="description"
+                value={exhibition?.description}
+                className="exhibition-item"
+                onChange={handleChange}
+              />
+            </div>
+            <div className="art-details-types">
+              <div className="input-item fit-content">
+                <input
+                  type="date"
+                  id="date"
+                  name="date"
+                  placeholder="date"
+                  value={exhibition?.date}
+                  className="exhibition-item"
+                  onChange={handleDateChange}
+                />
+              </div>
+
+              <div className="input-item fit-content">
+                <Select
+                  styles={{ width: 400 }}
+                  value={exhibition.category}
+                  onChange={({ label, value }) =>
+                    handleDropdownChange("category", { label, value })
+                  }
+                  options={categoryOptions}
+                  className="dropdown-input"
+                />
+              </div>
             </div>
           </div>
 
           <div className="buttons">
-            <button className="cancel" name="cancel">
+            <button id="cancel" name="cancel">
               Cancel
             </button>
-            <button className="save" name="save" onClick={handleSaveExhibition}>
+            <button id="save" name="save" onClick={handleSaveExhibition}>
               Save
             </button>
             <button className="publish" name="publish">

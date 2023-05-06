@@ -1,4 +1,5 @@
-import React from "react";
+import { React, useState } from "react";
+
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -7,8 +8,34 @@ import { auth } from "../../firebase";
 import { AccountCircle } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { AddCircle, SettingsSystemDaydream } from "@mui/icons-material";
+import { ExhibitionForm } from "../gallery/exhibition/ExhibitionForm";
+import { Modal } from "../Modal";
+import { AddArtworkForm } from "../gallery/AddArtworkForm";
+
+import * as AiIcons from "react-icons/ai";
 
 export default function UserSubmenu() {
+  const [isOpenExhibition, setIsOpenExhibition] = useState(false);
+  const [isOpenArtwork, setIsOpenArtwork] = useState(false);
+
+  const handleOpenModal = (id) => {
+    if (id === "artwork") {
+      setIsOpenArtwork(true);
+      return;
+    }
+
+    setIsOpenExhibition(true);
+  };
+
+  const handleCloseModal = (id) => {
+    if (id === "artwork") {
+      setIsOpenArtwork(false);
+      return;
+    }
+
+    setIsOpenExhibition(false);
+  };
+
   return (
     <>
       <div className="dropdown-menu">
@@ -18,8 +45,13 @@ export default function UserSubmenu() {
               <AccountCircle />
             </Fab>
           </Link>
-          <Link to="/add-artwork">
-            <Fab color="secondary" aria-label="edit" className="account-btn">
+          <Link to="/">
+            <Fab
+              color="secondary"
+              aria-label="edit"
+              className="account-btn"
+              onClick={() => handleOpenModal("artwork")}
+            >
               <AddCircle />
             </Fab>
           </Link>
@@ -28,18 +60,47 @@ export default function UserSubmenu() {
               <SettingsSystemDaydream />
             </Fab>
           </Link>
-          <Fab
-            color="secondary"
-            aria-label="edit"
-            className="signout-btn"
-            onClick={() => {
-              signOut(auth);
-            }}
-          >
-            <LogoutIcon />
-          </Fab>
+          <Link to="#">
+            <Fab
+              color="secondary"
+              aria-label="edit"
+              className="account-btn"
+              onClick={() => {
+                signOut(auth);
+              }}
+            >
+              <LogoutIcon />
+            </Fab>
+          </Link>
+
+          <Link to="#">
+            <Fab
+              color="secondary"
+              aria-label="edit"
+              className="account-btn"
+              onClick={() => handleOpenModal("exhibition")}
+            >
+              <AddCircle />
+            </Fab>
+          </Link>
         </Box>
       </div>
+
+      <Modal isOpen={isOpenExhibition} id="exhibition">
+        <AiIcons.AiOutlineCloseCircle
+          onClick={() => handleCloseModal("exhibition")}
+          id="close-button"
+        />
+        <ExhibitionForm />
+      </Modal>
+      <Modal isOpen={isOpenArtwork} id="artwork">
+        <AiIcons.AiOutlineCloseCircle
+          onClick={() => handleCloseModal("artwork")}
+          id="close-button"
+        />
+
+        <AddArtworkForm />
+      </Modal>
     </>
   );
 }

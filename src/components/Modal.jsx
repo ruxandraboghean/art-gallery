@@ -1,7 +1,7 @@
 import React from "react";
 
 export const Modal = (props) => {
-  const { isOpen, onClose, children } = props;
+  const { isOpen, children } = props;
 
   if (!isOpen) {
     return null;
@@ -10,7 +10,7 @@ export const Modal = (props) => {
   return (
     <>
       <section className="modal">{children}</section>
-      <div className="overlay" onClick={onClose}></div>
+      <div className="overlay"></div>
     </>
   );
 };
