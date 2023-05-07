@@ -17,44 +17,49 @@
     }
 }
 
-@mixin arrow-right {
-    margin-left: 0.5rem;
-    color:$purple;
-    float:right;
-   
-    &:hover {
-        color:$base_color;
-        font-size: $bold;
-    }
-}
-
 .register-user{
     @include flexbox(flex, center, center);
-    gap:2rem;
+    gap:4rem;
     margin-top: 1rem;
 
     .register-as {
-        @include font($brittany, $normal, $l);
+        @include font($roboto-mono, $normal, $m);
         letter-spacing: 0.1rem;
     }
 
     .users{
         @include font($roboto-mono, $normal, $m);
-    
-        .user{
-           @include users();
+        @include flexbox(flex, stretch, center);
+        gap: 5rem;
+        padding: 2rem;
 
            .arrow-right {
-            @include arrow-right();
+            @include flexbox-direction(flex, center, column, center);
+                flex-basis: 0;
+                flex-grow: 1;
+                text-decoration: inherit;
+                margin: 0;
+                gap: 2rem;
+                color: $dark_magenta;
+                font-size: $s;
+
+                .user_icon, .expert_icon {
+                    width: 4rem;
+                    height: 4rem;
+                }
+                .user{
+                    @include flexbox(flex, center, center);
+                    gap:1rem;
+                    padding: 2rem;
+                    border: 1px solid $base_color_pink;
+                    border-radius: 5px;
+        
+                    &:hover {
+                        background-color: $base_color_pink;
+                        cursor: pointer;
+                    }
            }
         }
 
-        .expert{
-            @include users();
-            
-            .arrow-right {
-                @include arrow-right();
-            }
-        }
     }
 }

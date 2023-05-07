@@ -1,4 +1,7 @@
 import React, { useContext, useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import { ClipLoader } from "react-spinners";
 import Select from "react-select";
 import { categoryOptions } from "../../../mockData/categoryOptions";
@@ -28,25 +31,7 @@ export const ExhibitionForm = () => {
   const [exhibition, setExhibition] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(false);
-
-  const isImageUploaded = exhibition?.coverPhotoURL !== null;
-
-  function loadFile(e) {
-    setExhibition({
-      ...exhibition,
-      coverPhotoURL: {
-        imageSrc: URL.createObjectURL(e.target.files[0]),
-        file: e.target.files[0],
-      },
-    });
-  }
-
-  const handleRemoveImg = () => {
-    setExhibition({
-      ...exhibition,
-      coverPhotoURL: null,
-    });
-  };
+  const [startDate, setStartDate] = useState(new Date());
 
   const resetState = (e) => {
     e.preventDefault();
@@ -160,7 +145,15 @@ export const ExhibitionForm = () => {
             </div>
             <div className="art-details-types">
               <div className="input-item fit-content">
-                <input
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date)}
+                  minDate={new Date()}
+                  maxDate={new Date("2050-01-01")}
+                  className="custom-datepicker"
+                />
+
+                {/* <input
                   type="date"
                   id="date"
                   name="date"
@@ -168,7 +161,7 @@ export const ExhibitionForm = () => {
                   value={exhibition?.date}
                   className="exhibition-item"
                   onChange={handleDateChange}
-                />
+                /> */}
               </div>
 
               <div className="input-item fit-content">

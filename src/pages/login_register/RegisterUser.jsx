@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { auth, db, storage } from "../../firebase";
 import { doc, setDoc } from "firebase/firestore";
@@ -19,10 +19,16 @@ export const RegisterUser = () => {
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const { from } = location.state;
+
+  console.log(from, "from");
+
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
 
+    console.log(e.target, "target");
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
@@ -47,6 +53,7 @@ export const RegisterUser = () => {
               displayName,
               email,
               photoURL: downloadURL,
+              role: from,
             });
 
             await setDoc(doc(db, "userChats", res.user.uid), {});

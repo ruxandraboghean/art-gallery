@@ -2,9 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import logo from "../../images/logo/no_illusion_logo.png";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import user from "../../images/artist.png";
+import expert from "../../images/verified-account.png";
 
 export const Register = () => {
   return (
@@ -16,26 +15,27 @@ export const Register = () => {
               <img src={logo} alt="Logo" className="logo" />
             </div>
             <div className="register-user">
-              <div className="register-as">Register as</div>
               <div className="users">
-                <div className="user">
-                  user
-                  <Link to="/register-user" className="arrow-right">
-                    <FontAwesomeIcon
-                      icon={faCircleArrowRight}
-                      className="arrow-right"
-                    />
-                  </Link>
-                </div>
-                <div className="expert">
-                  expert
-                  <Link to="/register-expert" className="arrow-right">
-                    <FontAwesomeIcon
-                      icon={faCircleArrowRight}
-                      className="arrow-right"
-                    />
-                  </Link>
-                </div>
+                <Link
+                  to="/register-user"
+                  state={{ from: "user" }}
+                  className="arrow-right"
+                >
+                  <div className="user">
+                    <img src={user} alt="user" className="user_icon" />
+                    <span className="register_account">user</span>
+                  </div>
+                </Link>
+                <Link
+                  to="/register-expert"
+                  state={{ from: "expert" }}
+                  className="arrow-right"
+                >
+                  <div className="user">
+                    <img src={expert} alt="expert" className="expert_icon" />
+                    <span className="register_account">art authenticator</span>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>

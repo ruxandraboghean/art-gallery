@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { auth, db, storage } from "../../firebase";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
@@ -16,69 +16,102 @@ import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import AttachmentIcon from "@mui/icons-material/Attachment";
 
 export const RegisterExpert = () => {
+  const [formValues, setFormValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    checkPassword: "",
+    file: "",
+    certificate: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(false);
-  const navigate = useNavigate();
+
+  const location = useLocation();
+  const { from } = location.state;
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormValues((previousValues) => ({
+      ...previousValues,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
 
+    console.log(e.target[5].files[0], "target");
+
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
-    // const checkPassword = e.target[3].value;
-    const file = e.target[4].files[0];
-    const certificate = e.target[5].files[0];
+    const checkPassword = e.target[3].value;
+    const file = e.target[4].files[0] || null;
+    const certificate = e.target[5].files[0] || null;
 
-    try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-
-      const storageRef = ref(storage, displayName);
-
-      await uploadBytesResumable(storageRef, file).then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL,
-            });
-
-            await setDoc(doc(db, "users", res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              email,
-              photoURL: downloadURL,
-            });
-
-            setIsLoading(false);
-          } catch (err) {
-            setErr(true);
-          }
-        });
-      });
-      await uploadBytesResumable(storageRef, certificate).then(() => {
-        getDownloadURL(storageRef).then(async (downloadURL) => {
-          try {
-            await updateProfile(res.user, {
-              displayName,
-              certificateURL: downloadURL,
-            });
-
-            await updateDoc(doc(db, "users", res.user.uid), {
-              certificateURL: downloadURL,
-            });
-
-            setIsLoading(false);
-            //your request has been registered
-          } catch (err) {
-            setErr(true);
-          }
-        });
-      });
-    } catch (err) {
-      setErr(true);
+    if (
+      !formValues.username.trim() ||
+      !formValues.email.trim() ||
+      !formValues.password.trim() ||
+      !formValues.checkPassword.trim() ||
+      !formValues.file.trim() ||
+      !formValues.certificate.trim()
+    ) {
+      alert("Please complete all required fields.");
       setIsLoading(false);
+    } else {
+      try {
+        const res = await createUserWithEmailAndPassword(auth, email, password);
+
+        const storageRef = ref(storage, displayName);
+
+        await uploadBytesResumable(storageRef, file).then(() => {
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            try {
+              await updateProfile(res.user, {
+                displayName,
+                photoURL: downloadURL,
+              });
+
+              await setDoc(doc(db, "users", res.user.uid), {
+                uid: res.user.uid,
+                displayName,
+                email,
+                photoURL: downloadURL,
+                role: from,
+              });
+
+              setIsLoading(false);
+            } catch (err) {
+              setErr(true);
+            }
+          });
+        });
+        await uploadBytesResumable(storageRef, certificate).then(() => {
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            try {
+              await updateProfile(res.user, {
+                displayName,
+                certificateURL: downloadURL,
+              });
+
+              await updateDoc(doc(db, "users", res.user.uid), {
+                certificateURL: downloadURL,
+              });
+
+              setIsLoading(false);
+            } catch (err) {
+              setErr(true);
+            }
+          });
+        });
+      } catch (err) {
+        setErr(true);
+        setIsLoading(false);
+      }
     }
   };
 
@@ -97,31 +130,73 @@ export const RegisterExpert = () => {
               <div>
                 <div className="input-icons-register">
                   <i className="fa fa-user"></i>
-                  <input type="text" placeholder="username" />
+                  <input
+                    type="text"
+                    placeholder="username"
+                    name="username"
+                    value={formValues.username}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="input-icons-register">
                   <i className="fa fa-envelope"></i>
-                  <input type="email" placeholder="email" />
+                  <input
+                    type="email"
+                    placeholder="email"
+                    name="email"
+                    value={formValues.email}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="input-icons-register">
                   <i className="fa fa-duotone fa-lock"></i>
-                  <input type="password" placeholder="password" />
+                  <input
+                    type="password"
+                    placeholder="password"
+                    name="password"
+                    value={formValues.password}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="input-icons-register">
                   <i className="fa fa-duotone fa-lock"></i>
-                  <input type="password" placeholder="confirm password" />
+                  <input
+                    type="password"
+                    placeholder="confirm password"
+                    name="checkPassword"
+                    value={formValues.checkPassword}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
-              <input style={{ display: "none" }} type="file" id="file" />
               <div className="upload-files">
                 <label htmlFor="file">
                   <AddPhotoAlternateIcon className="add-avatar" />
                   <span> Add an avatar </span>
                 </label>
-                <label htmlFor="file">
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  accept=".jpg, .png, .svg"
+                  name="file"
+                  id="file"
+                  value={formValues.file}
+                  onChange={handleChange}
+                />
+
+                <label htmlFor="certificate">
                   <AttachmentIcon className="add-avatar" />
                   <span> Add certificate </span>
                 </label>
+                <input
+                  style={{ display: "none" }}
+                  type="file"
+                  accept=".pdf, .doc, .docx"
+                  name="certificate"
+                  id="certificate"
+                  value={formValues.certificate}
+                  onChange={handleChange}
+                />
               </div>
 
               <button className="form-button">

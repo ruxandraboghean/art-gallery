@@ -10,6 +10,11 @@
     transition: ease-in-out all .4s;
     display: table;
 
+    .addExhibitionIcon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
     &:hover {
         width: 1rem;
         opacity: 1;

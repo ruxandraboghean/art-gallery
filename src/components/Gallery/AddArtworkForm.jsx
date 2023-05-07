@@ -44,9 +44,10 @@ const initialState = {
   category: null,
 };
 
-export const AddArtworkForm = () => {
+export const AddArtworkForm = ({ onClose }) => {
   const [artworkData, setArtworkData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -76,6 +77,10 @@ export const AddArtworkForm = () => {
 
   const handleRemoveImg = () => {
     refreshPage();
+  };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
   };
 
   const handleChange = (e) => {
@@ -122,7 +127,7 @@ export const AddArtworkForm = () => {
         resetState(e);
         setErr(false);
         console.log("Document written with ID: ", docRef.id);
-        navigate("/gallery");
+        navigate("/");
       } else {
         try {
           const storageRef = sRef(storage, artId);
@@ -188,7 +193,8 @@ export const AddArtworkForm = () => {
   }
 
   //PUBLISH
-  const publishArtwork = async () => {
+  const publishArtwork = async (e) => {
+    e.preventDefault();
     const docRef = doc(collection(db, "artworks"));
     const artId = docRef.id;
 
@@ -284,7 +290,6 @@ export const AddArtworkForm = () => {
       <form className="form" id="exhibition-form">
         <div className="inputs">
           <div className="input-item">
-            {/* <label htmlFor="title">title</label> */}
             <input
               type="text"
               id="title"
@@ -295,7 +300,6 @@ export const AddArtworkForm = () => {
             />
           </div>
           <div className="input-item">
-            {/* <label htmlFor="year">year</label> */}
             <input
               type="text"
               id="year"
@@ -306,7 +310,6 @@ export const AddArtworkForm = () => {
             />
           </div>
           <div className="input-item">
-            {/* <label htmlFor="description">description</label> */}
             <input
               type="text"
               id="description"
@@ -318,9 +321,8 @@ export const AddArtworkForm = () => {
           </div>
           <div className="art-details">
             <div className="input-item">
-              {/* <label htmlFor="height">height</label> */}
               <input
-                type="text"
+                type="number"
                 id="height  "
                 name="height"
                 placeholder="height"
@@ -329,9 +331,8 @@ export const AddArtworkForm = () => {
               />
             </div>
             <div className="input-item">
-              {/* <label htmlFor="width">width</label> */}
               <input
-                type="text"
+                type="number"
                 id="width"
                 name="width"
                 placeholder="width"
@@ -340,9 +341,8 @@ export const AddArtworkForm = () => {
               />
             </div>
             <div className="input-item">
-              {/* <label htmlFor="depth">depth</label> */}
               <input
-                type="text"
+                type="number"
                 id="depth"
                 name="depth"
                 placeholder="depth"
@@ -353,10 +353,10 @@ export const AddArtworkForm = () => {
           </div>
           <div className="art-details-types">
             <div className="input-item">
-              {/* <label htmlFor="unit">unit</label> */}
               <Select
                 styles={{ width: 400 }}
                 value={artworkData.unit}
+                placeholder="unit"
                 onChange={({ label, value }) =>
                   handleDropdownChange("unit", { label, value })
                 }
@@ -365,10 +365,10 @@ export const AddArtworkForm = () => {
               />
             </div>
             <div className="input-item">
-              {/* <label htmlFor="technique">technique</label> */}
               <Select
                 styles={{ width: 400 }}
                 value={artworkData.technique}
+                placeholder="technique"
                 onChange={({ label, value }) =>
                   handleDropdownChange("technique", { label, value })
                 }
@@ -379,10 +379,10 @@ export const AddArtworkForm = () => {
           </div>
           <div className="art-details-types">
             <div className="input-item">
-              {/* <label htmlFor="genre">genre</label> */}
               <Select
                 styles={{ width: 400 }}
                 value={artworkData.genre}
+                placeholder="genre"
                 onChange={({ label, value }) =>
                   handleDropdownChange("genre", { label, value })
                 }
@@ -392,10 +392,10 @@ export const AddArtworkForm = () => {
             </div>
 
             <div className="input-item">
-              {/* <label htmlFor="category"> category </label> */}
               <Select
                 styles={{ width: 400 }}
                 value={artworkData.category}
+                placeholder="category"
                 onChange={({ label, value }) =>
                   handleDropdownChange("category", { label, value })
                 }
@@ -404,16 +404,53 @@ export const AddArtworkForm = () => {
               />
             </div>
           </div>
+          <div className="input-item-checkbox">
+            <input
+              type="checkbox"
+              id="certificate"
+              checked={isChecked}
+              onChange={handleCheckboxChange}
+            />
+            <label for="certificate">has certificate</label>
+          </div>
+          {!isChecked && (
+            <div className="input-item">
+              <Select
+                styles={{ width: 400 }}
+                value={artworkData.genre}
+                placeholder="art authenticator"
+                onChange={({ label, value }) =>
+                  handleDropdownChange("genre", { label, value })
+                }
+                options={genreOptions}
+                className="dropdown-input"
+              />
+            </div>
+          )}
+          {isChecked && (
+            <div className="input-item dropdown-input">
+              <label htmlFor="upload-btn" className="custom-file-upload">
+                <i className="fa fa-cloud-upload"></i> upload certificate
+              </label>
+              <input
+                type="file"
+                id="upload-btn"
+                accept="image/*"
+                style={{ display: "none" }}
+              />
+            </div>
+          )}
+          {err && <p className="error">You have to upload an image</p>}
         </div>
         <div className="buttons">
-          <button id="cancel" name="cancel" onClick={refreshPage}>
+          <button id="cancel" name="cancel" onClick={onClose}>
             Cancel
           </button>
           <button id="save" name="save" onClick={handleSaveArtwork}>
-            Save
+            Save as draft
           </button>
           <button className="publish" name="publish" onClick={publishArtwork}>
-            Publish
+            Send Request
           </button>
         </div>
         {isLoading && (
@@ -421,7 +458,6 @@ export const AddArtworkForm = () => {
             <ClipLoader size={30} aria-label="Loading Spinner" />
           </div>
         )}
-        {err && <p className="error">You have to upload an image</p>}
       </form>
     </div>
   );

@@ -5,14 +5,17 @@ import Fab from "@mui/material/Fab";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
-import { AccountCircle } from "@mui/icons-material";
+import { AccountCircle, Height } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { AddCircle, SettingsSystemDaydream } from "@mui/icons-material";
 import { ExhibitionForm } from "../gallery/exhibition/ExhibitionForm";
 import { Modal } from "../Modal";
 import { AddArtworkForm } from "../gallery/AddArtworkForm";
 
+import addExhibition from "../../images/exhibitions/add-exhibition.png";
+
 import * as AiIcons from "react-icons/ai";
+import * as TbIcons from "react-icons/tb";
 
 export default function UserSubmenu() {
   const [isOpenExhibition, setIsOpenExhibition] = useState(false);
@@ -55,11 +58,24 @@ export default function UserSubmenu() {
               <AddCircle />
             </Fab>
           </Link>
+
+          <Link to="#">
+            <Fab
+              color="secondary"
+              aria-label="edit"
+              className="account-btn"
+              onClick={() => handleOpenModal("exhibition")}
+            >
+              <img src={addExhibition} className="addExhibitionIcon" />
+            </Fab>
+          </Link>
+
           <Link to="/manage-artwork">
             <Fab color="secondary" aria-label="edit" className="account-btn">
               <SettingsSystemDaydream />
             </Fab>
           </Link>
+
           <Link to="#">
             <Fab
               color="secondary"
@@ -70,17 +86,6 @@ export default function UserSubmenu() {
               }}
             >
               <LogoutIcon />
-            </Fab>
-          </Link>
-
-          <Link to="#">
-            <Fab
-              color="secondary"
-              aria-label="edit"
-              className="account-btn"
-              onClick={() => handleOpenModal("exhibition")}
-            >
-              <AddCircle />
             </Fab>
           </Link>
         </Box>
@@ -99,7 +104,7 @@ export default function UserSubmenu() {
           id="close-button"
         />
 
-        <AddArtworkForm />
+        <AddArtworkForm onClose={() => handleCloseModal("artwork")} />
       </Modal>
     </>
   );
