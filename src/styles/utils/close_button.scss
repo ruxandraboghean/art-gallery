@@ -1,0 +1,43 @@
+.close_button {
+    background: none;
+    border:0;
+    color: $dark_magenta;
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: $l;
+    letter-spacing: 1.5px;
+    outline: none;
+    overflow: hidden;
+    text-transform: uppercase;
+    transition: all 0.2s ease-in;
+    width: 50px;
+
+    &::before,
+    .close_button::after {
+      color: $base_color_pink;
+      height: 0.2rem;
+      transform-origin: center left;
+      transition: all 0.2s ease-in;
+      width: 10rem;
+      z-index: -1;
+    }
+
+    &::before {
+        transform: rotate(45deg);
+    }
+
+    &::after {
+        transform: rotate(-45deg);
+    }
+
+    &:hover {
+        color: $base_color_pink;
+    }
+    
+    &:hover::before,
+    &:hover::after {
+        height: 10rem;
+        transform: rotate(0deg);
+    }
+  
+}

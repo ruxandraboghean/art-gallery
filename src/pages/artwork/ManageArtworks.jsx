@@ -15,8 +15,6 @@ import {
 } from "firebase/firestore";
 //components
 import { ArtworkArtistView } from "../../components/gallery/ArtworkArtistView";
-import { HomeNavbar } from "../../components/home/HomeNavbar";
-import { HomeSidebar } from "../../components/home/HomeSidebar";
 import Select from "react-select";
 import { Box, Fab } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
@@ -31,7 +29,13 @@ const orderOptions = [
   { label: "desc", value: "desc" },
 ];
 
-export const ManageArtworks = () => {
+export const ManageArtworks = ({
+  isOpenArtwork,
+  setIsOpenArtwork,
+  setArtworkId,
+  setMenuDropdownOpen,
+  handleOpenModal,
+}) => {
   const { currentUser } = useContext(AuthContext);
   const [artworks, setArtworks] = useState(null);
   const [searchedTitle, setSearchedTitle] = useState("");
@@ -48,14 +52,13 @@ export const ManageArtworks = () => {
   };
 
   const handleReset = () => {
-    console.log("reseting");
     setSearchedTitle("");
     setSortData(null);
     setFilteredData([]);
   };
 
   const handleAdd = () => {
-    navigate("/add-artwork");
+    // navigate("/add-artwork");
   };
 
   const handleSearch = async () => {
@@ -146,91 +149,93 @@ export const ManageArtworks = () => {
   }, [sortData]);
 
   return (
-    <div className="home">
-      <HomeSidebar />
-      <div className="content">
-        <HomeNavbar />
-        <div className="gallery-container">
-          <div className="gallery-wrapper">
-            <div className="artworks-container">
-              <div className="title">Manage Artworks</div>
+    <div className="gallery-container">
+      <div className="gallery-wrapper">
+        <div className="artworks-container">
+          <div className="title">Manage Artworks</div>
 
-              <div className="filter">
-                <div className="inputs">
-                  <div className="filter-item">
-                    <label htmlFor="title">TITLE</label>
-                    <input
-                      value={searchedTitle}
-                      name="title"
-                      type="text"
-                      id="title"
-                      onChange={handleChange}
-                      onKeyDown={handleKey}
-                    />
-                  </div>
-                  <div className="filter-item">
-                    <label htmlFor="sort">SORT BY</label>
-                    <Select
-                      value={sortData?.sortBy || null}
-                      onChange={({ label, value }) =>
-                        handleDropdownChange("sortBy", { label, value })
-                      }
-                      options={sortOptions}
-                      className="dropdown-input"
-                    />
-                  </div>
-                  <div className="filter-item">
-                    <label htmlFor="sort">ORDER</label>
-                    <Select
-                      value={sortData?.order || null}
-                      onChange={({ label, value }) =>
-                        handleDropdownChange("order", { label, value })
-                      }
-                      options={orderOptions}
-                      className="dropdown-input"
-                    />
-                  </div>
-                  <div className="filter-dropdown-menu">
-                    <Box sx={{ width: 100 }}>
-                      <Fab
-                        color="secondary"
-                        aria-label="edit"
-                        className="action-btn"
-                        onClick={handleReset}
-                        sx={{ mb: 1 }}
-                      >
-                        <RotateLeftIcon sx={{ fontSize: 20 }} />
-                      </Fab>
-                    </Box>
-                    <Box sx={{ width: 100 }}>
-                      <Fab
-                        color="secondary"
-                        aria-label="edit"
-                        className="action-btn"
-                        onClick={handleAdd}
-                        sx={{ mb: 1 }}
-                      >
-                        <AddIcon sx={{ fontSize: 20 }} />
-                      </Fab>
-                    </Box>
-                  </div>
-                </div>
+          <div className="filter">
+            <div className="inputs">
+              <div className="filter-item">
+                <label htmlFor="title">TITLE</label>
+                <input
+                  value={searchedTitle}
+                  name="title"
+                  type="text"
+                  id="title"
+                  onChange={handleChange}
+                  onKeyDown={handleKey}
+                />
               </div>
-
-              <div className="header">
-                <div className="header-item">IMAGE</div>
-                <div className="header-item">TITLE</div>
-                <div className="header-item">YEAR</div>
-                <div className="header-item">STATUS</div>
-                <div className="header-item">ACTIONS</div>
+              <div className="filter-item">
+                <label htmlFor="sort">SORT BY</label>
+                <Select
+                  value={sortData?.sortBy || null}
+                  onChange={({ label, value }) =>
+                    handleDropdownChange("sortBy", { label, value })
+                  }
+                  options={sortOptions}
+                  className="dropdown-input"
+                />
               </div>
-              {(filteredData.length === 0 ? artworks : filteredData)?.map(
-                (artwork) => (
-                  <ArtworkArtistView artwork={artwork} key={artwork.id} />
-                )
-              )}
+              <div className="filter-item">
+                <label htmlFor="sort">ORDER</label>
+                <Select
+                  value={sortData?.order || null}
+                  onChange={({ label, value }) =>
+                    handleDropdownChange("order", { label, value })
+                  }
+                  options={orderOptions}
+                  className="dropdown-input"
+                />
+              </div>
+              <div className="filter-dropdown-menu">
+                <Box sx={{ width: 100 }}>
+                  <Fab
+                    color="secondary"
+                    aria-label="edit"
+                    className="action-btn"
+                    onClick={handleReset}
+                    sx={{ mb: 1 }}
+                  >
+                    <RotateLeftIcon sx={{ fontSize: 20 }} />
+                  </Fab>
+                </Box>
+                <Box sx={{ width: 100 }}>
+                  <Fab
+                    color="secondary"
+                    aria-label="edit"
+                    className="action-btn"
+                    onClick={handleAdd}
+                    sx={{ mb: 1 }}
+                  >
+                    <AddIcon sx={{ fontSize: 20 }} />
+                  </Fab>
+                </Box>
+              </div>
             </div>
           </div>
+
+          <div className="header">
+            <div className="header-item">IMAGE</div>
+            <div className="header-item">TITLE</div>
+            <div className="header-item">YEAR</div>
+            <div className="header-item">STATUS</div>
+            <div className="header-item">ACTIONS</div>
+          </div>
+          {(filteredData.length === 0 ? artworks : filteredData)?.map(
+            (artwork) => (
+              <ArtworkArtistView
+                artwork={artwork}
+                key={artwork.id}
+                isOpenArtwork={isOpenArtwork}
+                setIsOpenArtwork={setIsOpenArtwork}
+                setArtworkId={setArtworkId}
+                setMenuDropdownOpen={setMenuDropdownOpen}
+                handleOpenModal={handleOpenModal}
+              />
+            )
+          )}
         </div>
       </div>
     </div>

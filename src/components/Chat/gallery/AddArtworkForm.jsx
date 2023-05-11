@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import * as ImIcons from "react-icons/im";
 import * as TiIcons from "react-icons/ti";
+import * as BsIcons from "react-icons/bs";
 
 import { unitOptions } from "../../mockData/unitOptions";
 import { techniqueOptions } from "../../mockData/techniqueOptions";
@@ -28,6 +29,7 @@ import {
 // components
 import Select from "react-select";
 import { ClipLoader } from "react-spinners";
+import select_styles from "../../../custom_styles/select_styles";
 
 const initialState = {
   title: "",
@@ -262,7 +264,7 @@ export const AddArtworkForm = () => {
             onChange={loadFile}
           />
           <label htmlFor="upload-btn" className="upload-btn">
-            Upload{" "}
+            <BsIcons.BsFillCloudUploadFill />
           </label>
         </div>
 
@@ -353,7 +355,7 @@ export const AddArtworkForm = () => {
           <div className="input-item">
             <label htmlFor="unit">unit</label>
             <Select
-              styles={{ width: 400 }}
+              styles={select_styles}
               value={artworkData.unit}
               onChange={({ label, value }) =>
                 handleDropdownChange("unit", { label, value })

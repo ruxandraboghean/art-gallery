@@ -11,9 +11,9 @@
         @include flexbox(flex, center, space-between);
         flex-wrap: wrap;
         @include dim (98.5%, 97.5%);
-        border: 1px solid $purple;
+        border: 1px solid $base_color_pink;
         border-radius: 50px;
-        background-color: $light_purple;
+        background-color: $base_color;
         overflow: scroll;
 
         &::-webkit-scrollbar { 

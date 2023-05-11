@@ -92,9 +92,8 @@
 }
 
 @mixin form-input {
-    @include font($roboto-mono, $normal, $xs);
+    @include font($roboto-mono, $normal, $xxs);
     padding: 0.7rem 1rem;
-    font-size: 0.9em;
     outline: none;
     background-color: $base_color;
     border: none;

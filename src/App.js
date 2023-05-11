@@ -14,7 +14,6 @@ import { Home } from "./pages/Home";
 import { Messages } from "./pages/chat/Messages";
 import { Exhibitions } from "./pages/exhibition/Exhibitions";
 import { Artists } from "./pages/users/Artists";
-import { AddArtwork } from "./pages/artwork/AddArtwork";
 import { ManageArtworks } from "./pages/artwork/ManageArtworks";
 import { RegisterExpert } from "./pages/login_register/RegisterExpert";
 import { RegisterUser } from "./pages/login_register/RegisterUser";
@@ -40,7 +39,7 @@ function App() {
                 index
                 element={
                   <ProtectedRoute>
-                    <Exhibitions />
+                    <Home />
                   </ProtectedRoute>
                 }
               />
@@ -85,16 +84,7 @@ function App() {
                 }
               />
             </Route>
-            <Route path="/add-artwork/:id?">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <AddArtwork />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
+
             <Route path="/manage-artwork">
               <Route
                 index

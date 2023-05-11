@@ -229,7 +229,7 @@
     .artworks-wrapper {
         .artwork {
             @include flexbox(flex, center, space-between);
-            background-color: rgb(231,228,238, 0.25);
+            background-color:$grayish_light;
             border-radius:10px;
             margin-top:1rem;
             padding: 0.5rem;

@@ -3,9 +3,18 @@ import { useOnHoverOutside } from "../../hooks/useOnHoverOutside";
 import { AuthContext } from "../../context/AuthContext";
 import UserSubmenu from "./UserSubmenu";
 
-export function MenuHeader() {
+export function MenuHeader({
+  setCurrentMenuItem,
+  setIsOpenArtwork,
+  isOpenArtwork,
+  artworkId,
+  setMenuDropdownOpen,
+  isMenuDropdownOpen,
+  handleOpenModal,
+  setIsSuccess,
+  setHasDisplayedMessage,
+}) {
   const dropdownRef = useRef(null);
-  const [isMenuDropdownOpen, setMenuDropdownOpen] = useState(false);
   const { currentUser } = useContext(AuthContext);
 
   const closeHoverMenu = () => {
@@ -22,7 +31,17 @@ export function MenuHeader() {
         onMouseOver={() => setMenuDropdownOpen(true)}
         alt="Avatar"
       />
-      {isMenuDropdownOpen && <UserSubmenu />}
+      {isMenuDropdownOpen && (
+        <UserSubmenu
+          setCurrentMenuItem={setCurrentMenuItem}
+          setIsOpenArtwork={setIsOpenArtwork}
+          isOpenArtwork={isOpenArtwork}
+          artworkId={artworkId}
+          handleOpenModal={handleOpenModal}
+          setIsSuccess={setIsSuccess}
+          setHasDisplayedMessage={setHasDisplayedMessage}
+        />
+      )}
     </div>
   );
 }

@@ -1,23 +1,30 @@
 import React from "react";
-import painting from "../../images/menu/painting.png";
-import artist from "../../images/menu/artist.png";
-import { Link } from "react-router-dom";
 import { MenuHeader } from "./MenuHeader";
 
-export const HomeNavbar = () => {
+export const HomeNavbar = ({
+  setCurrentMenuItem,
+  setIsOpenArtwork,
+  isOpenArtwork,
+  artworkId,
+  setMenuDropdownOpen,
+  isMenuDropdownOpen,
+  handleOpenModal,
+  setIsSuccess,
+  setHasDisplayedMessage,
+}) => {
   return (
     <div className="home-navbar">
-      {/* <div className="navbar">
-        <Link to="/works" className="link">
-          <img src={painting} alt="painting" />
-          <div className="works">Works</div>
-        </Link>
-        <Link to="/artists" className="link">
-          <img src={artist} alt="artist" />
-          <div className="artists">Artists</div>
-        </Link>
-      </div> */}
-      <MenuHeader />
+      <MenuHeader
+        setCurrentMenuItem={setCurrentMenuItem}
+        setIsOpenArtwork={setIsOpenArtwork}
+        isOpenArtwork={isOpenArtwork}
+        artworkId={artworkId}
+        setMenuDropdownOpen={setMenuDropdownOpen}
+        isMenuDropdownOpen={isMenuDropdownOpen}
+        handleOpenModal={handleOpenModal}
+        setIsSuccess={setIsSuccess}
+        setHasDisplayedMessage={setHasDisplayedMessage}
+      />
     </div>
   );
 };

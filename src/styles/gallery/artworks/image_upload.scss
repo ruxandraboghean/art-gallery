@@ -1,22 +1,27 @@
 .image-container {
     border-radius: 10px;
     padding: 0.5rem 1rem;
-    border: 1px dashed $grayish_purple;
+    border: 3px dashed $base_color_pink;
     border-spacing: 10px;
+    width: 80%;
+    height: 30%;
+    
   
     .upload-container {
-        @include flexbox-direction(flex, center, column, space-around);
+        @include flexbox-direction(flex, center, column, center);
         gap:1rem;
+        height: 100%;
 
         .drag-icon {
             @include dim(2.5rem, 2.5rem);
-            color:$dark_magenta;
+            color:$base_color_pink;
             cursor: pointer;
         }
 
         p {
             @include font($roboto-mono, $light, $s);
             text-align: center;
+            color:$dark_magenta;
 
             @include laptop {
                 font-size: 0.55rem;
@@ -51,17 +56,18 @@
     .upload-container-none {
         display: none;
     }
+
     .img-wrapper {
         @include flexbox-direction(flex, flex-end, column, flex-end);
-        width: auto;
-        height: auto;
+        width: 100%;
+        height: 100%;
 
         .img-uploaded {
             box-sizing: border-box;
             object-fit: cover;
             border-radius: 10px; 
-            max-width:50%;
-            max-height:50%;
+            max-width:80%;
+            height: 90%;
             margin: auto;
             display: block;
 
@@ -97,6 +103,11 @@
                 @include dim(1.75rem, 1.75rem);
             }
         }
+    }
+
+    
+    .image-none {
+        display: none;
     }
     
     @include tablet {

@@ -2,8 +2,8 @@
 
 .home-sidebar {
     height: 100vh;
-    background-color: $light_purple;
-    border-radius: 10px;
+    background-color:$grayish_normal;
+    border-radius: 0 10px 10px 0;
     margin-right: 1rem;
     flex:1.1;
 
@@ -14,23 +14,29 @@
             margin:auto;
             width: 50%;
             .logo {
-                @include dim(6rem, 6rem);
+                @include dim(2em, 3rem);
                 padding: 0.5rem 0 7.5rem 0;
                 cursor: pointer;
                 
                 @include monitor() {
-                    @include dim(7rem, 7rem);
+                    @include dim(2rem, 2.5rem);
                 }
             }
         }
+        .logo {
+            @include dim(3rem, 3rem);
+            padding: 2rem 0.5rem 7.5rem 0.5rem;
+            cursor: pointer;
+        }
+        
         .menu-icon {
-            @include dim(2rem, 2rem);
-            color: $dark_magenta;
+            @include dim(3.5rem, 3.5rem);
+            color: $base_color;
             padding-bottom: 12rem;
             cursor: pointer;
             padding-top:2rem;
             &:hover {
-                color: $purple;
+                color: $base_color_pink;
             }
         }
       
@@ -44,13 +50,13 @@
     }
    
     .sidebar-menu {
-        @include flexbox-direction(flex, left, column, space-between);
+        @include flexbox-direction(flex, center, column, space-between);
         gap:2rem;
         cursor: pointer;
         
         .link {
             text-decoration: none;
-            color: $magenta;
+            color: $base_color;
         }
         .sidebar-menu-item {
             @include flexbox(flex, center, flex-start);
@@ -59,7 +65,7 @@
             margin: 0 3.5rem 0 2rem;
 
             .sidebar-img {
-                @include dim(2rem, 2rem);
+                @include dim(1rem, 1rem);
                 color:$magenta;
             }
 
@@ -77,11 +83,14 @@
             margin: 0 0.5rem 0 0.25rem;
 
             .sidebar-img {
-                @include dim(2rem, 2rem);
+                @include dim(1.5rem, 1.5rem);
+                color:$magenta;
+
             }
         }
     }
 }
+
 .hidden-sidebar {
     flex: none;
 }

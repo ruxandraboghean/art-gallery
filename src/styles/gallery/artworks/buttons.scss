@@ -1,11 +1,12 @@
 .buttons {
     @include flexbox(flex, center, center);
     gap:2rem;
+    width: 90%;
 
     button {
         @include upload-btn; 
         @include dim(10rem, 2.5rem);
-        font-size: $s; 
+        font-size: $xs; 
 
         &#cancel:hover {
             background-color: $danger_color;

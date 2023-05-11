@@ -3,15 +3,18 @@ import { Link, useNavigate } from "react-router-dom";
 import { Box, Fab } from "@mui/material";
 import { DeleteForever, RemoveRedEye, EditOutlined } from "@mui/icons-material";
 
-export const ActionButtons = ({ artworkId }) => {
+export const ActionButtons = ({
+  artworkId,
+  isOpenArtwork,
+  setIsOpenArtwork,
+  setArtworkId,
+  setMenuDropdownOpen,
+  handleOpenModal,
+}) => {
   const navigate = useNavigate();
 
-  const handleEditButtonClick = () => {
-    navigate(`/add-artwork/${artworkId}`);
-  };
-
   const handleSeeGalleryButtonClick = () => {
-    navigate("/gallery");
+    navigate("/");
   };
 
   return (
@@ -22,7 +25,10 @@ export const ActionButtons = ({ artworkId }) => {
             color="secondary"
             aria-label="edit"
             className="action-btn"
-            onClick={handleEditButtonClick}
+            onClick={() => {
+              handleOpenModal("edit", "artwork", artworkId);
+              setMenuDropdownOpen(true);
+            }}
             sx={{ mb: 1 }}
           >
             <EditOutlined sx={{ fontSize: 20 }} />
@@ -36,7 +42,7 @@ export const ActionButtons = ({ artworkId }) => {
           >
             <RemoveRedEye sx={{ fontSize: 20 }} />
           </Fab>
-          <Link to="/gallery">
+          <Link to="/">
             <Fab
               color="secondary"
               aria-label="edit"

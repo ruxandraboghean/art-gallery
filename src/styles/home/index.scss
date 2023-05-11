@@ -9,21 +9,12 @@
     height: 100vh;
 
     .content {
-        flex:6;
+        max-width: 100%;
+        width: 90%;
     }
     .home-container {
         @include flexbox(flex, center, space-between);
         background-color: $base_color;
-        height: 95vh;
-        flex: 5;
-       
-        .home-wrapper {
-            @include dim (98.5%, 97.5%);
-            // border: 1px solid $purple;
-            border-radius: 50px;
-            display: flex;
-            overflow: hidden;
-            background-color: $light_purple;
-        }
+        max-width: 90%;
     }
 }

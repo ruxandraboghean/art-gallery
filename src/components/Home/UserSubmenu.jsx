@@ -1,59 +1,45 @@
-import { React, useState } from "react";
+import { React } from "react";
 
 import Box from "@mui/material/Box";
 import Fab from "@mui/material/Fab";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
-import { AccountCircle, Height } from "@mui/icons-material";
+import { AccountCircle } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { AddCircle, SettingsSystemDaydream } from "@mui/icons-material";
-import { ExhibitionForm } from "../gallery/exhibition/ExhibitionForm";
-import { Modal } from "../Modal";
-import { AddArtworkForm } from "../gallery/AddArtworkForm";
 
 import addExhibition from "../../images/exhibitions/add-exhibition.png";
 
-import * as AiIcons from "react-icons/ai";
-import * as TbIcons from "react-icons/tb";
+import { ArtworkModal } from "../gallery/modals/ArtworkModal";
 
-export default function UserSubmenu() {
-  const [isOpenExhibition, setIsOpenExhibition] = useState(false);
-  const [isOpenArtwork, setIsOpenArtwork] = useState(false);
-
-  const handleOpenModal = (id) => {
-    if (id === "artwork") {
-      setIsOpenArtwork(true);
-      return;
-    }
-
-    setIsOpenExhibition(true);
+export default function UserSubmenu({
+  setCurrentMenuItem,
+  setIsOpenArtwork,
+  isOpenArtwork,
+  artworkId,
+  handleOpenModal,
+  setIsSuccess,
+  setHasDisplayedMessage,
+}) {
+  const handleClick = (id) => {
+    setCurrentMenuItem(id);
   };
-
-  const handleCloseModal = (id) => {
-    if (id === "artwork") {
-      setIsOpenArtwork(false);
-      return;
-    }
-
-    setIsOpenExhibition(false);
-  };
-
   return (
     <>
       <div className="dropdown-menu">
         <Box sx={{ "& > :not(style)": { m: 1 } }}>
-          <Link to="/profile">
+          <Link to="#" onClick={() => handleClick("profile")}>
             <Fab color="secondary" aria-label="edit" className="account-btn">
               <AccountCircle />
             </Fab>
           </Link>
-          <Link to="/">
+          <Link to="#">
             <Fab
               color="secondary"
               aria-label="edit"
               className="account-btn"
-              onClick={() => handleOpenModal("artwork")}
+              onClick={() => handleOpenModal("add", "artwork", null)}
             >
               <AddCircle />
             </Fab>
@@ -70,7 +56,7 @@ export default function UserSubmenu() {
             </Fab>
           </Link>
 
-          <Link to="/manage-artwork">
+          <Link to="#" onClick={() => handleClick("manage-artworks")}>
             <Fab color="secondary" aria-label="edit" className="account-btn">
               <SettingsSystemDaydream />
             </Fab>
@@ -91,21 +77,20 @@ export default function UserSubmenu() {
         </Box>
       </div>
 
-      <Modal isOpen={isOpenExhibition} id="exhibition">
+      {/* <Modal isOpen={isOpenExhibition} id="exhibition">
         <AiIcons.AiOutlineCloseCircle
           onClick={() => handleCloseModal("exhibition")}
           id="close-button"
         />
         <ExhibitionForm />
-      </Modal>
-      <Modal isOpen={isOpenArtwork} id="artwork">
-        <AiIcons.AiOutlineCloseCircle
-          onClick={() => handleCloseModal("artwork")}
-          id="close-button"
-        />
-
-        <AddArtworkForm onClose={() => handleCloseModal("artwork")} />
-      </Modal>
+      </Modal> */}
+      <ArtworkModal
+        isOpen={isOpenArtwork}
+        setIsOpenArtwork={setIsOpenArtwork}
+        artworkId={artworkId}
+        setIsSuccess={setIsSuccess}
+        setHasDisplayedMessage={setHasDisplayedMessage}
+      />
     </>
   );
 }
