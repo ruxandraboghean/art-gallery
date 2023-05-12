@@ -10,6 +10,7 @@ export const ArtworkModalContextProvider = ({ children }) => {
   const [currentMenuItem, setCurrentMenuItem] = useState(
     localStorage.getItem("currentMenuItem")
   );
+  const [artworks, setArtworks] = useState(null);
   const [isOpenArtwork, setIsOpenArtwork] = useState(false);
   const [artworkId, setArtworkId] = useState(null);
   const [isMenuDropdownOpen, setMenuDropdownOpen] = useState(false);
@@ -31,7 +32,7 @@ export const ArtworkModalContextProvider = ({ children }) => {
     if (isSuccess && !hasDisplayedMessage) {
       toast.success("Action successfully completed!", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -61,6 +62,8 @@ export const ArtworkModalContextProvider = ({ children }) => {
         isSuccess,
         setIsSuccess,
         setHasDisplayedMessage,
+        artworks,
+        setArtworks,
       }}
     >
       {children}

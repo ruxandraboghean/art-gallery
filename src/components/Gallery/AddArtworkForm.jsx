@@ -53,7 +53,7 @@ export const AddArtworkForm = ({ onClose }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
-  const { artworkId, setIsSuccess, setHasDisplayedMessage } =
+  const { artworkId, setIsSuccess, setHasDisplayedMessage, setArtworks } =
     useContext(ArtworkModalContext);
 
   const onDrop = (acceptedFiles) => {
@@ -114,6 +114,10 @@ export const AddArtworkForm = ({ onClose }) => {
       const docRef = doc(artworksRef);
       const artId = docRef.id;
 
+      const userDocRef = doc(db, "users", currentUser.uid);
+      const userDoc = await getDoc(userDocRef);
+      const artworks = userDoc.data().artworks;
+
       //if artwork exists
       if (artworkId) {
         setHasDisplayedMessage(false);
@@ -128,10 +132,6 @@ export const AddArtworkForm = ({ onClose }) => {
           photoURL: artworkData?.photoURL.imageSrc,
           status: artworkData?.status,
         });
-
-        const userDocRef = doc(db, "users", currentUser.uid);
-        const userDoc = await getDoc(userDocRef);
-        const artworks = userDoc.data().artworks;
 
         const index = artworks.findIndex((artwork) => artwork.id === artworkId);
 
@@ -151,11 +151,13 @@ export const AddArtworkForm = ({ onClose }) => {
           };
 
           await updateDoc(userDocRef, { artworks: updatedArtworks });
+          setArtworks(updatedArtworks);
         }
 
         resetState(e);
         setErr(false);
         setIsSuccess(true);
+
         onClose();
 
         console.log("Document updated with ID: ", docRef.id);
@@ -209,7 +211,19 @@ export const AddArtworkForm = ({ onClose }) => {
                   setErr(false);
                   resetState(e);
                   setIsSuccess(true);
-
+                  setArtworks((prevArtworks) =>
+                    prevArtworks.concat({
+                      id: artId,
+                      ...artworkData,
+                      unit: artworkData?.unit.value,
+                      technique: artworkData?.technique.value,
+                      genre: artworkData?.genre.value,
+                      category: artworkData?.category.value,
+                      specialist: artworkData?.specialist.value,
+                      photoURL: downloadURL,
+                      status: "draft",
+                    })
+                  );
                   onClose();
                 } catch (err) {
                   console.log("Can't update doc:", err.message);
@@ -231,23 +245,50 @@ export const AddArtworkForm = ({ onClose }) => {
     }
   }
 
-  //PUBLISH
-  const publishArtwork = async (e) => {
+  //SEND REQUEST TO SPECIALIST
+  const sendRequest = async (e) => {
     e.preventDefault();
 
-    const docRef = doc(collection(db, "artworks"));
-    const artId = docRef.id;
+    const docRef = doc(db, "artworks", artworkId);
 
     try {
       setIsLoading(true);
-      await updateDoc(doc(db, "artworks", artId), {
-        status: "published",
+      await updateDoc(docRef, {
+        ...artworkData,
+        unit: artworkData?.unit.value,
+        technique: artworkData?.technique.value,
+        genre: artworkData?.genre.value,
+        category: artworkData?.category.value,
+        specialist: artworkData?.specialist.value,
+        photoURL: artworkData?.photoURL.imageSrc,
+        status: "pending authentication",
       });
-      await updateDoc(doc(db, "users", currentUser.uid), {
-        artworks: arrayUnion({
-          status: "published",
-        }),
-      });
+
+      const userDocRef = doc(db, "users", currentUser.uid);
+      const userDoc = await getDoc(userDocRef);
+      const artworks = userDoc.data().artworks;
+
+      const index = artworks.findIndex((artwork) => artwork.id === artworkId);
+
+      if (index !== -1) {
+        let updatedArtworks = [...artworks];
+
+        updatedArtworks[index] = {
+          id: artworkId,
+          ...artworkData,
+          unit: artworkData?.unit.value,
+          technique: artworkData?.technique.value,
+          genre: artworkData?.genre.value,
+          category: artworkData?.category.value,
+          specialist: artworkData?.specialist.value,
+          photoURL: artworkData?.photoURL.imageSrc,
+          status: "pending authentication",
+        };
+
+        await updateDoc(userDocRef, { artworks: updatedArtworks });
+        setArtworks(updatedArtworks);
+      }
+
       setIsLoading(false);
       setIsSuccess(true);
 
@@ -500,7 +541,7 @@ export const AddArtworkForm = ({ onClose }) => {
             <button id="save" name="save" onClick={handleSaveAsDraft}>
               Save as draft
             </button>
-            <button className="publish" name="publish" onClick={publishArtwork}>
+            <button className="publish" name="publish" onClick={sendRequest}>
               Send Request
             </button>
           </div>

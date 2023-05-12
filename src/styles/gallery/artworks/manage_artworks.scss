@@ -1,6 +1,6 @@
 .artworks-container {
   @include flexbox(flex, flex-start, flex-start);
-  @include mobile() {
+  @include tablet() {
     @include flexbox-direction(flex, flex-start, column, flex-start);
     width: 100%;
     box-sizing: border-box;
@@ -42,6 +42,7 @@
       }
       @include tablet {
         justify-content: center;
+        width: 100%;
       }
       @include mobile() {
         justify-content: flex-start;
@@ -60,7 +61,7 @@
         gap: 3rem;
         .filter-item {
           @include flexbox-direction(flex, center, column, flex-start);
-          @include mobile() {
+          @include tablet() {
             width: 100%;
           }
 
@@ -79,7 +80,7 @@
 
           .dropdown-input {
             @include form-input;
-            @include mobile() {
+            @include tablet() {
               width: 100%;
             }
             border: none;
@@ -135,7 +136,7 @@
             }
 
             input {
-              @include mobile() {
+              @include tablet() {
                 width: 100%;
               }
               float: left;
@@ -232,7 +233,7 @@
       }
 
       .artwork {
-        @include flexbox(flex, center, space-between);
+        @include flexbox(flex, center, center);
         @include mobile {
           width: 100%;
         }
@@ -243,13 +244,21 @@
         font-size: $xs;
         gap: 1rem;
 
-        img {
+        .artwork-item {
+          flex-grow: 1;
+          flex-basis: 0;
+          text-align: center;
+        }
+
+        #artwork-image {
           @include dim(8rem, 10rem);
           @include mobile() {
             @include dim(4rem, 5rem);
           }
           object-fit: cover;
           border-radius: 10px;
+          flex-grow: 0;
+
         }
 
         p {

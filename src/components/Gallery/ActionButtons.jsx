@@ -1,87 +1,68 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
 
-import { Box, Fab } from "@mui/material";
-import { DeleteForever, RemoveRedEye, EditOutlined } from "@mui/icons-material";
+import { Box, Fab, Tooltip } from "@mui/material";
+import { DeleteForever, EditOutlined } from "@mui/icons-material";
+import SendIcon from "@mui/icons-material/Send";
 
-//firebase
-import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase";
-import { AuthContext } from "../../context/AuthContext";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 
-export const ActionButtons = ({ artworkId, setIsSuccess }) => {
-  const { currentUser } = useContext(AuthContext);
+export const ActionButtons = ({
+  artworkId,
+  setIsOpenConfirmationModal,
+  setCurrentArtwork,
+}) => {
   const { setMenuDropdownOpen, handleOpenModal } =
     useContext(ArtworkModalContext);
 
-  const handleDeleteArtwork = async () => {
-    console.log("removing");
-
-    const docRef = doc(db, "artworks", artworkId);
-
-    await deleteDoc(docRef)
-      .then(() => console.log("Item deleted successfully"))
-      .catch((err) => console.error("Error deleting item: ", err));
-
-    const userDocRef = doc(db, "users", currentUser.uid);
-
-    const userDoc = await getDoc(userDocRef);
-    const artworks = userDoc.data().artworks;
-
-    const indexToRemove = artworks.findIndex(
-      (artwork) => artwork.id === artworkId
-    );
-
-    if (indexToRemove !== -1) {
-      let updatedArtworks = artworks.filter(
-        (item, index) => index !== indexToRemove
-      );
-
-      await updateDoc(userDocRef, { artworks: updatedArtworks });
-      setIsSuccess(true);
-    }
+  const handleDelete = () => {
+    setIsOpenConfirmationModal(true);
+    setCurrentArtwork(artworkId);
   };
-
   return (
     <>
       <div className="actions-dropdown-menu notransition">
         <Box sx={{ width: 100, height: 200 }}>
-          <Fab
-            color="secondary"
-            aria-label="edit"
-            className="action-btn"
-            onClick={() => {
-              handleOpenModal("edit", "artwork", artworkId);
-              setMenuDropdownOpen(true);
-            }}
-            sx={{ mb: 1 }}
-          >
-            <EditOutlined sx={{ fontSize: 20 }} />
-          </Fab>
-          <Fab
-            color="secondary"
-            aria-label="edit"
-            className="action-btn"
-            onClick={() => {
-              handleOpenModal("edit", "artwork", artworkId);
-              setMenuDropdownOpen(true);
-            }}
-            sx={{ mb: 1 }}
-          >
-            <RemoveRedEye sx={{ fontSize: 20 }} />
-          </Fab>
-          <Link to="/">
+          <Tooltip title="edit artwork" placement="right">
             <Fab
               color="secondary"
               aria-label="edit"
+              className="action-btn"
+              onClick={() => {
+                handleOpenModal("edit", "artwork", artworkId);
+                setMenuDropdownOpen(true);
+              }}
+              sx={{ mb: 1 }}
+            >
+              <EditOutlined sx={{ fontSize: 20 }} />
+            </Fab>
+          </Tooltip>
+
+          <Tooltip title="send request to specialist" placement="right">
+            <Fab
+              color="secondary"
+              aria-label="request"
+              className="action-btn"
+              onClick={() => {
+                handleOpenModal("edit", "artwork", artworkId);
+                setMenuDropdownOpen(true);
+              }}
+              sx={{ mb: 1 }}
+            >
+              <SendIcon sx={{ fontSize: 18 }} />
+            </Fab>
+          </Tooltip>
+
+          <Tooltip title="delete artwork" placement="right">
+            <Fab
+              color="secondary"
+              aria-label="delete"
               className="action-btn notransition"
-              onClick={handleDeleteArtwork}
+              onClick={handleDelete}
               sx={{ mb: 1 }}
             >
               <DeleteForever sx={{ fontSize: 20 }} />
             </Fab>
-          </Link>
+          </Tooltip>
         </Box>
       </div>
     </>

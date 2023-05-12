@@ -18,6 +18,8 @@ import { ArtworkArtistView } from "../../components/gallery/ArtworkArtistView";
 //notifications
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { ConfirmationModal } from "../../components/gallery/modals/ConfirmationModal";
+import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 
 const sortOptions = [
   { label: "year", value: "year" },
@@ -31,12 +33,20 @@ const orderOptions = [
 
 export const ManageArtworks = () => {
   const { currentUser } = useContext(AuthContext);
-  const [artworks, setArtworks] = useState(null);
+  const [currentArtwork, setCurrentArtwork] = useState(null);
   const [searchedTitle, setSearchedTitle] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [sortData, setSortData] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [hasDisplayedMessage, setHasDisplayedMessage] = useState(false);
+
+  const { artworks, setArtworks } = useContext(ArtworkModalContext);
+  useContext(ArtworkModalContext);
+
+  console.log(artworks, "artworks");
+
+  //modal for displaying a message for deleting confirmation
+  const [isOpenConfirmationModal, setIsOpenConfirmationModal] = useState(false);
 
   const handleChange = (e) => {
     setSearchedTitle(e.target.value);
@@ -85,7 +95,8 @@ export const ManageArtworks = () => {
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
-        setArtworks(docSnap.data().artworks);
+        const artworksDatabase = docSnap.data().artworks;
+        setArtworks(artworksDatabase);
       } else {
         console.log("No such document!");
       }
@@ -136,7 +147,7 @@ export const ManageArtworks = () => {
     if (isSuccess && !hasDisplayedMessage) {
       toast.success("Action successfully completed!", {
         position: "bottom-right",
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -152,6 +163,7 @@ export const ManageArtworks = () => {
     }
   }, [isSuccess, hasDisplayedMessage]);
 
+  console.log(currentArtwork, "currentArtwork");
   return (
     <div className="gallery-container">
       <div className="gallery-wrapper">
@@ -204,7 +216,10 @@ export const ManageArtworks = () => {
                 <ArtworkArtistView
                   artwork={artwork}
                   key={artwork.id}
-                  setIsSuccess={setIsSuccess}
+                  isOpenConfirmationModal={isOpenConfirmationModal}
+                  setIsOpenConfirmationModal={setIsOpenConfirmationModal}
+                  setCurrentArtwork={setCurrentArtwork}
+                  setArtworks={setArtworks}
                 />
               )
             )}
@@ -212,6 +227,15 @@ export const ManageArtworks = () => {
         </div>
       </div>
       {isSuccess && <ToastContainer />}
+      {isOpenConfirmationModal && (
+        <ConfirmationModal
+          artworkId={currentArtwork}
+          isOpenConfirmationModal={isOpenConfirmationModal}
+          setIsOpenConfirmationModal={setIsOpenConfirmationModal}
+          setIsSuccess={setIsSuccess}
+          setArtworks={setArtworks}
+        />
+      )}
     </div>
   );
 };
