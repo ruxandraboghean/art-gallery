@@ -1,77 +1,80 @@
-.dropdown-menu {
+.menu-header {
+    float:right;
+    padding: 0 1.5rem 0 0; 
+    
+  .dropdown-menu {
     @include flexbox-direction(flex, center, column, space-evenly);
     position: absolute;
     @include dim(1rem, 1rem);
-    margin: 5rem 1.3rem 0 0rem;
+    margin: 5rem 3rem 0 0rem;
     top: 0;
     right: 0;
     width: 1rem;
     list-style: none;
-    transition: ease-in-out all .4s;
+    transition: ease-in-out all 0.4s;
     display: table;
 
     .addExhibitionIcon {
-        width: 1.5rem;
-        height: 1.5rem;
+      width: 1.5rem;
+      height: 1.5rem;
     }
 
     &:hover {
-        width: 1rem;
-        opacity: 1;
-      }
+      width: 1rem;
+      opacity: 1;
+    }
 
     @include mobile() {
-        @include dim (1rem, 1rem);
-        margin: 4rem 1rem 1rem 1rem;
+      @include dim(1rem, 1rem);
+      margin: 4rem 0.5rem 1rem 1rem;
     }
     @include tablet() {
-        @include dim (1rem, 1rem);
-        margin: 7rem 1.3rem 1rem 1rem;
+      @include dim(1rem, 1rem);
+      margin: 7rem 3rem 1rem 1rem;
     }
     @include laptop() {
-        @include dim (1rem, 1rem);
-        margin: 7rem 1.3rem 0 0rem;
+      @include dim(1rem, 1rem);
+      margin: 7rem 3rem 0 0rem;
     }
     @include bigger-laptop() {
-        @include dim (1rem, 1rem);
-        margin: 7rem 1.3rem 0 0rem;
+      @include dim(1rem, 1rem);
+      margin: 6.5rem 3rem 0 0rem;
     }
     @include monitor() {
+      @include dim(1rem, 1rem);
+      margin: 6.5rem 3em 0 0rem;
+    }
+
+    .signout-btn {
+      @include dim(2.5rem, 2.5rem);
+      background-color: $medium_purple;
+      color: $base_color;
+      transform: rotate(180deg);
+
+      @include mobile() {
         @include dim(1rem, 1rem);
-        margin: 6rem 1.3rem 0 0rem;
-     }
+      }
 
-    .signout-btn{
-        @include dim (2.5rem, 2.5rem);
-        background-color: $medium_purple;
-        color: $base_color;
-        transform: rotate(180deg);
-        
-
-        @include mobile() {
-           @include dim(1rem, 1rem);
-        }
-
-        &:hover {
-            background-color: $dark_magenta;
-            color: $base_color_pink;
-           
-        }
+      &:hover {
+        background-color: $dark_magenta;
+        color: $base_color_pink;
+      }
     }
-    .account-btn{
-        @include dim (2.5rem, 2.5rem);
-        background-color: $medium_purple;
-        color: $base_color;
-        padding: 1rem;
-        margin: 0.5rem 0;
+    .account-btn {
+      @include dim(2.5rem, 2.5rem);
+      background-color: $medium_purple;
+      color: $base_color;
+      padding: 1rem;
+      margin: 0.5rem 0;
 
-        @include mobile() {
-           @include dim(1rem, 1rem);
-        }
+      @include mobile() {
+        @include dim(1rem, 1rem);
+      }
 
-        &:hover {
-            background-color: $dark_magenta;
-            color: $base_color_pink;
-        }
+      &:hover {
+        background-color: $dark_magenta;
+        color: $base_color_pink;
+      }
     }
+  }
 }

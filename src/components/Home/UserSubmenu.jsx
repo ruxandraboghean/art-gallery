@@ -12,16 +12,13 @@ import { AddCircle, SettingsSystemDaydream } from "@mui/icons-material";
 import addExhibition from "../../images/exhibitions/add-exhibition.png";
 
 import { ArtworkModal } from "../gallery/modals/ArtworkModal";
+import { ArtworkModalContext } from "../../context/ArtworkModalContext";
+import { useContext } from "react";
 
-export default function UserSubmenu({
-  setCurrentMenuItem,
-  setIsOpenArtwork,
-  isOpenArtwork,
-  artworkId,
-  handleOpenModal,
-  setIsSuccess,
-  setHasDisplayedMessage,
-}) {
+export default function UserSubmenu() {
+  const { setCurrentMenuItem, handleOpenModal } =
+    useContext(ArtworkModalContext);
+
   const handleClick = (id) => {
     setCurrentMenuItem(id);
   };
@@ -52,7 +49,11 @@ export default function UserSubmenu({
               className="account-btn"
               onClick={() => handleOpenModal("exhibition")}
             >
-              <img src={addExhibition} className="addExhibitionIcon" />
+              <img
+                src={addExhibition}
+                alt="exhibition"
+                className="addExhibitionIcon"
+              />
             </Fab>
           </Link>
 
@@ -84,13 +85,7 @@ export default function UserSubmenu({
         />
         <ExhibitionForm />
       </Modal> */}
-      <ArtworkModal
-        isOpen={isOpenArtwork}
-        setIsOpenArtwork={setIsOpenArtwork}
-        artworkId={artworkId}
-        setIsSuccess={setIsSuccess}
-        setHasDisplayedMessage={setHasDisplayedMessage}
-      />
+      <ArtworkModal />
     </>
   );
 }

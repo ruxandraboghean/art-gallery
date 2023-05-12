@@ -1,20 +1,46 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+
 import { Box, Fab } from "@mui/material";
 import { DeleteForever, RemoveRedEye, EditOutlined } from "@mui/icons-material";
 
-export const ActionButtons = ({
-  artworkId,
-  isOpenArtwork,
-  setIsOpenArtwork,
-  setArtworkId,
-  setMenuDropdownOpen,
-  handleOpenModal,
-}) => {
-  const navigate = useNavigate();
+//firebase
+import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../../firebase";
+import { AuthContext } from "../../context/AuthContext";
+import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 
-  const handleSeeGalleryButtonClick = () => {
-    navigate("/");
+export const ActionButtons = ({ artworkId, setIsSuccess }) => {
+  const { currentUser } = useContext(AuthContext);
+  const { setMenuDropdownOpen, handleOpenModal } =
+    useContext(ArtworkModalContext);
+
+  const handleDeleteArtwork = async () => {
+    console.log("removing");
+
+    const docRef = doc(db, "artworks", artworkId);
+
+    await deleteDoc(docRef)
+      .then(() => console.log("Item deleted successfully"))
+      .catch((err) => console.error("Error deleting item: ", err));
+
+    const userDocRef = doc(db, "users", currentUser.uid);
+
+    const userDoc = await getDoc(userDocRef);
+    const artworks = userDoc.data().artworks;
+
+    const indexToRemove = artworks.findIndex(
+      (artwork) => artwork.id === artworkId
+    );
+
+    if (indexToRemove !== -1) {
+      let updatedArtworks = artworks.filter(
+        (item, index) => index !== indexToRemove
+      );
+
+      await updateDoc(userDocRef, { artworks: updatedArtworks });
+      setIsSuccess(true);
+    }
   };
 
   return (
@@ -37,7 +63,10 @@ export const ActionButtons = ({
             color="secondary"
             aria-label="edit"
             className="action-btn"
-            onClick={handleSeeGalleryButtonClick}
+            onClick={() => {
+              handleOpenModal("edit", "artwork", artworkId);
+              setMenuDropdownOpen(true);
+            }}
             sx={{ mb: 1 }}
           >
             <RemoveRedEye sx={{ fontSize: 20 }} />
@@ -47,7 +76,7 @@ export const ActionButtons = ({
               color="secondary"
               aria-label="edit"
               className="action-btn notransition"
-              onClick={() => console.log("remove")}
+              onClick={handleDeleteArtwork}
               sx={{ mb: 1 }}
             >
               <DeleteForever sx={{ fontSize: 20 }} />

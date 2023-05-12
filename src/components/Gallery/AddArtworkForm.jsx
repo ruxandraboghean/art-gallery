@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import * as ImIcons from "react-icons/im";
 import * as TiIcons from "react-icons/ti";
 
@@ -29,6 +28,8 @@ import {
 // components
 import Select from "react-select";
 import { ClipLoader } from "react-spinners";
+import { useDropzone } from "react-dropzone";
+import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 
 const initialState = {
   title: "",
@@ -46,18 +47,27 @@ const initialState = {
   specialist: null,
 };
 
-export const AddArtworkForm = ({
-  onClose,
-  artworkId,
-  setIsSuccess,
-  setHasDisplayedMessage,
-}) => {
+export const AddArtworkForm = ({ onClose }) => {
   const [artworkData, setArtworkData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { artworkId, setIsSuccess, setHasDisplayedMessage } =
+    useContext(ArtworkModalContext);
+
+  const onDrop = (acceptedFiles) => {
+    const selectedFile = acceptedFiles[0];
+    setArtworkData({
+      ...artworkData,
+      photoURL: {
+        imageSrc: URL.createObjectURL(selectedFile),
+        file: selectedFile,
+      },
+    });
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   // derrived state
   const isImageUploaded = artworkData?.photoURL !== null;
@@ -290,9 +300,11 @@ export const AddArtworkForm = ({
             className={`upload-container ${
               isImageUploaded && "upload-container-none"
             }`}
+            {...getRootProps()}
           >
-            <p>Drag & Drop your artwork here.</p>
             <input
+              {...getInputProps()}
+              multiple={false}
               type="file"
               id="upload-btn"
               accept="image/*"
@@ -302,6 +314,12 @@ export const AddArtworkForm = ({
             <label htmlFor="upload-btn">
               <ImIcons.ImDownload className="drag-icon" />
             </label>
+
+            {isDragActive ? (
+              <p>Drop the image here ...</p>
+            ) : (
+              <p>Drag 'n' drop image </p>
+            )}
           </div>
 
           <div className={`img-wrapper ${!isImageUploaded && "image-none"}`}>
@@ -313,6 +331,7 @@ export const AddArtworkForm = ({
                 />
                 <img
                   src={artworkData?.photoURL?.imageSrc}
+                  alt="artwork"
                   className="img-uploaded"
                 />
               </>

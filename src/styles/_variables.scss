@@ -9,13 +9,16 @@ $medium : 600;
 $regular: 700;
 $bold   : 900;
 
-$xxs: 0.7rem;
-$xs : 0.8rem;
-$s  : 0.9rem;
-$m  : 1.0rem;
-$l  : 1.2rem;
-$xl : 1.4rem;
-$xxl: 2.0rem;
+$xxs_mobile : 0.4rem;
+$xs_mobile  : 0.5rem;
+$s_mobile   : 0.6rem;
+$xxs        : 0.7rem;
+$xs         : 0.8rem;
+$s          : 0.9rem;
+$m          : 1.0rem;
+$l          : 1.2rem;
+$xl         : 1.4rem;
+$xxl        : 2.0rem;
 
 $base_color             :  #FFFFFF !default;
 $base_color_pink        :  #eedfe5 !default;
@@ -33,7 +36,7 @@ $pale_grayish_purple    :  rgb(187,174,209, 0.2);
 $success_color          :  #9AB0A6;
 $danger_color           :  #C47A7A;
 $grayish_light          : rgb(231,228,238, 0.25);
-$grayish_normal          : rgb(231,228,238, 0.5);
+$grayish_normal         : rgb(231,228,238, 0.5);
 
 
 $text-white             :  #FFF9FD !default;

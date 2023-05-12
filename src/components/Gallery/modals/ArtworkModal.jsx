@@ -1,14 +1,12 @@
 import React from "react";
 import { Modal } from "../../Modal";
 import { AddArtworkForm } from "../AddArtworkForm";
+import { ArtworkModalContext } from "../../../context/ArtworkModalContext";
+import { useContext } from "react";
 
-export const ArtworkModal = ({
-  isOpen,
-  setIsOpenArtwork,
-  artworkId,
-  setIsSuccess,
-  setHasDisplayedMessage,
-}) => {
+export const ArtworkModal = () => {
+  const { setIsOpenArtwork, isOpenArtwork } = useContext(ArtworkModalContext);
+
   const handleCloseModal = (id) => {
     if (id === "artwork") {
       setIsOpenArtwork(false);
@@ -17,19 +15,14 @@ export const ArtworkModal = ({
   };
   return (
     <>
-      <Modal isOpen={isOpen} id="artwork">
+      <Modal isOpen={isOpenArtwork} id="artwork">
         <button
           className="close_button"
           onClick={() => handleCloseModal("artwork")}
         >
           x
         </button>
-        <AddArtworkForm
-          onClose={() => handleCloseModal("artwork")}
-          artworkId={artworkId}
-          setIsSuccess={setIsSuccess}
-          setHasDisplayedMessage={setHasDisplayedMessage}
-        />
+        <AddArtworkForm onClose={() => handleCloseModal("artwork")} />
       </Modal>
     </>
   );

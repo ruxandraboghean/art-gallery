@@ -8,6 +8,18 @@
 
 .artwork-form-container {
     @include flexbox-direction(flex, center, column, flex-start);
+
+    @include tablet {
+        gap: 1rem;
+    }
+    @include mobile {
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    &::-webkit-scrollbar { 
+        display: none;
+    }
     gap: 2.5rem;
     min-height: 95%;
     overflow: scroll;
@@ -39,7 +51,6 @@
                 display: inline-block;
                 clear: left;
                 text-align: center;
-                // width: 90%;
             }
 
             input{
@@ -285,16 +296,15 @@
                 margin-left: 2rem;
               }
         }
-
+        }
         @include tablet {
-           height: 30%;
+            height: 75%;
            border:none;
         }
         @include mobile {
             height: 50%;
             border:none;
          }
-        }
     }
 
     .error {
@@ -302,22 +312,5 @@
         text-align: center;
         color: tomato;
     }
-    @include laptop {
-        flex-direction: row;
-    }
-
-    @include tablet {
-        gap: 1rem;
-        flex-direction: column;
-    }
-    @include mobile {
-        gap: 0.5rem;
-        flex-direction: column;
-    }
-
-    &::-webkit-scrollbar { 
-        display: none;
-    }
-
 }
 

@@ -3,14 +3,7 @@ import { useOnHoverOutside } from "../../hooks/useOnHoverOutside";
 import * as MdIcons from "react-icons/md";
 import { ActionButtons } from "./ActionButtons";
 
-export const ArtworkArtistView = ({
-  artwork,
-  isOpenArtwork,
-  setIsOpenArtwork,
-  setArtworkId,
-  setMenuDropdownOpen,
-  handleOpenModal,
-}) => {
+export const ArtworkArtistView = ({ artwork, setIsSuccess }) => {
   const dropdownRef = useRef(null);
   const [isMenuOpen, setMenuOpen] = useState(false);
 
@@ -33,14 +26,7 @@ export const ArtworkArtistView = ({
             onMouseOver={() => setMenuOpen(true)}
           />
           {isMenuOpen && (
-            <ActionButtons
-              artworkId={artwork.id}
-              isOpenArtwork={isOpenArtwork}
-              setIsOpenArtwork={setIsOpenArtwork}
-              setArtworkId={setArtworkId}
-              setMenuDropdownOpen={setMenuDropdownOpen}
-              handleOpenModal={handleOpenModal}
-            />
+            <ActionButtons artworkId={artwork.id} setIsSuccess={setIsSuccess} />
           )}
         </div>
       </div>

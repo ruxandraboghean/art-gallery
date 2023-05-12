@@ -3,7 +3,6 @@
 .home-navbar {
     float:right;
     padding: 0 1.5rem 0 0; 
-    // width: 7.5%;
   
     .navbar {
         @include flexbox(flex, center, center);

@@ -9,11 +9,15 @@
     @include flexbox(flex, center, space-between);
     background-color: $base_color;
     height: 90vh;
+    width: 90%;
     flex: 5;
    
     .gallery-wrapper {
         @include flexbox(flex, center, center);
         @include dim (98.5%, 97.5%);
+        @include mobile() {
+            width: 100%;
+        }
         border-radius: 50px;
         display: flex;
         overflow: scroll;

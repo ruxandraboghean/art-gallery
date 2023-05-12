@@ -14,6 +14,9 @@
     }
     .home-container {
         @include flexbox(flex, center, space-between);
+        @include mobile() {
+            width: 80%;
+        }
         background-color: $base_color;
         max-width: 90%;
     }

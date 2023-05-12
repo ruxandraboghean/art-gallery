@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-
+import Select from "react-select";
 import { AuthContext } from "../../context/AuthContext";
 // firebase
 import { db } from "../../firebase";
@@ -15,10 +14,11 @@ import {
 } from "firebase/firestore";
 //components
 import { ArtworkArtistView } from "../../components/gallery/ArtworkArtistView";
-import Select from "react-select";
-import { Box, Fab } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import RotateLeftIcon from "@mui/icons-material/RotateLeft";
+
+//notifications
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const sortOptions = [
   { label: "year", value: "year" },
   { label: "title", value: "title" },
@@ -29,19 +29,14 @@ const orderOptions = [
   { label: "desc", value: "desc" },
 ];
 
-export const ManageArtworks = ({
-  isOpenArtwork,
-  setIsOpenArtwork,
-  setArtworkId,
-  setMenuDropdownOpen,
-  handleOpenModal,
-}) => {
+export const ManageArtworks = () => {
   const { currentUser } = useContext(AuthContext);
   const [artworks, setArtworks] = useState(null);
   const [searchedTitle, setSearchedTitle] = useState("");
   const [filteredData, setFilteredData] = useState([]);
   const [sortData, setSortData] = useState(null);
-  const navigate = useNavigate();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [hasDisplayedMessage, setHasDisplayedMessage] = useState(false);
 
   const handleChange = (e) => {
     setSearchedTitle(e.target.value);
@@ -49,16 +44,6 @@ export const ManageArtworks = ({
 
   const handleDropdownChange = (dropdownLabel, { label, value }) => {
     setSortData({ ...sortData, [dropdownLabel]: { label, value } });
-  };
-
-  const handleReset = () => {
-    setSearchedTitle("");
-    setSortData(null);
-    setFilteredData([]);
-  };
-
-  const handleAdd = () => {
-    // navigate("/add-artwork");
   };
 
   const handleSearch = async () => {
@@ -143,101 +128,90 @@ export const ManageArtworks = ({
           setArtworks(newData);
         }
       };
-
       getSortedArtworks(sortType, orderType);
     }
   }, [sortData]);
+
+  useEffect(() => {
+    if (isSuccess && !hasDisplayedMessage) {
+      toast.success("Action successfully completed!", {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        style: {
+          backgroundColor: "#AF92C6",
+          color: "#fff",
+        },
+      });
+      setHasDisplayedMessage(true);
+    }
+  }, [isSuccess, hasDisplayedMessage]);
 
   return (
     <div className="gallery-container">
       <div className="gallery-wrapper">
         <div className="artworks-container">
-          <div className="title">Manage Artworks</div>
+          <div className="artworks-header">
+            <div className="title">Artworks</div>
 
-          <div className="filter">
-            <div className="inputs">
-              <div className="filter-item">
-                <label htmlFor="title">TITLE</label>
-                <input
-                  value={searchedTitle}
-                  name="title"
-                  type="text"
-                  id="title"
-                  onChange={handleChange}
-                  onKeyDown={handleKey}
-                />
-              </div>
-              <div className="filter-item">
-                <label htmlFor="sort">SORT BY</label>
-                <Select
-                  value={sortData?.sortBy || null}
-                  onChange={({ label, value }) =>
-                    handleDropdownChange("sortBy", { label, value })
-                  }
-                  options={sortOptions}
-                  className="dropdown-input"
-                />
-              </div>
-              <div className="filter-item">
-                <label htmlFor="sort">ORDER</label>
-                <Select
-                  value={sortData?.order || null}
-                  onChange={({ label, value }) =>
-                    handleDropdownChange("order", { label, value })
-                  }
-                  options={orderOptions}
-                  className="dropdown-input"
-                />
-              </div>
-              <div className="filter-dropdown-menu">
-                <Box sx={{ width: 100 }}>
-                  <Fab
-                    color="secondary"
-                    aria-label="edit"
-                    className="action-btn"
-                    onClick={handleReset}
-                    sx={{ mb: 1 }}
-                  >
-                    <RotateLeftIcon sx={{ fontSize: 20 }} />
-                  </Fab>
-                </Box>
-                <Box sx={{ width: 100 }}>
-                  <Fab
-                    color="secondary"
-                    aria-label="edit"
-                    className="action-btn"
-                    onClick={handleAdd}
-                    sx={{ mb: 1 }}
-                  >
-                    <AddIcon sx={{ fontSize: 20 }} />
-                  </Fab>
-                </Box>
+            <div className="filter">
+              <div className="inputs">
+                <div className="filter-item">
+                  <label htmlFor="title">TITLE</label>
+                  <input
+                    value={searchedTitle}
+                    name="title"
+                    type="text"
+                    id="title"
+                    onChange={handleChange}
+                    onKeyDown={handleKey}
+                  />
+                </div>
+                <div className="filter-item">
+                  <label htmlFor="sort">SORT BY</label>
+                  <Select
+                    value={sortData?.sortBy || null}
+                    onChange={({ label, value }) =>
+                      handleDropdownChange("sortBy", { label, value })
+                    }
+                    options={sortOptions}
+                    className="dropdown-input"
+                  />
+                </div>
+                <div className="filter-item">
+                  <label htmlFor="sort">ORDER</label>
+                  <Select
+                    value={sortData?.order || null}
+                    onChange={({ label, value }) =>
+                      handleDropdownChange("order", { label, value })
+                    }
+                    options={orderOptions}
+                    className="dropdown-input"
+                  />
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="header">
-            <div className="header-item">IMAGE</div>
-            <div className="header-item">TITLE</div>
-            <div className="header-item">YEAR</div>
-            <div className="header-item">STATUS</div>
-            <div className="header-item">ACTIONS</div>
+          <div className="works">
+            {(filteredData.length === 0 ? artworks : filteredData)?.map(
+              (artwork) => (
+                <ArtworkArtistView
+                  artwork={artwork}
+                  key={artwork.id}
+                  setIsSuccess={setIsSuccess}
+                />
+              )
+            )}
           </div>
-          {(filteredData.length === 0 ? artworks : filteredData)?.map(
-            (artwork) => (
-              <ArtworkArtistView
-                artwork={artwork}
-                key={artwork.id}
-                isOpenArtwork={isOpenArtwork}
-                setIsOpenArtwork={setIsOpenArtwork}
-                setArtworkId={setArtworkId}
-                setMenuDropdownOpen={setMenuDropdownOpen}
-                handleOpenModal={handleOpenModal}
-              />
-            )
-          )}
         </div>
       </div>
+      {isSuccess && <ToastContainer />}
     </div>
   );
 };
