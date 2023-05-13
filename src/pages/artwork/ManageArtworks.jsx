@@ -41,9 +41,6 @@ export const ManageArtworks = () => {
   const [hasDisplayedMessage, setHasDisplayedMessage] = useState(false);
 
   const { artworks, setArtworks } = useContext(ArtworkModalContext);
-  useContext(ArtworkModalContext);
-
-  console.log(artworks, "artworks");
 
   //modal for displaying a message for deleting confirmation
   const [isOpenConfirmationModal, setIsOpenConfirmationModal] = useState(false);

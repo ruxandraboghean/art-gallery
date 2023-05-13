@@ -12,57 +12,106 @@
         transform: none;
     }
 
-    gap: 0.4rem;
-    width: 50%;
-    padding: 2rem;
-    height: 100%;
-    position: fixed;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    background-color: $base_color;
-    border-radius: 15px;
-    box-sizing: border-box;
-    z-index: 9999999;
-    
-    #close-button {
-        width: 1.5rem;
-        height: 1.5rem;
-
-        &:hover {
-            cursor: pointer;
-        }
-    }
-
-    input{
-        @include form-input;
-    
-    }
-    textarea {
-        @include form-input;
-    }
-    .social-links-input{
-        @include flexbox(flex, center, flex-start);
-        gap:1rem;
-
-        input{
-            flex:4;       
-        }
-        .instagram {
-            @include dim(1.5rem, 1.5rem);
-            color: $grayish_pink;
-        }
-
-        .youtube {
-            @include dim(1.5rem, 1.75rem);
-            color: $magenta;
-        }
-
-        .blog {
-            @include dim(1.5rem, 1.25rem);
-            color: $dark_magenta;
-        }
-    }
+        gap: 0.4rem;
+        width: 50%;
+        padding: 2rem;
+        height: 100%;
+        position: fixed;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: $base_color;
+        border-radius: 15px;
+        box-sizing: border-box;
+        z-index: 9999999;   
 }
+    //Biography modal
+
+    #biography-modal {
+        @include flexbox-direction(flex, space-between, column, space-between);
+        gap: 0.4rem;
+        width: 25%;
+        padding: 2rem;
+        height: 100%;
+        position: fixed;
+        right: 0;
+        top:0;
+        transform: none;
+        background-color: $base_color;
+        border-radius: 15px 0 0 15px;
+        box-sizing: border-box;
+        z-index: 9999999;
+
+        .modal-header {
+            @include flexbox(flex, center, space-between);
+            margin-bottom: 3rem;
+            flex:1;
+
+            img {
+                width: 3.5rem;
+                height: 3.5rem;
+                border-radius: 100px;
+                object-fit: cover;
+            }
+        
+            h3 {
+                font-size: $s;
+            }
+
+            #close-button {
+                width: 3.5rem;
+                height: 3.5rem;
+        
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    .modal-content {
+        flex:10;
+        @include flexbox-direction(flex, center, column, flex-start);
+        gap:2rem;
+        width: 100%;
+            .social-links-input{
+                @include flexbox(flex, center, flex-start);
+                gap:1rem;
+                width: 100%;
+
+        
+                input{
+                    flex:4; 
+                    width: 100%;
+
+                }
+                .instagram {
+                    @include dim(1.5rem, 1.5rem);
+                    color: $grayish_pink;
+                }
+        
+                .youtube {
+                    @include dim(1.5rem, 1.75rem);
+                    color: $magenta;
+                }
+        
+                .blog {
+                    @include dim(1.5rem, 1.25rem);
+                    color: $dark_magenta;
+                }
+            }
+
+            input, textarea {
+                @include form-input;
+                width: 100%;
+            }
+        }
+        .modal-footer {
+            flex:1;
+            @include flexbox(flex, center, center);
+
+            .modal-button {
+                @include upload-btn; 
+            }
+        }
+    }
 .overlay {
     position: fixed;
     top: 0;

@@ -1,22 +1,20 @@
 .exhibition-card-wrapper{
     @include flexbox(flex, flex-start, space-between);
     height:250%;
-    width:100%;
 
     .img-wrapper {
+        @include flexbox-direction(flex, flex-end, column, space-between);
         border-radius: 15px;
-        width: 580px;
-        height: 400px;
+        height: 380px;
         text-align: right;
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
-
-        @include flexbox-direction(flex, flex-end, column, space-between);
-        
+        max-height: 100%;
+        width: 545px;
 
         @include monitor {
-            width: 680px;
+            width: 700px;
             height: 465px;
         }
         @include bigger-laptop {

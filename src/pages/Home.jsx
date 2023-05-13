@@ -23,7 +23,11 @@ export const Home = () => {
     <div className="home">
       <HomeSidebar setCurrentMenuItem={setCurrentMenuItem} />
       <div className="content">
-        <HomeNavbar />
+        {currentMenuItem === "exhibitions" ? (
+          <HomeNavbar exhibitionClass="exhibition-navbar" />
+        ) : (
+          <HomeNavbar />
+        )}
         <div className="home-container">
           {currentMenuItem === "messages" ? (
             <Messages />

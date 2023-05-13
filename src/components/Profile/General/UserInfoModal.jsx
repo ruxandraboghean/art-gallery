@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import * as IoIcons from "react-icons/io";
 import { doc, updateDoc } from "firebase/firestore";
-import { auth, db } from "../../firebase";
+import { auth, db } from "../../../firebase";
 import { updateProfile } from "firebase/auth";
 
 export const UserInfoModal = ({ user, userData, setIsOpen }) => {
@@ -67,66 +66,69 @@ export const UserInfoModal = ({ user, userData, setIsOpen }) => {
 
   return (
     <>
-      <section className="modal">
-        <div className="flex">
-          <img src={user?.photoURL} alt="Avatar" />
+      <section id="biography-modal">
+        <div className="modal-header">
+          <button className="close_button" onClick={handleClose}>
+            x
+          </button>
           <h3>{user?.displayName}'s Profile Info</h3>
-          <IoIcons.IoMdCloseCircle
-            className="btn-close"
-            onClick={handleClose}
+          <img src={user?.photoURL} alt="Avatar" />
+        </div>
+        <div className="modal-content">
+          <input
+            type="text"
+            id="username"
+            placeholder="username"
+            name="displayName"
+            defaultValue={modalData?.displayName}
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            id="email"
+            placeholder="email"
+            name="email"
+            defaultValue={modalData?.email}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            id="address"
+            placeholder="address"
+            name="address"
+            defaultValue={modalData?.address}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            id="city"
+            placeholder="city"
+            name="city"
+            defaultValue={modalData?.city}
+            onChange={handleChange}
+          />{" "}
+          <input
+            type="text"
+            id="country"
+            placeholder="country"
+            name="country"
+            defaultValue={modalData?.country}
+            onChange={handleChange}
+          />
+          <input
+            type="text"
+            id="phone"
+            placeholder="phone"
+            name="phone"
+            defaultValue={modalData?.phone}
+            onChange={handleChange}
           />
         </div>
-        <input
-          type="text"
-          id="username"
-          placeholder="username"
-          name="displayName"
-          defaultValue={modalData?.displayName}
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          id="email"
-          placeholder="email"
-          name="email"
-          defaultValue={modalData?.email}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          id="address"
-          placeholder="address"
-          name="address"
-          defaultValue={modalData?.address}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          id="city"
-          placeholder="city"
-          name="city"
-          defaultValue={modalData?.city}
-          onChange={handleChange}
-        />{" "}
-        <input
-          type="text"
-          id="country"
-          placeholder="country"
-          name="country"
-          defaultValue={modalData?.country}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          id="phone"
-          placeholder="phone"
-          name="phone"
-          defaultValue={modalData?.phone}
-          onChange={handleChange}
-        />
-        <button className="btn" onClick={handleUpdate}>
-          Save Changes
-        </button>
+        <div className="modal-footer">
+          <button className="modal-button" onClick={handleUpdate}>
+            Save Changes
+          </button>
+        </div>
       </section>
       <div className="overlay"></div>
     </>

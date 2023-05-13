@@ -14,6 +14,12 @@ export const UserProfile = () => {
   const [image, setImage] = useState(null);
   const [photoURL, setPhotoURL] = useState(null);
 
+  const [currentSection, setCurrentSection] = useState("");
+
+  const handleChangesCurrentSection = (item) => {
+    setCurrentSection(item);
+  };
+
   const capitalizeFirst = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
@@ -66,8 +72,33 @@ export const UserProfile = () => {
           </span>
           <img src={abstract} alt="abstract" className="abstract-icon" />
         </div>
+        <section className="user-sections">
+          <section
+            className="user-section"
+            aria-label="General Information Section"
+            onClick={() => handleChangesCurrentSection("general")}
+          >
+            General Information
+          </section>
+          <section
+            className="user-section"
+            aria-label="Authenticated Artworks Section"
+            onClick={() =>
+              handleChangesCurrentSection("authenticated-artworks")
+            }
+          >
+            Authenticated Artworks
+          </section>
+          <section
+            className="user-section"
+            aria-label="Exhibitions Section"
+            onClick={() => handleChangesCurrentSection("exhibitions")}
+          >
+            Exhibitions
+          </section>
+        </section>
       </div>
-      <UserCard {...currentUser} />
+      <UserCard currentUser={currentUser} currentSection={currentSection} />
     </div>
   );
 };

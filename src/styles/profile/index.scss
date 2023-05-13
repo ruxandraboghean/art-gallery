@@ -11,10 +11,10 @@
     .profile-wrapper {
         @include dim (98.5%, 97.5%);
         border: 1px solid $light_grayish_purple;
-        border-radius: 50px;
+        border-radius: 10px;
         display: flex;
         overflow: hidden;
-        background-color: $light_purple;
+        background-color: $grayish_normal;
     }
 }
    

@@ -1,61 +1,85 @@
-@import './user_card.scss';
+@import "./user_card.scss";
 
 .user-profile {
-    @include flexbox(flex, center, space-between);
-    width: 100%;
-    padding: 2rem;
+  @include flexbox(flex, flex-start, space-between);
+  width: 100%;
 
-    .header {
-        @include flexbox-direction(flex, center,column, flex-start);
-        flex: 1;
-        img {
-            @include dim (8rem, 8rem);
-            margin: 0 1rem 1.5rem 0;
-            border-radius: 100px;
-            object-fit: cover;
-            border: 1px solid $dark_magenta;  
-        }
-        .user-image{
-            &:hover{
-                filter: blur(0.75px); 
-            }
-        }
-        .file-input-btn {
-            top:47.5%;
-            left:14%;
-            position: absolute;
-            color: $magenta;
-            cursor: pointer;
-            z-index: 2;
-    
-            &:hover {
-                color: $medium_purple;
-            }
-
-            .edit-btn {
-                cursor: pointer;
-                @include dim(1.5rem, 1.5rem);
-            }
-        }
-
-        .upload-btn {
-          @include upload-btn;
-        }
-        .user-info {
-            @include flexbox(flex, flex-start, center);
-
-            .username {
-                @include font($brittany, $bold, $l);
-                letter-spacing: 2px;
-                color: $magenta;
-                padding: 0 1rem 0 1rem;
-            }
-            .abstract-icon {
-                @include dim(2rem, 2rem);
-                border-radius: 0;
-                border:0;
-            }
-        }
-        
+  .header {
+    @include flexbox-direction(flex, center, column, flex-start);
+    flex: 1;
+    padding-top: 1rem;
+    box-sizing: border-box;
+    img {
+      @include dim(8rem, 8rem);
+      margin: 0 1rem 1.5rem 0;
+      border-radius: 100px;
+      object-fit: cover;
+      border: 1px solid $dark_magenta;
     }
+    .user-image {
+      &:hover {
+        filter: blur(0.75px);
+      }
+    }
+    .file-input-btn {
+      top: 15%;
+      left: 12.5%;
+      position: absolute;
+      color: $magenta;
+      cursor: pointer;
+      z-index: 2;
+
+      &:hover {
+        color: $medium_purple;
+      }
+
+      .edit-btn {
+        cursor: pointer;
+        @include dim(1.5rem, 1.5rem);
+      }
+    }
+
+    .upload-btn {
+      @include upload-btn;
+    }
+    .user-info {
+      @include flexbox(flex, flex-start, center);
+
+      .username {
+        @include font($brittany, $bold, $l);
+        letter-spacing: 2px;
+        color: $magenta;
+        padding: 0 1rem 0 1rem;
+      }
+      .abstract-icon {
+        @include dim(2rem, 2rem);
+        border-radius: 0;
+        border: 0;
+      }
+    }
+
+    .user-sections {
+      @include flexbox-direction(flex, center, column, center);
+      padding: 2rem;
+      box-sizing: border-box;
+      font-size: $xs;
+
+      .user-section {
+        padding: 1rem;
+        box-sizing: border-box;
+        margin: 1rem;
+        border-radius: 10px;
+        flex: 1 1 0;
+        width: 100%;
+        text-align: center;
+        border: 1px solid $base_color_pink;
+
+
+        &:hover {
+          background-color: $base_color_pink;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }

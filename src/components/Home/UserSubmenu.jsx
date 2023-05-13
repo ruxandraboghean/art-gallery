@@ -1,13 +1,13 @@
 import { React } from "react";
 
-import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
+import { Box, Fab, Tooltip } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { AccountCircle } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { AddCircle, SettingsSystemDaydream } from "@mui/icons-material";
+import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 
 import addExhibition from "../../images/exhibitions/add-exhibition.png";
 
@@ -27,53 +27,77 @@ export default function UserSubmenu() {
       <div className="dropdown-menu">
         <Box sx={{ "& > :not(style)": { m: 1 } }}>
           <Link to="#" onClick={() => handleClick("profile")}>
-            <Fab color="secondary" aria-label="edit" className="account-btn">
-              <AccountCircle />
-            </Fab>
+            <Tooltip title="see profile" placement="right">
+              <Fab color="secondary" aria-label="edit" className="account-btn">
+                <AccountCircle />
+              </Fab>
+            </Tooltip>
           </Link>
           <Link to="#">
-            <Fab
-              color="secondary"
-              aria-label="edit"
-              className="account-btn"
-              onClick={() => handleOpenModal("add", "artwork", null)}
-            >
-              <AddCircle />
-            </Fab>
+            <Tooltip title="add artwork" placement="right">
+              <Fab
+                color="secondary"
+                aria-label="edit"
+                className="account-btn"
+                onClick={() => handleOpenModal("add", "artwork", null)}
+              >
+                <AddCircle />
+              </Fab>
+            </Tooltip>
           </Link>
 
           <Link to="#">
-            <Fab
-              color="secondary"
-              aria-label="edit"
-              className="account-btn"
-              onClick={() => handleOpenModal("exhibition")}
-            >
-              <img
-                src={addExhibition}
-                alt="exhibition"
-                className="addExhibitionIcon"
-              />
-            </Fab>
+            <Tooltip title="add exhibition" placement="right">
+              <Fab
+                color="secondary"
+                aria-label="edit"
+                className="account-btn"
+                onClick={() => handleOpenModal("exhibition")}
+              >
+                <img
+                  src={addExhibition}
+                  alt="exhibition"
+                  className="addExhibitionIcon"
+                />
+              </Fab>
+            </Tooltip>
           </Link>
 
           <Link to="#" onClick={() => handleClick("manage-artworks")}>
-            <Fab color="secondary" aria-label="edit" className="account-btn">
-              <SettingsSystemDaydream />
-            </Fab>
+            <Tooltip title="manage artworks" placement="right">
+              <Fab color="secondary" aria-label="edit" className="account-btn">
+                <SettingsSystemDaydream />
+              </Fab>
+            </Tooltip>
           </Link>
 
           <Link to="#">
-            <Fab
-              color="secondary"
-              aria-label="edit"
-              className="account-btn"
-              onClick={() => {
-                signOut(auth);
-              }}
-            >
-              <LogoutIcon />
-            </Fab>
+            <Tooltip title="notifications" placement="right">
+              <Fab
+                color="secondary"
+                aria-label="edit"
+                className="account-btn"
+                onClick={() => {
+                  console.log("see notifications");
+                }}
+              >
+                <CircleNotificationsIcon />
+              </Fab>
+            </Tooltip>
+          </Link>
+          <Link to="#">
+            <Tooltip title="sign out" placement="right">
+              <Fab
+                color="secondary"
+                aria-label="edit"
+                className="account-btn"
+                onClick={() => {
+                  signOut(auth);
+                }}
+              >
+                <LogoutIcon />
+              </Fab>
+            </Tooltip>
           </Link>
         </Box>
       </div>

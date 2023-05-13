@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import UserSubmenu from "./UserSubmenu";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 
-export const HomeNavbar = () => {
+export const HomeNavbar = ({ exhibitionClass }) => {
   const { setMenuDropdownOpen, isMenuDropdownOpen } =
     useContext(ArtworkModalContext);
 
@@ -17,7 +17,7 @@ export const HomeNavbar = () => {
 
   useOnHoverOutside(dropdownRef, closeHoverMenu);
   return (
-    <div className="home-navbar">
+    <div className={`home-navbar ${exhibitionClass}`}>
       <div ref={dropdownRef} className="menu-header">
         <img
           src={currentUser.photoURL}

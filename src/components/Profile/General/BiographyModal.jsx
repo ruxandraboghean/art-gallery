@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import * as IoIcons from "react-icons/io";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 
 export const BiographyModal = ({ user, userData, setIsOpen }) => {
   const [modalData, setModalData] = useState({
@@ -36,26 +35,29 @@ export const BiographyModal = ({ user, userData, setIsOpen }) => {
 
   return (
     <>
-      <section className="modal">
-        <div className="flex">
-          <img src={user?.photoURL} alt="Avatar" />
+      <section id="biography-modal">
+        <div className="modal-header">
+          <button className="close_button" onClick={handleClose}>
+            x
+          </button>
           <h3>{user?.displayName}'s Biography</h3>
-          <IoIcons.IoMdCloseCircle
-            className="btn-close"
-            onClick={handleClose}
+          <img src={user?.photoURL} alt="Avatar" />
+        </div>
+        <div className="modal-content">
+          <textarea
+            type="text"
+            id="biography"
+            placeholder=" Tell the world about yourself..."
+            name="biography"
+            defaultValue={modalData?.biography}
+            onChange={handleChange}
           />
         </div>
-        <textarea
-          type="text"
-          id="biography"
-          placeholder=" Tell the world about yourself..."
-          name="biography"
-          defaultValue={modalData?.biography}
-          onChange={handleChange}
-        />
-        <button className="btn" onClick={handleUpdate}>
-          Save Changes
-        </button>
+        <div className="modal-footer">
+          <button className="modal-button" onClick={handleUpdate}>
+            Save Changes
+          </button>
+        </div>
       </section>
       <div className="overlay"></div>
     </>

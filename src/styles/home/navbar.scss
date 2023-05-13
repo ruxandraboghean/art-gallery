@@ -1,44 +1,56 @@
 @import "../index.scss";
 
 .home-navbar {
-    float:right;
-    padding: 0 1.5rem 0 0; 
-  
-    .navbar {
-        @include flexbox(flex, center, center);
-        flex:6;
-        gap: 1rem;
-       
-        .link {
-            @include flexbox(flex, center, center);
-            text-decoration: none;
-            @include font($brittany, $regular, $m);
-            cursor: pointer;
-            border-radius: 10px;
-            letter-spacing: 2px;
+  float: right;
+  padding: 2rem 1.5rem 0 0;
 
-            img {
-                padding-left: 0.5rem;
-                @include dim(1.5rem, 1.5rem);
-            }
-            .works {
-                padding: 0.3rem 1.2rem;
-            }
-      
-            .artists {
-                padding: 0.3rem 1.2rem;
-            }
+  @include monitor() {
+    padding: 0 1.5rem 0 0;
+  }
 
-          &:hover {
-            color:$dark_magenta;
-            font-weight: $bold;
-            background-color: rgb(174,145,197, 0.3);
-           }
-           &:focus {
-            color:$dark_magenta;
-            font-weight: $bold;
-            background-color: rgb(174,145,197, 0.3);
-           }
-        }
+  .navbar {
+    @include flexbox(flex, center, center);
+    flex: 6;
+    gap: 1rem;
+
+    .link {
+      @include flexbox(flex, center, center);
+      text-decoration: none;
+      @include font($brittany, $regular, $m);
+      cursor: pointer;
+      border-radius: 10px;
+      letter-spacing: 2px;
+
+      img {
+        padding-left: 0.5rem;
+        @include dim(1.5rem, 1.5rem);
+      }
+      .works {
+        padding: 0.3rem 1.2rem;
+      }
+
+      .artists {
+        padding: 0.3rem 1.2rem;
+      }
+
+      &:hover {
+        color: $dark_magenta;
+        font-weight: $bold;
+        background-color: rgb(174, 145, 197, 0.3);
+      }
+      &:focus {
+        color: $dark_magenta;
+        font-weight: $bold;
+        background-color: rgb(174, 145, 197, 0.3);
+      }
     }
+  }
+}
+
+.exhibition-navbar {
+  padding: 2rem 6.5rem 0 0;
+
+  @include monitor() {
+    padding: 3.5rem 6.5rem 0 0;
+  }
 }

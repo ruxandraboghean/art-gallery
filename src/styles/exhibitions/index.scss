@@ -4,9 +4,12 @@
 
 .works-container {
     background-color: $base_color;
-    min-width: 100%;
+    max-width: 100%;
     height: 90vh;
     overflow-y: scroll;
+    padding: 3rem;
+    box-sizing: border-box;
+
         &::-webkit-scrollbar { 
             display: none;
          }

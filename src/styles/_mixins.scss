@@ -17,13 +17,13 @@
 }
 
 @mixin bigger-laptop {
-    @media screen and (max-width: 1500px) {
+    @media screen and (max-width: 1600) {
         @content;
     }
 }
 
 @mixin monitor {
-    @media screen and (min-width: 1800px) {
+    @media screen and (min-width: 2000px) {
         @content;
     }
 }
