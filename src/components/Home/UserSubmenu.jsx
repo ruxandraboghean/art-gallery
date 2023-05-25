@@ -47,9 +47,7 @@ export default function UserSubmenu() {
                 color="secondary"
                 aria-label="edit"
                 className="account-btn"
-                onClick={() => {
-                  console.log("see notifications");
-                }}
+                onClick={() => handleOpenModal("see", "notifications", null)}
               >
                 <CircleNotificationsIcon className="icon" />
               </Fab>

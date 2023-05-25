@@ -57,8 +57,13 @@ export const AddArtworkForm = ({ onClose }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
-  const { artworkId, setIsSuccess, setHasDisplayedMessage, setArtworks } =
-    useContext(ArtworkModalContext);
+  const {
+    artworkId,
+    setIsSuccess,
+    setHasDisplayedMessage,
+    setArtworks,
+    setUserArtworks,
+  } = useContext(ArtworkModalContext);
 
   const [specialistOptions, setSpecialistsOptions] = useState(null);
 
@@ -156,12 +161,19 @@ export const AddArtworkForm = ({ onClose }) => {
                 artworks: arrayUnion({
                   id: artId,
                 }),
+                notifications: arrayUnion({
+                  message: `Art added successfully. You can see now in you artworks with "${status}" status. 
+                  Wait for the expert ${artworkData.specialist.value} report`,
+                  time: new Date().getTime(),
+                  image: downloadURL,
+                }),
               });
               console.log("Document written with ID: ", artId);
 
               setErr(false);
               resetState(e);
               setIsSuccess(true);
+
               setArtworks((prevArtworks) =>
                 prevArtworks.concat({
                   id: artId,
@@ -234,7 +246,7 @@ export const AddArtworkForm = ({ onClose }) => {
           };
 
           await updateDoc(userDocRef, { artworks: updatedArtworks });
-          setArtworks(updatedArtworks);
+          setUserArtworks(updatedArtworks);
         }
 
         resetState(e);

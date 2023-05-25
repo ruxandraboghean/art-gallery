@@ -4,6 +4,7 @@
 @import './artworks/buttons.scss';
 @import './artworks/manage_artworks.scss';
 @import './exhibition/index.scss';
+@import './user/notifications.scss';
 
 .gallery-container {
     @include flexbox(flex, center, space-between);

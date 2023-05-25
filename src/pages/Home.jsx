@@ -1,5 +1,4 @@
 import React from "react";
-import { HomeNavbar } from "../components/home/HomeNavbar";
 import { HomeSidebar } from "../components/home/HomeSidebar";
 import { Exhibitions } from "./exhibition/Exhibitions";
 import { Messages } from "./chat/Messages";
@@ -15,10 +14,16 @@ import "react-toastify/dist/ReactToastify.css";
 import { ArtworkModalContext } from "../context/ArtworkModalContext";
 import { useContext } from "react";
 import { ArtworkModal } from "../components/gallery/modals/ArtworkModal";
+import { NotificationsModal } from "../components/gallery/modals/NotificationsModal";
 
 export const Home = () => {
-  const { currentMenuItem, setCurrentMenuItem, isSuccess, isOpenArtwork } =
-    useContext(ArtworkModalContext);
+  const {
+    currentMenuItem,
+    setCurrentMenuItem,
+    isSuccess,
+    isOpenArtwork,
+    isOpenNotificationsModal,
+  } = useContext(ArtworkModalContext);
 
   return (
     <div className="home">
@@ -33,8 +38,6 @@ export const Home = () => {
             <Profile />
           ) : currentMenuItem === "manage-artworks" ? (
             <ManageArtworks />
-          ) : currentMenuItem === "notifications" ? (
-            <div> notifications </div>
           ) : (
             <Exhibitions />
           )}
@@ -42,6 +45,7 @@ export const Home = () => {
         {isSuccess && <ToastContainer />}
       </div>
       {isOpenArtwork && <ArtworkModal />}
+      {isOpenNotificationsModal && <NotificationsModal />}
     </div>
   );
 };

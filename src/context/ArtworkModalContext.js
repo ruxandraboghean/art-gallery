@@ -13,8 +13,10 @@ export const ArtworkModalContextProvider = ({ children }) => {
     localStorage.getItem("currentMenuItem")
   );
   const [userArtworks, setUserArtworks] = useState([]);
-  const [artworks, setArtworks] = useState(null);
+  const [artworks, setArtworks] = useState([]);
   const [isOpenArtwork, setIsOpenArtwork] = useState(false);
+  const [isOpenNotificationsModal, setIsOpenNotificationsModal] =
+    useState(false);
   const [artworkId, setArtworkId] = useState(null);
   const [isMenuDropdownOpen, setMenuDropdownOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -26,6 +28,8 @@ export const ArtworkModalContextProvider = ({ children }) => {
     if (type === "artwork") {
       setIsOpenArtwork(true);
       return id;
+    } else if (type === "notifications") {
+      setIsOpenNotificationsModal(true);
     }
   };
 
@@ -69,6 +73,8 @@ export const ArtworkModalContextProvider = ({ children }) => {
         setArtworks,
         userArtworks,
         setUserArtworks,
+        isOpenNotificationsModal,
+        setIsOpenNotificationsModal,
       }}
     >
       {children}

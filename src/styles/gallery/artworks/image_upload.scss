@@ -13,7 +13,7 @@
         height: 100%;
 
         .drag-icon {
-            @include dim(2.5rem, 2.5rem);
+            @include dim(1.5rem, 1.5rem);
             color:$base_color_pink;
             cursor: pointer;
         }
@@ -22,6 +22,7 @@
             @include font($roboto-mono, $light, $s);
             text-align: center;
             color:$dark_magenta;
+            font-size: $xxs;
 
             @include laptop {
                 font-size: 0.55rem;

@@ -1,5 +1,5 @@
 .modal {
-    @include flexbox-direction(flex, space-between, column, space-between);
+    @include flexbox-direction(flex, space-between, column, flex-start);
     @include laptop() {
         width: 100%;
     }
@@ -58,8 +58,8 @@
             }
 
             #close-button {
-                width: 3.5rem;
-                height: 3.5rem;
+                width: 2.5rem;
+                height: 2.5rem;
         
                 &:hover {
                     cursor: pointer;

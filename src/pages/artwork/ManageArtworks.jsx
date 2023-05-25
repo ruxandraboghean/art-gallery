@@ -63,15 +63,13 @@ export const ManageArtworks = () => {
       artData = [...artData, doc.data()];
     });
 
-    console.log(artData, "artworks in async method");
-
     const userDocRef = doc(db, "users", currentUser.uid);
 
     const docSnap = await getDoc(userDocRef);
 
     if (docSnap.exists()) {
       const artworksDatabaseIds = docSnap.data().artworks;
-      console.log(artworksDatabaseIds, "has artworks?");
+
       if (artworksDatabaseIds) {
         setIsLoading(true);
         const artworkIds = Object.values(artworksDatabaseIds).map(

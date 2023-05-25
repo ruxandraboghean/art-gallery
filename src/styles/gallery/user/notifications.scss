@@ -1,0 +1,42 @@
+.notifications__container {
+  @include flexbox-direction(flex, center, column, center);
+  padding: 1rem;
+  gap: 0.5rem;
+  width: 100%;
+
+  .notification__container {
+    @include flexbox(flex, center, flex-start);
+    padding: 0.5rem;
+    width: 100%;
+    border-radius: 5px;
+    gap: 1rem;
+
+    .notification__content {
+      @include flexbox-direction(flex, flex-start, column, center);
+      font-size: $xxs;
+      gap:0.5rem;
+
+      p {
+        margin: 0;
+        text-align: justify;
+      }
+      .notification__date {
+        color: $dark_magenta;
+      }
+    }
+    .delete__notification {
+        width: 3rem;
+        height: 3rem;
+        
+        &:hover {
+            cursor: pointer;
+            color:$danger_color;
+          }
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+    }
+  }
+}
