@@ -4,17 +4,11 @@
 
 .profile-container {
     @include flexbox(flex, center, space-between);
+    border-radius: 10px;
+    display: flex;
+    overflow: hidden;
     background-color: $base_color;
     height: 90vh;
     flex: 5;
-   
-    .profile-wrapper {
-        @include dim (98.5%, 97.5%);
-        border: 1px solid $light_grayish_purple;
-        border-radius: 10px;
-        display: flex;
-        overflow: hidden;
-        background-color: $grayish_normal;
-    }
 }
    

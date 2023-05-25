@@ -19,10 +19,10 @@ body {
 
         div{
             .current-user {
-                @include dim (3rem, 3rem);
+                @include dim (2.5rem, 2.5rem);
                 border-radius: 50px;
                 object-fit: cover;
-                border: 2px solid $magenta;
+                border: 2px solid $medium_purple;
                 cursor: pointer;
     
                 @include mobile() {

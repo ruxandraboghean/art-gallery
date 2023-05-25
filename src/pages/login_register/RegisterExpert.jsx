@@ -52,6 +52,8 @@ export const RegisterExpert = () => {
     const file = e.target[4].files[0] || null;
     const certificate = e.target[5].files[0] || null;
 
+    console.log(file, "file");
+
     if (
       !formValues.username.trim() ||
       !formValues.email.trim() ||
@@ -66,10 +68,10 @@ export const RegisterExpert = () => {
       try {
         const res = await createUserWithEmailAndPassword(auth, email, password);
 
-        const storageRef = ref(storage, displayName);
+        const storageRefFile = ref(storage, displayName);
 
-        await uploadBytesResumable(storageRef, file).then(() => {
-          getDownloadURL(storageRef).then(async (downloadURL) => {
+        await uploadBytesResumable(storageRefFile, file).then(() => {
+          getDownloadURL(storageRefFile).then(async (downloadURL) => {
             try {
               await updateProfile(res.user, {
                 displayName,
@@ -90,24 +92,28 @@ export const RegisterExpert = () => {
             }
           });
         });
-        await uploadBytesResumable(storageRef, certificate).then(() => {
-          getDownloadURL(storageRef).then(async (downloadURL) => {
-            try {
-              await updateProfile(res.user, {
-                displayName,
-                certificateURL: downloadURL,
-              });
+        const storageRefCertificate = ref(storage, displayName + "certificate");
 
-              await updateDoc(doc(db, "users", res.user.uid), {
-                certificateURL: downloadURL,
-              });
+        await uploadBytesResumable(storageRefCertificate, certificate).then(
+          () => {
+            getDownloadURL(storageRefCertificate).then(async (downloadURL) => {
+              try {
+                await updateProfile(res.user, {
+                  displayName,
+                  certificateURL: downloadURL,
+                });
 
-              setIsLoading(false);
-            } catch (err) {
-              setErr(true);
-            }
-          });
-        });
+                await updateDoc(doc(db, "users", res.user.uid), {
+                  certificateURL: downloadURL,
+                });
+
+                setIsLoading(false);
+              } catch (err) {
+                setErr(true);
+              }
+            });
+          }
+        );
       } catch (err) {
         setErr(true);
         setIsLoading(false);

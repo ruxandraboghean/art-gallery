@@ -19,7 +19,7 @@ export const ConfirmationModal = ({
   isOpenConfirmationModal,
   setIsOpenConfirmationModal,
   setIsSuccess,
-  setArtworks,
+  setUserArtworks,
 }) => {
   const { currentUser } = useContext(AuthContext);
 
@@ -52,8 +52,7 @@ export const ConfirmationModal = ({
       );
 
       await updateDoc(userDocRef, { artworks: updatedArtworks });
-      console.log(updatedArtworks, "updated artworks");
-      setArtworks(updatedArtworks);
+      setUserArtworks(updatedArtworks);
       setIsOpenConfirmationModal(false);
       setIsSuccess(true);
     }

@@ -3,6 +3,8 @@ import { createContext, useEffect, useState } from "react";
 //notifications
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { db } from "../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 export const ArtworkModalContext = createContext();
 
@@ -10,6 +12,7 @@ export const ArtworkModalContextProvider = ({ children }) => {
   const [currentMenuItem, setCurrentMenuItem] = useState(
     localStorage.getItem("currentMenuItem")
   );
+  const [userArtworks, setUserArtworks] = useState([]);
   const [artworks, setArtworks] = useState(null);
   const [isOpenArtwork, setIsOpenArtwork] = useState(false);
   const [artworkId, setArtworkId] = useState(null);
@@ -64,6 +67,8 @@ export const ArtworkModalContextProvider = ({ children }) => {
         setHasDisplayedMessage,
         artworks,
         setArtworks,
+        userArtworks,
+        setUserArtworks,
       }}
     >
       {children}

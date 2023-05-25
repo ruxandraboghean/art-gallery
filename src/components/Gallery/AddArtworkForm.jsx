@@ -6,7 +6,6 @@ import { unitOptions } from "../../mockData/unitOptions";
 import { techniqueOptions } from "../../mockData/techniqueOptions";
 import { genreOptions } from "../../mockData/genreOptions";
 import { categoryOptions } from "../../mockData/categoryOptions";
-import { specialistOptions } from "../../mockData/specialistOptions";
 
 // firebase
 import {
@@ -30,6 +29,7 @@ import Select from "react-select";
 import { ClipLoader } from "react-spinners";
 import { useDropzone } from "react-dropzone";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
+import getSpecialists from "../../data/getSpecialists";
 
 const initialState = {
   title: "",
@@ -47,6 +47,10 @@ const initialState = {
   specialist: null,
 };
 
+const artworksRef = collection(db, "artworks");
+const artworksDocRef = doc(artworksRef);
+const artId = artworksDocRef.id;
+
 export const AddArtworkForm = ({ onClose }) => {
   const [artworkData, setArtworkData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +59,8 @@ export const AddArtworkForm = ({ onClose }) => {
   const { currentUser } = useContext(AuthContext);
   const { artworkId, setIsSuccess, setHasDisplayedMessage, setArtworks } =
     useContext(ArtworkModalContext);
+
+  const [specialistOptions, setSpecialistsOptions] = useState(null);
 
   const onDrop = (acceptedFiles) => {
     const selectedFile = acceptedFiles[0];
@@ -103,6 +109,87 @@ export const AddArtworkForm = ({ onClose }) => {
     setArtworkData({ ...artworkData, [dropdownLabel]: { label, value } });
   };
 
+  const getSpecialistsData = async () => {
+    const specialistsData = await getSpecialists();
+    setSpecialistsOptions(
+      specialistsData.map((specialist) => ({
+        label: specialist.displayName,
+        value: specialist.displayName,
+      }))
+    );
+  };
+
+  const saveNewArtwork = async (e, status) => {
+    try {
+      const storageRef = sRef(storage, artId);
+
+      if (artworkData?.photoURL?.imageSrc) {
+        await setDoc(artworksDocRef, {
+          ...artworkData,
+          id: artId,
+          unit: artworkData?.unit.value,
+          technique: artworkData?.technique.value,
+          genre: artworkData?.genre.value,
+          category: artworkData?.category.value,
+          specialist: artworkData?.specialist.value,
+          status: status,
+          photoURL: artworkData?.photoURL?.imageSrc || "",
+        });
+
+        await uploadBytesResumable(
+          storageRef,
+          artworkData?.photoURL?.file
+        ).then(() => {
+          getDownloadURL(storageRef).then(async (downloadURL) => {
+            try {
+              await updateDoc(doc(db, "artworks", artId), {
+                ...artworkData,
+                photoURL: downloadURL,
+                unit: artworkData?.unit.value,
+                technique: artworkData?.technique.value,
+                genre: artworkData?.genre.value,
+                category: artworkData?.category.value,
+                specialist: artworkData?.specialist.value,
+                status: status,
+              });
+              await updateDoc(doc(db, "users", currentUser.uid), {
+                artworks: arrayUnion({
+                  id: artId,
+                }),
+              });
+              console.log("Document written with ID: ", artId);
+
+              setErr(false);
+              resetState(e);
+              setIsSuccess(true);
+              setArtworks((prevArtworks) =>
+                prevArtworks.concat({
+                  id: artId,
+                  ...artworkData,
+                  unit: artworkData?.unit.value,
+                  technique: artworkData?.technique.value,
+                  genre: artworkData?.genre.value,
+                  category: artworkData?.category.value,
+                  specialist: artworkData?.specialist.value,
+                  photoURL: downloadURL,
+                  status: status,
+                })
+              );
+              onClose();
+            } catch (err) {
+              console.log("Can't update doc:", err.message);
+              setErr(true);
+            }
+          });
+        });
+      } else {
+        setErr(true);
+      }
+    } catch (err) {
+      console.log("Can't update doc:", err.message);
+      setErr(true);
+    }
+  };
   //SAVE AS DRAFT
   async function handleSaveAsDraft(e) {
     e.preventDefault();
@@ -110,9 +197,7 @@ export const AddArtworkForm = ({ onClose }) => {
     try {
       setIsLoading(true);
 
-      const artworksRef = collection(db, "artworks");
-      const docRef = doc(artworksRef);
-      const artId = docRef.id;
+      //doc ref user artworks
 
       const userDocRef = doc(db, "users", currentUser.uid);
       const userDoc = await getDoc(userDocRef);
@@ -121,7 +206,11 @@ export const AddArtworkForm = ({ onClose }) => {
       //if artwork exists
       if (artworkId) {
         setHasDisplayedMessage(false);
+
         const docRef = doc(db, "artworks", artworkId);
+
+        //update la artwork existent in firebase
+
         await updateDoc(docRef, {
           ...artworkData,
           unit: artworkData?.unit.value,
@@ -133,6 +222,8 @@ export const AddArtworkForm = ({ onClose }) => {
           status: artworkData?.status,
         });
 
+        //seteaza in view imediat artwork ul editat
+
         const index = artworks.findIndex((artwork) => artwork.id === artworkId);
 
         if (index !== -1) {
@@ -140,14 +231,6 @@ export const AddArtworkForm = ({ onClose }) => {
 
           updatedArtworks[index] = {
             id: artworkId,
-            ...artworkData,
-            unit: artworkData?.unit.value,
-            technique: artworkData?.technique.value,
-            genre: artworkData?.genre.value,
-            category: artworkData?.category.value,
-            specialist: artworkData?.specialist.value,
-            photoURL: artworkData?.photoURL.imageSrc,
-            status: artworkData?.status,
           };
 
           await updateDoc(userDocRef, { artworks: updatedArtworks });
@@ -162,82 +245,7 @@ export const AddArtworkForm = ({ onClose }) => {
 
         console.log("Document updated with ID: ", docRef.id);
       } else {
-        try {
-          const storageRef = sRef(storage, artId);
-
-          if (artworkData?.photoURL?.imageSrc) {
-            await setDoc(docRef, {
-              ...artworkData,
-              id: artId,
-              unit: artworkData?.unit.value,
-              technique: artworkData?.technique.value,
-              genre: artworkData?.genre.value,
-              category: artworkData?.category.value,
-              status: "draft",
-              photoURL: artworkData?.photoURL?.imageSrc || "",
-            });
-
-            await uploadBytesResumable(
-              storageRef,
-              artworkData?.photoURL?.file
-            ).then(() => {
-              getDownloadURL(storageRef).then(async (downloadURL) => {
-                try {
-                  await updateDoc(doc(db, "artworks", artId), {
-                    ...artworkData,
-                    photoURL: downloadURL,
-                    unit: artworkData?.unit.value,
-                    technique: artworkData?.technique.value,
-                    genre: artworkData?.genre.value,
-                    category: artworkData?.category.value,
-                    specialist: artworkData?.specialist.value,
-                    status: "draft",
-                  });
-                  await updateDoc(doc(db, "users", currentUser.uid), {
-                    artworks: arrayUnion({
-                      id: artId,
-                      ...artworkData,
-                      unit: artworkData?.unit.value,
-                      technique: artworkData?.technique.value,
-                      genre: artworkData?.genre.value,
-                      category: artworkData?.category.value,
-                      specialist: artworkData?.specialist.value,
-                      photoURL: downloadURL,
-                      status: "draft",
-                    }),
-                  });
-                  console.log("Document written with ID: ", docRef.id);
-
-                  setErr(false);
-                  resetState(e);
-                  setIsSuccess(true);
-                  setArtworks((prevArtworks) =>
-                    prevArtworks.concat({
-                      id: artId,
-                      ...artworkData,
-                      unit: artworkData?.unit.value,
-                      technique: artworkData?.technique.value,
-                      genre: artworkData?.genre.value,
-                      category: artworkData?.category.value,
-                      specialist: artworkData?.specialist.value,
-                      photoURL: downloadURL,
-                      status: "draft",
-                    })
-                  );
-                  onClose();
-                } catch (err) {
-                  console.log("Can't update doc:", err.message);
-                  setErr(true);
-                }
-              });
-            });
-          } else {
-            setErr(true);
-          }
-        } catch (err) {
-          console.log("Can't update doc:", err.message);
-          setErr(true);
-        }
+        saveNewArtwork(e, "draft");
       }
       setIsLoading(false);
     } catch (e) {
@@ -249,32 +257,12 @@ export const AddArtworkForm = ({ onClose }) => {
   const sendRequest = async (e) => {
     e.preventDefault();
 
-    const docRef = doc(db, "artworks", artworkId);
+    if (artworkId) {
+      try {
+        setIsLoading(true);
 
-    try {
-      setIsLoading(true);
-      await updateDoc(docRef, {
-        ...artworkData,
-        unit: artworkData?.unit.value,
-        technique: artworkData?.technique.value,
-        genre: artworkData?.genre.value,
-        category: artworkData?.category.value,
-        specialist: artworkData?.specialist.value,
-        photoURL: artworkData?.photoURL.imageSrc,
-        status: "pending authentication",
-      });
-
-      const userDocRef = doc(db, "users", currentUser.uid);
-      const userDoc = await getDoc(userDocRef);
-      const artworks = userDoc.data().artworks;
-
-      const index = artworks.findIndex((artwork) => artwork.id === artworkId);
-
-      if (index !== -1) {
-        let updatedArtworks = [...artworks];
-
-        updatedArtworks[index] = {
-          id: artworkId,
+        const docRef = doc(db, "artworks", artworkId);
+        await updateDoc(docRef, {
           ...artworkData,
           unit: artworkData?.unit.value,
           technique: artworkData?.technique.value,
@@ -283,18 +271,34 @@ export const AddArtworkForm = ({ onClose }) => {
           specialist: artworkData?.specialist.value,
           photoURL: artworkData?.photoURL.imageSrc,
           status: "pending authentication",
-        };
+        });
 
-        await updateDoc(userDocRef, { artworks: updatedArtworks });
-        setArtworks(updatedArtworks);
+        const userDocRef = doc(db, "users", currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        const artworks = userDoc.data().artworks;
+
+        const index = artworks.findIndex((artwork) => artwork.id === artworkId);
+
+        if (index !== -1) {
+          let updatedArtworks = [...artworks];
+
+          updatedArtworks[index] = {
+            id: artworkId,
+          };
+
+          await updateDoc(userDocRef, { artworks: updatedArtworks });
+          setArtworks(updatedArtworks);
+        }
+
+        setIsLoading(false);
+        setIsSuccess(true);
+
+        onClose();
+      } catch (err) {
+        console.log(err.message);
       }
-
-      setIsLoading(false);
-      setIsSuccess(true);
-
-      onClose();
-    } catch (err) {
-      console.log(err.message);
+    } else {
+      saveNewArtwork(e, "pending authentication");
     }
   };
 
@@ -330,6 +334,7 @@ export const AddArtworkForm = ({ onClose }) => {
   useEffect(() => {
     if (artworkId !== undefined && artworkId !== "") {
       editHandler();
+      getSpecialistsData();
     }
   }, [artworkId]);
 
@@ -359,7 +364,7 @@ export const AddArtworkForm = ({ onClose }) => {
             {isDragActive ? (
               <p>Drop the image here ...</p>
             ) : (
-              <p>Drag 'n' drop image </p>
+              <p>Drag & drop image </p>
             )}
           </div>
 
@@ -541,7 +546,7 @@ export const AddArtworkForm = ({ onClose }) => {
             <button id="save" name="save" onClick={handleSaveAsDraft}>
               Save as draft
             </button>
-            <button className="publish" name="publish" onClick={sendRequest}>
+            <button id="publish" name="publish" onClick={sendRequest}>
               Send Request
             </button>
           </div>

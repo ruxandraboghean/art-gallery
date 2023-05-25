@@ -1,13 +1,6 @@
 @import "../index.scss";
 
 .home-navbar {
-  float: right;
-  padding: 2rem 1.5rem 0 0;
-
-  @include monitor() {
-    padding: 0 1.5rem 0 0;
-  }
-
   .navbar {
     @include flexbox(flex, center, center);
     flex: 6;

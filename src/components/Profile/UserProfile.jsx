@@ -3,7 +3,6 @@ import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UserCard } from "./UserCard";
 import { AuthContext } from "../../context/AuthContext";
-import abstract from "../../images/abstract.png";
 import { useState } from "react";
 import { upload } from "../../firebase";
 import { useEffect } from "react";
@@ -14,7 +13,7 @@ export const UserProfile = () => {
   const [image, setImage] = useState(null);
   const [photoURL, setPhotoURL] = useState(null);
 
-  const [currentSection, setCurrentSection] = useState("");
+  const [currentSection, setCurrentSection] = useState("general");
 
   const handleChangesCurrentSection = (item) => {
     setCurrentSection(item);
@@ -43,6 +42,46 @@ export const UserProfile = () => {
   return (
     <div className="user-profile">
       <div className="header">
+        <span className="username">
+          {currentUser?.displayName &&
+            capitalizeFirst(currentUser?.displayName)}{" "}
+          's | Profile
+        </span>
+
+        <section className="user-sections">
+          <section
+            className={`user-section ${
+              currentSection === "general" ? "selected" : "false"
+            }`}
+            aria-label="General Information Section"
+            onClick={() => handleChangesCurrentSection("general")}
+          >
+            General Information
+          </section>
+          <section
+            className={`user-section ${
+              currentSection === "authenticated-artworks" ? "selected" : "false"
+            }`}
+            aria-label="Authenticated Artworks Section"
+            onClick={() =>
+              handleChangesCurrentSection("authenticated-artworks")
+            }
+          >
+            Authenticated Artworks
+          </section>
+          <section
+            className={`user-section ${
+              currentSection === "exhibitions" ? "selected" : "false"
+            }`}
+            aria-label="Exhibitions Section"
+            onClick={() => handleChangesCurrentSection("exhibitions")}
+          >
+            Exhibitions
+          </section>
+        </section>
+      </div>
+
+      <section className="user-info">
         <img src={photoURL} alt="User" className="user-image" />
         <div className="file-input-btn">
           <input
@@ -64,41 +103,8 @@ export const UserProfile = () => {
             Upload
           </button>
         )}
-
-        <div className="user-info">
-          <span className="username">
-            {currentUser?.displayName &&
-              capitalizeFirst(currentUser?.displayName)}
-          </span>
-          <img src={abstract} alt="abstract" className="abstract-icon" />
-        </div>
-        <section className="user-sections">
-          <section
-            className="user-section"
-            aria-label="General Information Section"
-            onClick={() => handleChangesCurrentSection("general")}
-          >
-            General Information
-          </section>
-          <section
-            className="user-section"
-            aria-label="Authenticated Artworks Section"
-            onClick={() =>
-              handleChangesCurrentSection("authenticated-artworks")
-            }
-          >
-            Authenticated Artworks
-          </section>
-          <section
-            className="user-section"
-            aria-label="Exhibitions Section"
-            onClick={() => handleChangesCurrentSection("exhibitions")}
-          >
-            Exhibitions
-          </section>
-        </section>
-      </div>
-      <UserCard currentUser={currentUser} currentSection={currentSection} />
+        <UserCard currentUser={currentUser} currentSection={currentSection} />
+      </section>
     </div>
   );
 };

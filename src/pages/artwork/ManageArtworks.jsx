@@ -39,8 +39,9 @@ export const ManageArtworks = () => {
   const [sortData, setSortData] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [hasDisplayedMessage, setHasDisplayedMessage] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const { artworks, setArtworks } = useContext(ArtworkModalContext);
+  const { userArtworks, setUserArtworks } = useContext(ArtworkModalContext);
 
   //modal for displaying a message for deleting confirmation
   const [isOpenConfirmationModal, setIsOpenConfirmationModal] = useState(false);
@@ -51,6 +52,43 @@ export const ManageArtworks = () => {
 
   const handleDropdownChange = (dropdownLabel, { label, value }) => {
     setSortData({ ...sortData, [dropdownLabel]: { label, value } });
+  };
+
+  const getArtworks = async () => {
+    const docRef = collection(db, "artworks");
+    const docs = await getDocs(docRef);
+    let artData = [];
+
+    docs.forEach((doc) => {
+      artData = [...artData, doc.data()];
+    });
+
+    console.log(artData, "artworks in async method");
+
+    const userDocRef = doc(db, "users", currentUser.uid);
+
+    const docSnap = await getDoc(userDocRef);
+
+    if (docSnap.exists()) {
+      const artworksDatabaseIds = docSnap.data().artworks;
+      console.log(artworksDatabaseIds, "has artworks?");
+      if (artworksDatabaseIds) {
+        setIsLoading(true);
+        const artworkIds = Object.values(artworksDatabaseIds).map(
+          (artId) => artId.id
+        );
+        const filteredArtworks = artData.filter((artwork) =>
+          artworkIds.includes(artwork.id)
+        );
+
+        setUserArtworks(filteredArtworks);
+        setIsLoading(false);
+      } else {
+        console.log("User has not artworks");
+      }
+    } else {
+      console.log("No such document!");
+    }
   };
 
   const handleSearch = async () => {
@@ -74,7 +112,7 @@ export const ManageArtworks = () => {
       console.log("FOUND DATA: ", filteredData);
       console.log(
         " DATA: ",
-        filteredData.length === 0 ? artworks : filteredData
+        filteredData.length === 0 ? userArtworks : filteredData
       );
     } catch (err) {
       console.log(err.message);
@@ -85,26 +123,36 @@ export const ManageArtworks = () => {
     e.code === "Enter" && handleSearch();
   };
 
-  useEffect(() => {
-    async function getArtworks() {
-      const docRef = doc(db, "users", currentUser.uid);
+  const getSortedArtworks = async (sortType, orderType) => {
+    const artCollection = collection(db, "artworks");
 
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        const artworksDatabase = docSnap.data().artworks;
-        setArtworks(artworksDatabase);
-      } else {
-        console.log("No such document!");
-      }
+    if (orderType === "desc") {
+      const data = await getDocs(
+        query(artCollection, orderBy(sortType, "desc"))
+      );
+      const newData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setUserArtworks(newData);
+    } else {
+      const data = await getDocs(
+        query(artCollection, orderBy(sortType, "asc"))
+      );
+      const newData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setUserArtworks(newData);
     }
+  };
 
+  useEffect(() => {
     getArtworks();
+    setUserArtworks([]);
   }, [currentUser.uid]);
 
   useEffect(() => {
-    const artCollection = collection(db, "artworks");
-
     if (
       sortData?.sortBy === null ||
       sortData?.order === null ||
@@ -114,31 +162,9 @@ export const ManageArtworks = () => {
     } else {
       const sortType = sortData?.sortBy?.label;
       const orderType = sortData?.order?.label;
-
-      const getSortedArtworks = async (sortType, orderType) => {
-        if (orderType === "desc") {
-          const data = await getDocs(
-            query(artCollection, orderBy(sortType, "desc"))
-          );
-          const newData = data.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
-          setArtworks(newData);
-        } else {
-          const data = await getDocs(
-            query(artCollection, orderBy(sortType, "asc"))
-          );
-          const newData = data.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
-          setArtworks(newData);
-        }
-      };
       getSortedArtworks(sortType, orderType);
     }
-  }, [sortData]);
+  }, [currentUser.id, sortData]);
 
   useEffect(() => {
     if (isSuccess && !hasDisplayedMessage) {
@@ -160,7 +186,6 @@ export const ManageArtworks = () => {
     }
   }, [isSuccess, hasDisplayedMessage]);
 
-  console.log(currentArtwork, "currentArtwork");
   return (
     <div className="gallery-container">
       <div className="gallery-wrapper">
@@ -208,16 +233,20 @@ export const ManageArtworks = () => {
           </div>
 
           <div className="works">
-            {(filteredData.length === 0 ? artworks : filteredData)?.map(
-              (artwork) => (
-                <ArtworkArtistView
-                  artwork={artwork}
-                  key={artwork.id}
-                  isOpenConfirmationModal={isOpenConfirmationModal}
-                  setIsOpenConfirmationModal={setIsOpenConfirmationModal}
-                  setCurrentArtwork={setCurrentArtwork}
-                  setArtworks={setArtworks}
-                />
+            {userArtworks.length === 0 ? (
+              <p>No artworks found</p>
+            ) : (
+              (filteredData.length === 0 ? userArtworks : filteredData)?.map(
+                (artwork) => (
+                  <ArtworkArtistView
+                    artwork={artwork}
+                    key={artwork.id}
+                    isOpenConfirmationModal={isOpenConfirmationModal}
+                    setIsOpenConfirmationModal={setIsOpenConfirmationModal}
+                    setCurrentArtwork={setCurrentArtwork}
+                    setUserArtworks={setUserArtworks}
+                  />
+                )
               )
             )}
           </div>
@@ -230,7 +259,7 @@ export const ManageArtworks = () => {
           isOpenConfirmationModal={isOpenConfirmationModal}
           setIsOpenConfirmationModal={setIsOpenConfirmationModal}
           setIsSuccess={setIsSuccess}
-          setArtworks={setArtworks}
+          setUserArtworks={setUserArtworks}
         />
       )}
     </div>

@@ -1,66 +1,90 @@
 .user-card {
-    @include flexbox-direction(flex, flex-start,column, space-around);
-    flex:4;
-    height: 100%;
-    border: 1px solid $light_grayish_purple;
-    border-radius: 10px;
-    background-color: $base_color;
+  @include flexbox(flex, flex-start, space-between);
+  flex: 4;
+  width: 95%;
+  height: 100%;
+  border-radius: 20px;
+  padding: 4rem;
+  padding-top: 8rem;
+  background-color: $grayish_normal;
+  box-sizing: border-box;
 
-    .details {
-        @include flexbox-direction(flex, left,column, center);
+  .details {
+    @include flexbox-direction(flex, flex-start, column, space-between);
 
-        .details-header {
-            @include flexbox(flex, center, flex-start);
-            gap:2rem;
-            padding: 0 0 1rem 2rem; 
-
-            span {
-                @include font($roboto-mono, $regular, $s);
-                color: $dark_magenta;
-            }
-          
-            .edit-btn {
-                @include dim(1rem, 1rem);
-                color: $medium_purple;
-                cursor: pointer;
-                
-                &:hover {
-                    color: $magenta;
-                }
-            }
-        }
-
-        .details-content {  
-            @include flexbox-direction(flex, left, column, center);
-            gap: 1rem;
-
-            span {
-                @include font($roboto-mono, $normal, $xs);
-            }
-            .details-span {
-                margin-left: 2rem;
-            }
-
-            .social-links {
-                @include flexbox(flex, center, center);
-                gap:1rem;
-                cursor: pointer;
-
-                .instagram {
-                    @include dim(1.5rem, 1.5rem);
-                    color: $grayish_pink;
-                }
-
-                .youtube {
-                    @include dim(1.75rem, 1.75rem);
-                    color: $magenta;
-                }
-
-                .blog {
-                    @include dim(1.25rem, 1.25rem);
-                    color: $dark_magenta;
-                }
-            }
-        }
+    @include tablet() {
+      @include flexbox-direction(flex, flex-start, column, space-between);
     }
+    width: 100%;
+    gap: 3rem;
+
+    .details-header {
+      @include flexbox(flex, center, flex-start);
+      gap: 10rem;
+      width: 100%;
+      cursor: pointer;
+
+      .details-header-item {
+        @include flexbox(flex, center, flex-start);
+        gap: 1rem;
+
+        span {
+          @include font($roboto-mono, $regular, $s);
+          color: $dark_magenta;
+          padding: 0 1rem;
+          padding-bottom: 0.2rem;
+
+          &:hover {
+            color: $purple;
+          }
+        }
+
+        .tab-selected {
+            border-radius: 5px;
+            border-bottom: 2px solid $dark_magenta;
+        }
+
+        .edit-btn {
+          @include dim(1rem, 1rem);
+          color: $medium_purple;
+          cursor: pointer;
+          padding-bottom: 0.2rem;
+
+          &:hover {
+            color: $dark_magenta;
+          }
+        }
+      }
+    }
+
+    .details-content {
+      @include flexbox-direction(flex, flex-start, column, center);
+      gap: 1rem;
+
+      span {
+        @include font($roboto-mono, $normal, $xxs);
+      }
+
+      .social-links {
+        @include flexbox(flex, center, center);
+        gap: 2rem;
+        cursor: pointer;
+
+        .instagram {
+          @include dim(1.25rem, 1.25rem);
+          color: $grayish_pink;
+        }
+
+        .youtube {
+          @include dim(1.5rem, 1.5rem);
+          color: $magenta;
+        }
+
+        .blog {
+          @include dim(1rem, 1rem);
+          color: $dark_magenta;
+        }
+      }
+    }
+  }
 }

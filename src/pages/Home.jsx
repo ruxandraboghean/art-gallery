@@ -14,20 +14,16 @@ import "react-toastify/dist/ReactToastify.css";
 //context
 import { ArtworkModalContext } from "../context/ArtworkModalContext";
 import { useContext } from "react";
+import { ArtworkModal } from "../components/gallery/modals/ArtworkModal";
 
 export const Home = () => {
-  const { currentMenuItem, setCurrentMenuItem, isSuccess } =
+  const { currentMenuItem, setCurrentMenuItem, isSuccess, isOpenArtwork } =
     useContext(ArtworkModalContext);
 
   return (
     <div className="home">
       <HomeSidebar setCurrentMenuItem={setCurrentMenuItem} />
       <div className="content">
-        {currentMenuItem === "exhibitions" ? (
-          <HomeNavbar exhibitionClass="exhibition-navbar" />
-        ) : (
-          <HomeNavbar />
-        )}
         <div className="home-container">
           {currentMenuItem === "messages" ? (
             <Messages />
@@ -37,12 +33,15 @@ export const Home = () => {
             <Profile />
           ) : currentMenuItem === "manage-artworks" ? (
             <ManageArtworks />
+          ) : currentMenuItem === "notifications" ? (
+            <div> notifications </div>
           ) : (
             <Exhibitions />
           )}
         </div>
         {isSuccess && <ToastContainer />}
       </div>
+      {isOpenArtwork && <ArtworkModal />}
     </div>
   );
 };

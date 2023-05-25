@@ -26,22 +26,40 @@ export default function UserSubmenu() {
     <>
       <div className="dropdown-menu">
         <Box sx={{ "& > :not(style)": { m: 1 } }}>
-          <Link to="#" onClick={() => handleClick("profile")}>
-            <Tooltip title="see profile" placement="right">
-              <Fab color="secondary" aria-label="edit" className="account-btn">
-                <AccountCircle />
-              </Fab>
-            </Tooltip>
-          </Link>
           <Link to="#">
-            <Tooltip title="add artwork" placement="right">
+            <Tooltip title="sign out" placement="right">
               <Fab
                 color="secondary"
                 aria-label="edit"
                 className="account-btn"
-                onClick={() => handleOpenModal("add", "artwork", null)}
+                onClick={() => {
+                  signOut(auth);
+                }}
               >
-                <AddCircle />
+                <LogoutIcon className="icon" />
+              </Fab>
+            </Tooltip>
+          </Link>
+
+          <Link to="#" onClick={() => handleClick("notifications")}>
+            <Tooltip title="notifications" placement="right">
+              <Fab
+                color="secondary"
+                aria-label="edit"
+                className="account-btn"
+                onClick={() => {
+                  console.log("see notifications");
+                }}
+              >
+                <CircleNotificationsIcon className="icon" />
+              </Fab>
+            </Tooltip>
+          </Link>
+
+          <Link to="#" onClick={() => handleClick("manage-artworks")}>
+            <Tooltip title="manage artworks" placement="right">
+              <Fab color="secondary" aria-label="edit" className="account-btn">
+                <SettingsSystemDaydream className="icon" />
               </Fab>
             </Tooltip>
           </Link>
@@ -54,48 +72,28 @@ export default function UserSubmenu() {
                 className="account-btn"
                 onClick={() => handleOpenModal("exhibition")}
               >
-                <img
-                  src={addExhibition}
-                  alt="exhibition"
-                  className="addExhibitionIcon"
-                />
+                <img src={addExhibition} alt="exhibition" className="icon" />
               </Fab>
             </Tooltip>
           </Link>
 
-          <Link to="#" onClick={() => handleClick("manage-artworks")}>
-            <Tooltip title="manage artworks" placement="right">
+          <Link to="#">
+            <Tooltip title="add artwork" placement="right">
+              <Fab
+                color="secondary"
+                aria-label="edit"
+                className="account-btn"
+                onClick={() => handleOpenModal("add", "artwork", null)}
+              >
+                <AddCircle className="icon" />
+              </Fab>
+            </Tooltip>
+          </Link>
+
+          <Link to="#" onClick={() => handleClick("profile")}>
+            <Tooltip title="see profile" placement="right">
               <Fab color="secondary" aria-label="edit" className="account-btn">
-                <SettingsSystemDaydream />
-              </Fab>
-            </Tooltip>
-          </Link>
-
-          <Link to="#">
-            <Tooltip title="notifications" placement="right">
-              <Fab
-                color="secondary"
-                aria-label="edit"
-                className="account-btn"
-                onClick={() => {
-                  console.log("see notifications");
-                }}
-              >
-                <CircleNotificationsIcon />
-              </Fab>
-            </Tooltip>
-          </Link>
-          <Link to="#">
-            <Tooltip title="sign out" placement="right">
-              <Fab
-                color="secondary"
-                aria-label="edit"
-                className="account-btn"
-                onClick={() => {
-                  signOut(auth);
-                }}
-              >
-                <LogoutIcon />
+                <AccountCircle className="icon" />
               </Fab>
             </Tooltip>
           </Link>
@@ -109,7 +107,7 @@ export default function UserSubmenu() {
         />
         <ExhibitionForm />
       </Modal> */}
-      <ArtworkModal />
+      {/* <ArtworkModal /> */}
     </>
   );
 }
