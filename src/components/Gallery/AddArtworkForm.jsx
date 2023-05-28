@@ -30,6 +30,7 @@ import { ClipLoader } from "react-spinners";
 import { useDropzone } from "react-dropzone";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import getSpecialists from "../../data/getSpecialists";
+import getUsers from "../../data/getUsers";
 
 const initialState = {
   title: "",
@@ -53,6 +54,7 @@ const artId = artworksDocRef.id;
 
 export const AddArtworkForm = ({ onClose }) => {
   const [artworkData, setArtworkData] = useState(initialState);
+  const [specialistSelected, setSpecialistSelected] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [err, setErr] = useState(false);
@@ -63,9 +65,11 @@ export const AddArtworkForm = ({ onClose }) => {
     setHasDisplayedMessage,
     setArtworks,
     setUserArtworks,
+    setHasNewNotification,
   } = useContext(ArtworkModalContext);
 
   const [specialistOptions, setSpecialistsOptions] = useState(null);
+  const { nanoid } = require("nanoid");
 
   const onDrop = (acceptedFiles) => {
     const selectedFile = acceptedFiles[0];
@@ -110,16 +114,28 @@ export const AddArtworkForm = ({ onClose }) => {
     setArtworkData({ ...artworkData, [e.target.name]: e.target.value });
   };
 
-  const handleDropdownChange = (dropdownLabel, { label, value }) => {
+  const handleDropdownChange = async (dropdownLabel, { label, value }) => {
     setArtworkData({ ...artworkData, [dropdownLabel]: { label, value } });
+
+    if (dropdownLabel === "specialist") {
+      const users = await getUsers();
+
+      const userSelected =
+        users.find((user) => user.displayName === value.toLowerCase()) || {};
+      setSpecialistSelected(userSelected);
+    }
   };
 
   const getSpecialistsData = async () => {
     const specialistsData = await getSpecialists();
     setSpecialistsOptions(
       specialistsData.map((specialist) => ({
-        label: specialist.displayName,
-        value: specialist.displayName,
+        label:
+          specialist.displayName.charAt(0).toUpperCase() +
+          specialist.displayName.slice(1),
+        value:
+          specialist.displayName.charAt(0).toUpperCase() +
+          specialist.displayName.slice(1),
       }))
     );
   };
@@ -162,8 +178,18 @@ export const AddArtworkForm = ({ onClose }) => {
                   id: artId,
                 }),
                 notifications: arrayUnion({
-                  message: `Art added successfully. You can see now in you artworks with "${status}" status. 
+                  id: nanoid(),
+                  message: `You can see now your art: ${artworkData.title} in your artworks with ${status} status. 
                   Wait for the expert ${artworkData.specialist.value} report`,
+                  time: new Date().getTime(),
+                  image: downloadURL,
+                }),
+              });
+              await updateDoc(doc(db, "users", specialistSelected.uid), {
+                notifications: arrayUnion({
+                  id: nanoid(),
+                  message: `You have a new request for authenticating the artwork: ${artworkData.title} of ${currentUser.displayName}. 
+                  You can deny or accept the request.`,
                   time: new Date().getTime(),
                   image: downloadURL,
                 }),
@@ -173,6 +199,7 @@ export const AddArtworkForm = ({ onClose }) => {
               setErr(false);
               resetState(e);
               setIsSuccess(true);
+              setHasNewNotification(true);
 
               setArtworks((prevArtworks) =>
                 prevArtworks.concat({
@@ -252,7 +279,7 @@ export const AddArtworkForm = ({ onClose }) => {
         resetState(e);
         setErr(false);
         setIsSuccess(true);
-
+        setHasNewNotification(true);
         onClose();
 
         console.log("Document updated with ID: ", docRef.id);
@@ -304,6 +331,7 @@ export const AddArtworkForm = ({ onClose }) => {
 
         setIsLoading(false);
         setIsSuccess(true);
+        setHasNewNotification(true);
 
         onClose();
       } catch (err) {

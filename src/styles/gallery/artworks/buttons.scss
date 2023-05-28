@@ -5,7 +5,13 @@
 
     button {
         @include upload-btn; 
-        @include dim(10rem, 2.5rem);
+        @include dim(8rem, 2rem);
+        @include bigger-laptop() {
+            font-size: $xs_mobile; 
+        }
+        @include laptop-height() {
+            font-size: $xs_mobile; 
+        }
         font-size: $xxs; 
 
         &#cancel:hover {

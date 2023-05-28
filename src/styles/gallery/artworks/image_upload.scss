@@ -1,7 +1,7 @@
 .image-container {
     border-radius: 10px;
     padding: 0.5rem 1rem;
-    border: 3px dashed $base_color_pink;
+    border: 2px dashed $grayish_pink;
     border-spacing: 10px;
     width: 80%;
     height: 30%;
@@ -14,14 +14,14 @@
 
         .drag-icon {
             @include dim(1.5rem, 1.5rem);
-            color:$base_color_pink;
+            color:$grayish_pink;
             cursor: pointer;
         }
 
         p {
             @include font($roboto-mono, $light, $s);
             text-align: center;
-            color:$dark_magenta;
+            color:$grayish_pink;
             font-size: $xxs;
 
             @include laptop {

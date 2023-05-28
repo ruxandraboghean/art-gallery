@@ -8,7 +8,7 @@
     transition: ease-in-out all 0.4s;
     display: table;
     position: absolute;
-    bottom: 4rem;
+    bottom: 3.5rem;
 
     .icon {
       width: 1rem;
@@ -28,27 +28,27 @@
       margin: 7rem 3rem 1rem 1rem;
     }
     @include laptop() {
+    left: 0;
       @include dim(1rem, 1rem);
-      margin: 7rem 3rem 0 0rem;
+      margin: 7rem 2rem 0rem 0.25rem;
     }
     @include bigger-laptop() {
       @include dim(1rem, 1rem);
-      margin: 6.5rem 3rem 0 0rem;
+      margin: 6.5rem 3rem 0 0.25rem;
     }
     @include monitor() {
       @include dim(1rem, 1rem);
-      margin: 6.5rem 3em 0 0rem;
+      margin: 6.5rem 3em 0 0.25rem;
     }
 
     .signout-btn {
       @include dim(1.5rem, 1.5rem);
-      background-color: $medium_purple;
-      color: $base_color;
-      transform: rotate(180deg);
-
       @include mobile() {
         @include dim(1rem, 1rem);
       }
+      background-color: $medium_purple;
+      color: $base_color;
+      transform: rotate(180deg);
 
       &:hover {
         background-color: $dark_magenta;
@@ -57,18 +57,27 @@
     }
     .account-btn {
       @include dim(1.5rem, 1.5rem);
+      @include mobile() {
+        @include dim(1rem, 1rem);
+      }
       background-color: $medium_purple;
       color: $base_color;
       padding: 1rem;
       margin: 0.5rem 0;
 
-      @include mobile() {
-        @include dim(1rem, 1rem);
-      }
-
       &:hover {
         background-color: $dark_magenta;
         color: $base_color_pink;
+      }
+
+      #notif__span {
+        position: absolute;
+        background-color: $danger_color;
+        color: white;
+        padding: 5px;
+        border-radius: 50%;
+        font-weight: bold;
+        inset:0 0 1.5rem 1.3rem;
       }
     }
   }

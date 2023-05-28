@@ -21,6 +21,7 @@ export const ArtworkModalContextProvider = ({ children }) => {
   const [isMenuDropdownOpen, setMenuDropdownOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [hasDisplayedMessage, setHasDisplayedMessage] = useState(false);
+  const [hasNewNotification, setHasNewNotification] = useState(false);
 
   const handleOpenModal = (action, type, id) => {
     setArtworkId(id);
@@ -75,6 +76,8 @@ export const ArtworkModalContextProvider = ({ children }) => {
         setUserArtworks,
         isOpenNotificationsModal,
         setIsOpenNotificationsModal,
+        hasNewNotification,
+        setHasNewNotification,
       }}
     >
       {children}

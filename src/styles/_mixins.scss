@@ -28,6 +28,12 @@
     }
 }
 
+@mixin laptop-height {
+    @media screen and (max-height: 800px) {
+        @content;
+    }
+}
+
 @mixin font ($family, $weight,  $size) {
     font-family : $family;
     font-weight : $weight;
@@ -78,13 +84,13 @@
 }
 
 @mixin upload-btn {
-    @include font($roboto-mono, $normal, $s);
+    @include font($roboto-mono, $normal, $xs);
     outline: none;
-    padding: 0.5rem 0.75rem;
+    padding: 0.4rem 0.65rem;
     border-radius: 10px;
     cursor: pointer;
     color: $dark_magenta;
-    background: $base_color;
+    background: $base_color_transparent;
     border:none;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     font-weight: $regular;
@@ -95,7 +101,7 @@
     @include font($roboto-mono, $normal, $xxs);
     padding: 0.7rem 1rem;
     outline: none;
-    background-color: $base_color;
+    background-color: transparent;
     border: none;
-    border-bottom: 0.5px solid $purple;
+    border-bottom: 1px solid $grayish_pink;
 }

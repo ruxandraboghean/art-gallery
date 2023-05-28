@@ -13,7 +13,7 @@ body {
     .App-header {
         @include font($roboto-mono, $light, $m);
         @include dim (100%, 100%);
-        background: $base_color_pink;
+        background: $base_color_light;
         overflow: hidden;
         margin: 0;
 

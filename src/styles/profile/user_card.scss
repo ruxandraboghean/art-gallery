@@ -31,7 +31,6 @@
         span {
           @include font($roboto-mono, $regular, $s);
           color: $dark_magenta;
-          padding: 0 1rem;
           padding-bottom: 0.2rem;
 
           &:hover {
@@ -40,8 +39,7 @@
         }
 
         .tab-selected {
-            border-radius: 5px;
-            border-bottom: 2px solid $dark_magenta;
+            border-bottom: 1px solid $grayish_pink;
         }
 
         .edit-btn {

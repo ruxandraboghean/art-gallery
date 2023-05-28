@@ -2,7 +2,8 @@
     @include flexbox-direction(flex, center, column, flex-start);
 
     #exhibition-form {
-        min-height: 95%;
+        min-height: 100%;
+        @include flexbox-direction(flex, center, column, space-between);
     }
 }
 
@@ -33,6 +34,7 @@
         @include flexbox-direction(flex, center, column, space-between);
         height: 75%;
         width: 100%;
+    gap: 1rem;
       
 
       .inputs {
@@ -67,13 +69,13 @@
              }
 
              .dropdown-input {    
-                @include form-input;        
+                @include form-input; 
                 padding: 0;
                 width: 100%;
 
                 .css-13cymwt-control {
                     border: none !important;
-                    background-color: $base_color !important;
+                    background-color: transparent !important;
 
                     &:hover {
                         border: none !important;
@@ -83,24 +85,25 @@
                 .css-1nmdiq5-menu{
                     border: none;
                     border: 1px solid $base_color_pink;
+                    background-color: $base_color_transparent !important;
                     border-top: none;
                 }
 
                 .css-t3ipsp-control {
                     box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
                     border:none !important;
-                    background-color: $base_color !important;
+                    background-color: transparent !important;
 
                     &:hover {
                         border:none !important;
                     }
                     &:focus {
-                        background-color: $base_color !important;
+                        background-color: transparent !important;
                     }
                 }
 
                 .css-d7l1ni-option {
-                    background-color: $base_color;
+                    background-color: transparent;
                     z-index: 99999999;
                     border:none !important;
 
@@ -147,7 +150,7 @@
                     .css-13cymwt-control {
                         border: none !important;
                         z-index: 0;
-                        background-color: $base_color !important;
+                        background-color: transparent !important;
 
                         &:hover {
                             border: none !important;
@@ -157,7 +160,7 @@
                     .css-t3ipsp-control {
                         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
                         border:none !important;
-                        background-color: $base_color !important;
+                        background-color: transparent !important;
 
                         &:hover {
                             border:none !important;
@@ -168,7 +171,7 @@
                     }
                     
                     .css-d7l1ni-option {
-                        background-color: $base_color;
+                        background-color: transparent;
                         &:hover {
                             background-color: $base_color_pink;
                         }
@@ -207,10 +210,11 @@
                     @include form-input;        
                     padding: 0;
                     width: 100%;
+                    background-color: transparent;
 
                     .css-13cymwt-control {
                         border: none !important;
-                        background-color: $base_color !important;
+                        background-color: transparent !important;
 
                         &:hover {
                             border: none !important;
@@ -221,23 +225,25 @@
                         border: none;
                         border: 1px solid $base_color_pink;
                         border-top: none;
+                        background-color: $base_color_transparent !important;
+
                     }
 
                     .css-t3ipsp-control {
                         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1) !important;
                         border:none !important;
-                        background-color: $base_color !important;
+                        background-color: transparent !important;
 
                         &:hover {
                             border:none !important;
                         }
                         &:focus {
-                            background-color: $base_color !important;
+                            background-color: transparent !important;
                         }
                     }
 
                     .css-d7l1ni-option {
-                        background-color: $base_color;
+                        background-color: transparent;
                         z-index: 99999999;
                         border:none !important;
 

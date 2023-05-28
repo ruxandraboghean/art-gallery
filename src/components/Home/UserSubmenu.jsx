@@ -11,16 +11,24 @@ import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 
 import addExhibition from "../../images/exhibitions/add-exhibition.png";
 
-import { ArtworkModal } from "../gallery/modals/ArtworkModal";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import { useContext } from "react";
 
 export default function UserSubmenu() {
-  const { setCurrentMenuItem, handleOpenModal } =
-    useContext(ArtworkModalContext);
+  const {
+    setCurrentMenuItem,
+    handleOpenModal,
+    hasNewNotification,
+    setHasNewNotification,
+  } = useContext(ArtworkModalContext);
+
+  console.log(hasNewNotification, "@has new notif");
 
   const handleClick = (id) => {
     setCurrentMenuItem(id);
+    if (id === "notifications") {
+      setHasNewNotification(false);
+    }
   };
   return (
     <>
@@ -50,6 +58,7 @@ export default function UserSubmenu() {
                 onClick={() => handleOpenModal("see", "notifications", null)}
               >
                 <CircleNotificationsIcon className="icon" />
+                {hasNewNotification && <span id="notif__span"></span>}
               </Fab>
             </Tooltip>
           </Link>
@@ -97,15 +106,6 @@ export default function UserSubmenu() {
           </Link>
         </Box>
       </div>
-
-      {/* <Modal isOpen={isOpenExhibition} id="exhibition">
-        <AiIcons.AiOutlineCloseCircle
-          onClick={() => handleCloseModal("exhibition")}
-          id="close-button"
-        />
-        <ExhibitionForm />
-      </Modal> */}
-      {/* <ArtworkModal /> */}
     </>
   );
 }

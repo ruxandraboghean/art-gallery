@@ -8,7 +8,6 @@
 
 .gallery-container {
     @include flexbox(flex, center, space-between);
-    background-color: $base_color;
     height: 90vh;
     width: 100%;
     flex: 5;

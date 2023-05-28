@@ -3,7 +3,6 @@
 
 .artists-container {
     @include flexbox(flex, center, space-between);
-    background-color: $base_color;
     height: 90vh;
     flex: 5;
    
@@ -11,9 +10,7 @@
         @include flexbox(flex, center, space-between);
         flex-wrap: wrap;
         @include dim (98.5%, 97.5%);
-        border: 1px solid $base_color_pink;
         border-radius: 50px;
-        background-color: $base_color;
         overflow: scroll;
 
         &::-webkit-scrollbar { 

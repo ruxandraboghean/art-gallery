@@ -22,7 +22,7 @@ export const ActionButtons = ({
     <>
       <div className="actions-dropdown-menu notransition">
         <Box sx={{ width: 100, height: 200 }}>
-          <Tooltip title="edit artwork" placement="right">
+          <Tooltip title="edit artwork" placement="left">
             <Fab
               color="secondary"
               aria-label="edit"

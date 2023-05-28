@@ -1,16 +1,8 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from "../firebase";
+import getUsers from "./getUsers";
 
 const getSpecialists = async () => {
-  let users = [];
+  let users = await getUsers();
   let specialists = [];
-
-  const usersRef = collection(db, "users");
-  const querySnapshot = await getDocs(usersRef);
-
-  querySnapshot.forEach((doc) => {
-    users.push(doc.data());
-  });
 
   users.map((user) => {
     user.role === "expert" && specialists.push(user);
