@@ -46,6 +46,7 @@ const initialState = {
   photoURL: null,
   category: null,
   specialist: null,
+  userId: null,
 };
 
 const artworksRef = collection(db, "artworks");
@@ -155,6 +156,7 @@ export const AddArtworkForm = ({ onClose }) => {
           specialist: artworkData?.specialist.value,
           status: status,
           photoURL: artworkData?.photoURL?.imageSrc || "",
+          userId: currentUser.uid,
         });
 
         await uploadBytesResumable(
@@ -172,6 +174,7 @@ export const AddArtworkForm = ({ onClose }) => {
                 category: artworkData?.category.value,
                 specialist: artworkData?.specialist.value,
                 status: status,
+                userId: currentUser.uid,
               });
               await updateDoc(doc(db, "users", currentUser.uid), {
                 artworks: arrayUnion({
@@ -259,6 +262,7 @@ export const AddArtworkForm = ({ onClose }) => {
           specialist: artworkData?.specialist.value,
           photoURL: artworkData?.photoURL.imageSrc,
           status: artworkData?.status,
+          userId: currentUser.uid,
         });
 
         //seteaza in view imediat artwork ul editat
@@ -310,6 +314,7 @@ export const AddArtworkForm = ({ onClose }) => {
           specialist: artworkData?.specialist.value,
           photoURL: artworkData?.photoURL.imageSrc,
           status: "pending authentication",
+          userId: currentUser.uid,
         });
 
         const userDocRef = doc(db, "users", currentUser.uid);

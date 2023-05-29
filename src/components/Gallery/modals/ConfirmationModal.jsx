@@ -13,15 +13,16 @@ import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { AuthContext } from "../../../context/AuthContext";
 import { useContext } from "react";
+import { ArtworkModalContext } from "../../../context/ArtworkModalContext";
 
 export const ConfirmationModal = ({
   artworkId,
   isOpenConfirmationModal,
   setIsOpenConfirmationModal,
   setIsSuccess,
-  setUserArtworks,
 }) => {
   const { currentUser } = useContext(AuthContext);
+  const { setUserArtworks } = useContext(ArtworkModalContext);
 
   const handleOpenConfirmationModal = () => {
     setIsOpenConfirmationModal(true);
@@ -34,25 +35,30 @@ export const ConfirmationModal = ({
   const handleDeleteArtwork = async () => {
     const docRef = doc(db, "artworks", artworkId);
 
+    //delete from artworks collection
     await deleteDoc(docRef)
       .then(() => console.log("Item deleted successfully"))
       .catch((err) => console.error("Error deleting item: ", err));
 
     const userDocRef = doc(db, "users", currentUser.uid);
     const userDoc = await getDoc(userDocRef);
-    const artworks = userDoc.data().artworks;
+    const userArtworksIds = userDoc.data().artworks;
 
-    const indexToRemove = artworks.findIndex(
+    const indexToRemove = userArtworksIds.findIndex(
       (artwork) => artwork.id === artworkId
     );
 
     if (indexToRemove !== -1) {
-      let updatedArtworks = artworks.filter(
-        (item, index) => index !== indexToRemove
+      let updatedUserArtworks = userArtworksIds.filter(
+        (index) => index !== indexToRemove
       );
 
-      await updateDoc(userDocRef, { artworks: updatedArtworks });
-      setUserArtworks(updatedArtworks);
+      await updateDoc(userDocRef, { artworks: updatedUserArtworks });
+
+      setUserArtworks((prevUserArtworks) =>
+        prevUserArtworks.filter((artwork) => artwork.id !== artworkId)
+      );
+
       setIsOpenConfirmationModal(false);
       setIsSuccess(true);
     }

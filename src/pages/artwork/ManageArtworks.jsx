@@ -20,6 +20,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { ConfirmationModal } from "../../components/gallery/modals/ConfirmationModal";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
+import getCurrentUserArtworks from "../../data/getCurrentUserArtworks";
 
 const sortOptions = [
   { label: "year", value: "year" },
@@ -54,67 +55,12 @@ export const ManageArtworks = () => {
     setSortData({ ...sortData, [dropdownLabel]: { label, value } });
   };
 
-  const getArtworks = async () => {
-    const docRef = collection(db, "artworks");
-    const docs = await getDocs(docRef);
-    let artData = [];
-
-    docs.forEach((doc) => {
-      artData = [...artData, doc.data()];
-    });
-
-    const userDocRef = doc(db, "users", currentUser.uid);
-
-    const docSnap = await getDoc(userDocRef);
-
-    if (docSnap.exists()) {
-      const artworksDatabaseIds = docSnap.data().artworks;
-
-      if (artworksDatabaseIds) {
-        setIsLoading(true);
-        const artworkIds = Object.values(artworksDatabaseIds).map(
-          (artId) => artId.id
-        );
-        const filteredArtworks = artData.filter((artwork) =>
-          artworkIds.includes(artwork.id)
-        );
-
-        setUserArtworks(filteredArtworks);
-        setIsLoading(false);
-      } else {
-        console.log("User has not artworks");
-      }
-    } else {
-      console.log("No such document!");
-    }
-  };
-
   const handleSearch = async () => {
-    const q = query(
-      collection(db, "artworks"),
-      where("title", "==", searchedTitle)
+    const artworksFiltered = await userArtworks?.filter((artwork) =>
+      artwork.title.toLowerCase().includes(searchedTitle.toLowerCase())
     );
 
-    if (!q.res) {
-      setFilteredData([]);
-      console.log("...not found");
-    }
-
-    try {
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach((doc) => {
-        setFilteredData((filteredData) => [...filteredData, doc.data()]);
-      });
-
-      console.log("FOUND DATA: ", filteredData);
-      console.log(
-        " DATA: ",
-        filteredData.length === 0 ? userArtworks : filteredData
-      );
-    } catch (err) {
-      console.log(err.message);
-    }
+    setFilteredData(artworksFiltered);
   };
 
   const handleKey = (e) => {
@@ -126,7 +72,26 @@ export const ManageArtworks = () => {
 
     if (orderType === "desc") {
       const data = await getDocs(
-        query(artCollection, orderBy(sortType, "desc"))
+        query(
+          artCollection,
+          where("userId", "==", currentUser.uid),
+          orderBy(sortType, "desc")
+        )
+      );
+      const newData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+
+      console.log(newData, `data ordered DESC by ${sortType} `);
+      setUserArtworks(newData);
+    } else if (orderType === "asc") {
+      const data = await getDocs(
+        query(
+          artCollection,
+          where("userId", "==", currentUser.uid),
+          orderBy(sortType, "asc")
+        )
       );
       const newData = data.docs.map((doc) => ({
         ...doc.data(),
@@ -134,35 +99,31 @@ export const ManageArtworks = () => {
       }));
       setUserArtworks(newData);
     } else {
-      const data = await getDocs(
-        query(artCollection, orderBy(sortType, "asc"))
-      );
-      const newData = data.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }));
-      setUserArtworks(newData);
+      return;
     }
   };
 
   useEffect(() => {
-    getArtworks();
-    setUserArtworks([]);
-  }, [currentUser.uid]);
+    const fetchData = async () => {
+      if (Object.keys(currentUser).length > 0) {
+        console.log(currentUser, "user");
+        const userArtworksData = await getCurrentUserArtworks(currentUser);
+        setUserArtworks(userArtworksData);
+      }
+    };
+
+    if (currentUser || (isSuccess && !hasDisplayedMessage)) {
+      fetchData();
+    }
+  }, [currentUser, isSuccess, hasDisplayedMessage]);
 
   useEffect(() => {
-    if (
-      sortData?.sortBy === null ||
-      sortData?.order === null ||
-      sortData === null
-    ) {
-      console.log("SORT data is null");
-    } else {
-      const sortType = sortData?.sortBy?.label;
-      const orderType = sortData?.order?.label;
+    if (sortData && sortData.sortBy && sortData.order) {
+      const sortType = sortData.sortBy.value;
+      const orderType = sortData.order.value;
       getSortedArtworks(sortType, orderType);
     }
-  }, [currentUser.id, sortData]);
+  }, [sortData]);
 
   useEffect(() => {
     if (isSuccess && !hasDisplayedMessage) {
@@ -182,7 +143,11 @@ export const ManageArtworks = () => {
       });
       setHasDisplayedMessage(true);
     }
-  }, [isSuccess, hasDisplayedMessage]);
+  }, [isSuccess, hasDisplayedMessage, currentUser]);
+
+  useEffect(() => {
+    handleSearch();
+  }, [searchedTitle]);
 
   return (
     <div className="gallery-container">

@@ -3,9 +3,7 @@ import { createContext, useEffect, useState } from "react";
 //notifications
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { db } from "../firebase";
-import { collection, getDocs } from "firebase/firestore";
-
+import getAllArtworks from "../data/getAllArtworks";
 export const ArtworkModalContext = createContext();
 
 export const ArtworkModalContextProvider = ({ children }) => {
@@ -55,6 +53,15 @@ export const ArtworkModalContextProvider = ({ children }) => {
       setHasDisplayedMessage(true);
     }
   }, [currentMenuItem, isSuccess, hasDisplayedMessage]);
+
+  const fetchData = async () => {
+    const allArtworks = await getAllArtworks();
+    setArtworks(allArtworks);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <ArtworkModalContext.Provider
