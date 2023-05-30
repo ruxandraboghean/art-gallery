@@ -1,10 +1,10 @@
 import React from "react";
-import { HomeSidebar } from "../../components/home/HomeSidebar";
 import { Exhibitions } from "./exhibition/Exhibitions";
 import { Messages } from "./chat/Messages";
 import { Artists } from "../users/Artists";
 import { Profile } from "../users/Profile";
 import { ManageArtworks } from "../users/artworks/ManageArtworks";
+import { HomeSidebar } from "../../components/home/HomeSidebar";
 
 //notifications
 import { ToastContainer } from "react-toastify";
