@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import logo from "../../images/logo/no_illusion_logo.png";
-import user from "../../images/artist.png";
-import expert from "../../images/verified-account.png";
+import logo from "../../../images/logo/no_illusion_logo.png";
+import user from "../../../images/user.png";
+import expert from "../../../images/verified-account.png";
 
 export const Register = () => {
   return (

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react";
 import Select from "react-select";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../../context/AuthContext";
 // firebase
-import { db } from "../../firebase";
+import { db } from "../../../firebase";
 import {
   collection,
   doc,
@@ -13,14 +13,14 @@ import {
   where,
 } from "firebase/firestore";
 //components
-import { ArtworkArtistView } from "../../components/gallery/ArtworkArtistView";
+import { ArtworkArtistView } from "../../../components/gallery/ArtworkArtistView";
 
 //notifications
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ConfirmationModal } from "../../components/gallery/modals/ConfirmationModal";
-import { ArtworkModalContext } from "../../context/ArtworkModalContext";
-import getCurrentUserArtworks from "../../data/getCurrentUserArtworks";
+import { ConfirmationModal } from "../../../components/gallery/modals/ConfirmationModal";
+import { ArtworkModalContext } from "../../../context/ArtworkModalContext";
+import getCurrentUserArtworks from "../../../data/currentUser/getCurrentUserArtworks";
 
 const sortOptions = [
   { label: "year", value: "year" },

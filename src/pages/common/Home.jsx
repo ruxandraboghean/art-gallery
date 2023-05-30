@@ -1,20 +1,21 @@
 import React from "react";
-import { HomeSidebar } from "../components/home/HomeSidebar";
+import { HomeSidebar } from "../../components/home/HomeSidebar";
 import { Exhibitions } from "./exhibition/Exhibitions";
 import { Messages } from "./chat/Messages";
-import { Artists } from "./users/Artists";
-import { Profile } from "./users/Profile";
-import { ManageArtworks } from "./artwork/ManageArtworks";
+import { Artists } from "../users/Artists";
+import { Profile } from "../users/Profile";
+import { ManageArtworks } from "../users/artworks/ManageArtworks";
 
 //notifications
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 //context
-import { ArtworkModalContext } from "../context/ArtworkModalContext";
+import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import { useContext } from "react";
-import { ArtworkModal } from "../components/gallery/modals/ArtworkModal";
-import { NotificationsModal } from "../components/gallery/modals/NotificationsModal";
+import { ArtworkModal } from "../../components/gallery/modals/ArtworkModal";
+import { NotificationsModal } from "../../components/gallery/modals/NotificationsModal";
+import { ManageRequests } from "../experts/ManageRequests";
 
 export const Home = () => {
   const {
@@ -30,7 +31,9 @@ export const Home = () => {
       <HomeSidebar setCurrentMenuItem={setCurrentMenuItem} />
       <div className="content">
         <div className="home-container">
-          {currentMenuItem === "messages" ? (
+          {currentMenuItem === "home" ? (
+            <Exhibitions />
+          ) : currentMenuItem === "messages" ? (
             <Messages />
           ) : currentMenuItem === "artists" ? (
             <Artists />
@@ -38,6 +41,8 @@ export const Home = () => {
             <Profile />
           ) : currentMenuItem === "manage-artworks" ? (
             <ManageArtworks />
+          ) : currentMenuItem === "manage-requests" ? (
+            <ManageRequests />
           ) : (
             <Exhibitions />
           )}

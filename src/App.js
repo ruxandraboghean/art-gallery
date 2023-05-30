@@ -7,17 +7,11 @@ import {
 } from "react-router-dom";
 import "./App.scss";
 import { AuthContext } from "./context/AuthContext";
-import { Register } from "./pages/login_register/Register";
-import { Profile } from "./pages/users/Profile";
-import { Login } from "./pages/login_register/Login";
-import { Home } from "./pages/Home";
-import { Messages } from "./pages/chat/Messages";
-import { Exhibitions } from "./pages/exhibition/Exhibitions";
-import { Artists } from "./pages/users/Artists";
-import { ManageArtworks } from "./pages/artwork/ManageArtworks";
-import { RegisterExpert } from "./pages/login_register/RegisterExpert";
-import { RegisterUser } from "./pages/login_register/RegisterUser";
-import { Work } from "./pages/artwork/Work";
+import { Register } from "./pages/common/login_register/Register";
+import { Login } from "./pages/common/login_register/Login";
+import { Home } from "./pages/common/Home";
+import { RegisterExpert } from "./pages/common/login_register/RegisterExpert";
+import { RegisterUser } from "./pages/common/login_register/RegisterUser";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -40,67 +34,6 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Home />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-            <Route path="/profile">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <Profile />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-            <Route path="/messages">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <Messages />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-            <Route path="/artists">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <Artists />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-            <Route path="/exhibitions">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <Exhibitions />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-
-            <Route path="/manage-artwork">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <ManageArtworks />
-                  </ProtectedRoute>
-                }
-              />
-            </Route>
-            <Route path="/work">
-              <Route
-                index
-                element={
-                  <ProtectedRoute>
-                    <Work />
                   </ProtectedRoute>
                 }
               />

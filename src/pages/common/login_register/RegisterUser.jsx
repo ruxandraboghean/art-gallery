@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-import { auth, db, storage } from "../../firebase";
+import { auth, db, storage } from "../../../firebase";
 import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import ClipLoader from "react-spinners/ClipLoader";
-import logo from "../../images/logo/no_illusion_logo.png";
+import logo from "../../../images/logo/no_illusion_logo.png";
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 

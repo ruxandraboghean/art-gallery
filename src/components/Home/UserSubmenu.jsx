@@ -13,6 +13,10 @@ import addExhibition from "../../images/exhibitions/add-exhibition.png";
 
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useState } from "react";
+import { useEffect } from "react";
+import getCurrentUserDetails from "../../data/currentUser/getCurrentUserDetails";
 
 export default function UserSubmenu() {
   const {
@@ -22,7 +26,8 @@ export default function UserSubmenu() {
     setHasNewNotification,
   } = useContext(ArtworkModalContext);
 
-  console.log(hasNewNotification, "@has new notif");
+  const { currentUser } = useContext(AuthContext);
+  const [user, setUser] = useState(null);
 
   const handleClick = (id) => {
     setCurrentMenuItem(id);
@@ -30,6 +35,22 @@ export default function UserSubmenu() {
       setHasNewNotification(false);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const userData = await getCurrentUserDetails(currentUser);
+      setUser(userData);
+    };
+
+    if (Object.keys(currentUser).length > 0) {
+      fetchData();
+    }
+  }, [currentUser]);
+
+  if (!user) {
+    return;
+  }
+
   return (
     <>
       <div className="dropdown-menu">
@@ -42,6 +63,7 @@ export default function UserSubmenu() {
                 className="account-btn"
                 onClick={() => {
                   signOut(auth);
+                  setCurrentMenuItem("home");
                 }}
               >
                 <LogoutIcon className="icon" />
@@ -63,13 +85,31 @@ export default function UserSubmenu() {
             </Tooltip>
           </Link>
 
-          <Link to="#" onClick={() => handleClick("manage-artworks")}>
-            <Tooltip title="manage artworks" placement="right">
-              <Fab color="secondary" aria-label="edit" className="account-btn">
-                <SettingsSystemDaydream className="icon" />
-              </Fab>
-            </Tooltip>
-          </Link>
+          {user?.role === "expert" || user.role === "validator" ? (
+            <Link to="#" onClick={() => handleClick("manage-requests")}>
+              <Tooltip title="manage requests" placement="right">
+                <Fab
+                  color="secondary"
+                  aria-label="edit"
+                  className="account-btn"
+                >
+                  <SettingsSystemDaydream className="icon" />
+                </Fab>
+              </Tooltip>
+            </Link>
+          ) : (
+            <Link to="#" onClick={() => handleClick("manage-artworks")}>
+              <Tooltip title="manage artworks" placement="right">
+                <Fab
+                  color="secondary"
+                  aria-label="edit"
+                  className="account-btn"
+                >
+                  <SettingsSystemDaydream className="icon" />
+                </Fab>
+              </Tooltip>
+            </Link>
+          )}
 
           <Link to="#">
             <Tooltip title="add exhibition" placement="right">

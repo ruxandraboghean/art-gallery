@@ -4,7 +4,7 @@ import {
   query as firestoreQuery,
   where,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 
 const getCurrentUserArtworks = async (currentUser) => {
   const artworksRef = collection(db, "artworks");

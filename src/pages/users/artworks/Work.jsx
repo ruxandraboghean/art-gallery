@@ -1,7 +1,7 @@
 import React from "react";
-import { HomeNavbar } from "../../components/home/HomeNavbar";
-import { HomeSidebar } from "../../components/home/HomeSidebar";
-import { ArtWork } from "../../components/ArtWork";
+import { HomeNavbar } from "../../../components/home/HomeNavbar";
+import { HomeSidebar } from "../../../components/home/HomeSidebar";
+import { ArtWork } from "../../../components/ArtWork";
 
 export const Work = () => {
   return (

@@ -3,7 +3,8 @@ import { createContext, useEffect, useState } from "react";
 //notifications
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import getAllArtworks from "../data/getAllArtworks";
+import getAllArtworks from "../data/artworks/getAllArtworks";
+
 export const ArtworkModalContext = createContext();
 
 export const ArtworkModalContextProvider = ({ children }) => {
@@ -54,12 +55,12 @@ export const ArtworkModalContextProvider = ({ children }) => {
     }
   }, [currentMenuItem, isSuccess, hasDisplayedMessage]);
 
-  const fetchData = async () => {
-    const allArtworks = await getAllArtworks();
-    setArtworks(allArtworks);
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      const allArtworks = await getAllArtworks();
+      setArtworks(allArtworks);
+    };
+
     fetchData();
   }, []);
 

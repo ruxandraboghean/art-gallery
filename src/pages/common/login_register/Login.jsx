@@ -1,11 +1,11 @@
 import { React, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+import { auth } from "../../../firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 import ClipLoader from "react-spinners/ClipLoader";
-import logo from "../../images/logo/no_illusion_logo.png";
+import logo from "../../../images/logo/no_illusion_logo.png";
 
 export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);

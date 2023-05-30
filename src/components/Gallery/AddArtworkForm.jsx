@@ -29,8 +29,9 @@ import Select from "react-select";
 import { ClipLoader } from "react-spinners";
 import { useDropzone } from "react-dropzone";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
-import getSpecialists from "../../data/getSpecialists";
-import getUsers from "../../data/getUsers";
+import getSpecialists from "../../data/users/getSpecialists";
+import getUsers from "../../data/users/getUsers";
+import RequestStatusEnum from "../../enums/RequestStatusEnum";
 
 const initialState = {
   title: "",
@@ -50,7 +51,9 @@ const initialState = {
 };
 
 const artworksRef = collection(db, "artworks");
+const requestsRef = collection(db, "requests");
 const artworksDocRef = doc(artworksRef);
+const requestsDocRef = doc(requestsRef);
 const artId = artworksDocRef.id;
 
 export const AddArtworkForm = ({ onClose }) => {
@@ -159,6 +162,14 @@ export const AddArtworkForm = ({ onClose }) => {
           userId: currentUser.uid,
         });
 
+        await setDoc(requestsDocRef, {
+          id: requestsDocRef.id,
+          initiator: currentUser.uid,
+          receiver: specialistSelected.uid,
+          date: new Date().getTime(),
+          artworkId: artId,
+          status: RequestStatusEnum.PENDING,
+        });
         await uploadBytesResumable(
           storageRef,
           artworkData?.photoURL?.file
@@ -195,6 +206,10 @@ export const AddArtworkForm = ({ onClose }) => {
                   You can deny or accept the request.`,
                   time: new Date().getTime(),
                   image: downloadURL,
+                }),
+
+                requests: arrayUnion({
+                  id: requestsDocRef.id,
                 }),
               });
               console.log("Document written with ID: ", artId);

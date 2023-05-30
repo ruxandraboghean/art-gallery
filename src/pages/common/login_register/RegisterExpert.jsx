@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { auth, db, storage } from "../../firebase";
+import { auth, db, storage } from "../../../firebase";
 import { doc, setDoc, updateDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 import ClipLoader from "react-spinners/ClipLoader";
-import logo from "../../images/logo/no_illusion_logo.png";
+import logo from "../../../images/logo/no_illusion_logo.png";
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import AttachmentIcon from "@mui/icons-material/Attachment";
@@ -26,6 +26,7 @@ export const RegisterExpert = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(false);
+  const navigate = useNavigate();
 
   const location = useLocation();
   const { from } = location.state;
@@ -86,7 +87,10 @@ export const RegisterExpert = () => {
                 role: from,
               });
 
+              await setDoc(doc(db, "userChats", res.user.uid), {});
+
               setIsLoading(false);
+              navigate("/login");
             } catch (err) {
               setErr(true);
             }

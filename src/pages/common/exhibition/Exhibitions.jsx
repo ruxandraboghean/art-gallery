@@ -1,5 +1,5 @@
 import React from "react";
-import { Exhibition } from "../../components/gallery/exhibition/Exhibition";
+import { Exhibition } from "../../../components/gallery/exhibition/Exhibition";
 
 export const Exhibitions = () => {
   return (

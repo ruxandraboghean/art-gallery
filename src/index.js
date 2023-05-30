@@ -6,15 +6,18 @@ import "font-awesome/css/font-awesome.min.css";
 import "@fontsource/roboto-mono";
 import { ChatContextProvider } from "./context/ChatContext";
 import { ArtworkModalContextProvider } from "./context/ArtworkModalContext";
+import { RequestContextProvider } from "./context/RequestsContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <AuthContextProvider>
     <ChatContextProvider>
       <ArtworkModalContextProvider>
-        <React.StrictMode>
-          <App />
-        </React.StrictMode>
+        <RequestContextProvider>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </RequestContextProvider>
       </ArtworkModalContextProvider>
     </ChatContextProvider>
   </AuthContextProvider>
