@@ -3,15 +3,7 @@ import Select from "react-select";
 import { AuthContext } from "../../../context/AuthContext";
 // firebase
 import { db } from "../../../firebase";
-import {
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 //components
 import { ArtworkArtistView } from "../../../components/gallery/ArtworkArtistView";
 
