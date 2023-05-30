@@ -3,7 +3,6 @@ import logo from "../../images/logo/logo_small.png";
 import { Link } from "react-router-dom";
 import * as GrIcons from "react-icons/gr";
 import * as BsIcons from "react-icons/bs";
-import UserSubmenu from "./UserSubmenu";
 import { HomeNavbar } from "./HomeNavbar";
 
 export const HomeSidebar = ({ setCurrentMenuItem }) => {
