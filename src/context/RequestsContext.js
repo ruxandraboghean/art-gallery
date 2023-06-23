@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-import getAllRequests from "../data/getAllRequests";
+import getAllRequests from "../data/requests/getAllRequests";
 
 export const RequestContext = createContext();
 

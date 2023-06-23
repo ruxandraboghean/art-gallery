@@ -5,27 +5,54 @@ import { CheckCircle, DoDisturb } from "@mui/icons-material";
 import { useContext } from "react";
 import { RequestContext } from "../../context/RequestsContext";
 import RequestStatusEnum from "../../enums/RequestStatusEnum";
-import updateRequests from "../../data/updateRequests";
+import updateRequests from "../../data/requests/updateRequests";
+import { AuthContext } from "../../context/AuthContext";
+import { db } from "../../firebase";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { nanoid } from "nanoid";
+import getArtworkById from "../../data/artworks/getArtworkById";
 
-export const RequestActions = ({ requestId }) => {
+export const RequestPendingActions = ({ request }) => {
   const { userRequests, setUserRequests } = useContext(RequestContext);
+  const { currentUser } = useContext(AuthContext);
 
   const handleChangeRequestStatus = async (newStatus) => {
     const newData = userRequests.map((req) => {
-      if (req.id === requestId) {
+      if (req.id === request.id) {
         return newStatus === "accepted"
           ? { ...req, status: RequestStatusEnum.ACCEPTED }
           : { ...req, status: RequestStatusEnum.DENIED };
       }
       return req;
     });
+    const reqModified = newData.find((req) => req.id === request.id);
 
     setUserRequests(newData);
 
-    const reqModified = newData.find((req) => req.id === requestId);
+    //send notification to user
 
-    await updateRequests(requestId, reqModified);
+    await updateDoc(doc(db, "users", reqModified.initiator), {
+      notifications: arrayUnion({
+        id: nanoid(),
+        message: `Expert ${currentUser.displayName} has ${reqModified.status} your request`,
+        time: new Date().getTime(),
+      }),
+    });
+    await updateRequests(request.id, reqModified);
+
+    const artworkReq = await getArtworkById(request.artworkId);
+
+    console.log(artworkReq, "artwork to be autheticated");
+    console.log(artworkReq.status, "status");
+
+    await updateDoc(doc(db, "artworks", artworkReq.id), {
+      status: "pending authentication",
+    });
+
+    console.log(artworkReq.status, "status");
   };
+
+  console.log(request.id);
 
   return (
     <>

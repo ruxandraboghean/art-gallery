@@ -12,6 +12,8 @@ import getCurrentUserRequests from "../../data/currentUser/getCurrentUserRequest
 import { Request } from "../../components/experts/Request";
 import { RequestContext } from "../../context/RequestsContext";
 import getUserById from "../../data/users/getUserById";
+import { ConfirmationModal } from "../../components/gallery/modals/ConfirmationModal";
+import { DocumentsModal } from "./DocumentsModal";
 
 const sortOptions = [
   { label: "date", value: "date" },
@@ -26,6 +28,8 @@ const orderOptions = [
 export const ManageRequests = () => {
   const { currentUser } = useContext(AuthContext);
   const { userRequests, setUserRequests } = useContext(RequestContext);
+  const [currentRequest, setCurrentRequest] = useState(null);
+  const [artwork, setArtwork] = useState(null);
 
   const [searchedInititator, setSearchedInitiator] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -33,9 +37,15 @@ export const ManageRequests = () => {
 
   //modal for displaying a message for deleting confirmation
   const [isOpenConfirmationModal, setIsOpenConfirmationModal] = useState(false);
+  const [isOpenDocumentsModal, setIsOpenDocumentsModal] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const handleChange = (e) => {
     setSearchedInitiator(e.target.value);
+  };
+
+  const handleChangeTab = (tabName) => {
+    fetchData(tabName);
   };
 
   const handleDropdownChange = (dropdownLabel, { label, value }) => {
@@ -102,17 +112,36 @@ export const ManageRequests = () => {
     },
     [currentUser.uid, setUserRequests]
   );
+  const fetchData = async (tabName) => {
+    if (Object.keys(currentUser).length > 0) {
+      const userRequestsData = await getCurrentUserRequests(currentUser);
+
+      switch (tabName) {
+        case "pending":
+          setUserRequests(
+            userRequestsData.filter((req) => req.status === "pending")
+          );
+          break;
+        case "accepted":
+          setUserRequests(
+            userRequestsData.filter((req) => req.status === "accepted")
+          );
+          break;
+        case "denied":
+          setUserRequests(
+            userRequestsData.filter((req) => req.status === "denied")
+          );
+          break;
+        default:
+          setUserRequests(userRequestsData);
+          break;
+      }
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (Object.keys(currentUser).length > 0) {
-        const userRequestsData = await getCurrentUserRequests(currentUser);
-        setUserRequests(userRequestsData);
-      }
-    };
-
     if (currentUser) {
-      fetchData();
+      fetchData("pending");
     }
   }, [currentUser, setUserRequests]);
 
@@ -175,8 +204,29 @@ export const ManageRequests = () => {
           </div>
 
           <div className="works">
+            <div className="works-header">
+              <div
+                className="work-section"
+                onClick={() => handleChangeTab("pending")}
+              >
+                pending
+              </div>
+              <div
+                className="work-section"
+                onClick={() => handleChangeTab("accepted")}
+              >
+                accepted
+              </div>
+              <div
+                className="work-section"
+                onClick={() => handleChangeTab("denied")}
+              >
+                denied
+              </div>
+            </div>
+
             {userRequests.length === 0 ? (
-              <p>Loading requests...</p>
+              <p>No data...</p>
             ) : (
               (filteredData.length === 0 ? userRequests : filteredData)?.map(
                 (request) => (
@@ -185,6 +235,11 @@ export const ManageRequests = () => {
                     key={request.id}
                     isOpenConfirmationModal={isOpenConfirmationModal}
                     setIsOpenConfirmationModal={setIsOpenConfirmationModal}
+                    setCurrentRequest={setCurrentRequest}
+                    isOpenDocumentsModal={isOpenDocumentsModal}
+                    setIsOpenDocumentsModal={setIsOpenDocumentsModal}
+                    artwork={artwork}
+                    setArtwork={setArtwork}
                   />
                 )
               )
@@ -192,6 +247,23 @@ export const ManageRequests = () => {
           </div>
         </div>
       </div>
+      {isOpenConfirmationModal && (
+        <ConfirmationModal
+          id={currentRequest}
+          isOpenConfirmationModal={isOpenConfirmationModal}
+          setIsOpenConfirmationModal={setIsOpenConfirmationModal}
+          setIsSuccess={setIsSuccess}
+          type="requests"
+        />
+      )}
+      {isOpenDocumentsModal && (
+        <DocumentsModal
+          id={currentRequest}
+          artwork={artwork}
+          isOpenDocumentsModal={isOpenDocumentsModal}
+          setIsOpenDocumentsModal={setIsOpenDocumentsModal}
+        />
+      )}
     </div>
   );
 };

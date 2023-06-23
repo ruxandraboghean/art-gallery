@@ -2,7 +2,8 @@ import { createContext, useEffect, useState } from "react";
 
 //notifications
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
+import { injectStyle } from "react-toastify/dist/inject-style";
 import getAllArtworks from "../data/artworks/getAllArtworks";
 
 export const ArtworkModalContext = createContext();
@@ -21,6 +22,7 @@ export const ArtworkModalContextProvider = ({ children }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [hasDisplayedMessage, setHasDisplayedMessage] = useState(false);
   const [hasNewNotification, setHasNewNotification] = useState(false);
+  injectStyle();
 
   const handleOpenModal = (action, type, id) => {
     setArtworkId(id);

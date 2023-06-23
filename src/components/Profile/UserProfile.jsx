@@ -41,12 +41,35 @@ export const UserProfile = () => {
 
   return (
     <div className="user-profile">
-      <div className="header">
-        <span className="username">
-          {currentUser?.displayName &&
-            capitalizeFirst(currentUser?.displayName)}{" "}
-          's | Profile
-        </span>
+      <div className="header-wrapper">
+        <div className="header">
+          <img src={photoURL} alt="User" className="user-image" />
+          <div className="file-input-btn">
+            <input
+              style={{ display: "none" }}
+              type="file"
+              id="file"
+              onChange={handleChange}
+            />
+            <label htmlFor="file">
+              <FontAwesomeIcon icon={faEdit} className="edit-btn" />
+            </label>
+          </div>
+          {image && (
+            <button
+              disabled={loading || !image}
+              onClick={handleClick}
+              className="upload-btn"
+            >
+              Upload
+            </button>
+          )}
+          <span className="username">
+            {currentUser?.displayName &&
+              capitalizeFirst(currentUser?.displayName)}{" "}
+            's | Profile
+          </span>
+        </div>
 
         <section className="user-sections">
           <section
@@ -82,27 +105,6 @@ export const UserProfile = () => {
       </div>
 
       <section className="user-info">
-        <img src={photoURL} alt="User" className="user-image" />
-        <div className="file-input-btn">
-          <input
-            style={{ display: "none" }}
-            type="file"
-            id="file"
-            onChange={handleChange}
-          />
-          <label htmlFor="file">
-            <FontAwesomeIcon icon={faEdit} className="edit-btn" />
-          </label>
-        </div>
-        {image && (
-          <button
-            disabled={loading || !image}
-            onClick={handleClick}
-            className="upload-btn"
-          >
-            Upload
-          </button>
-        )}
         <UserCard currentUser={currentUser} currentSection={currentSection} />
       </section>
     </div>

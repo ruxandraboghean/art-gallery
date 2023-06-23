@@ -44,8 +44,6 @@ export const RegisterExpert = () => {
     setIsLoading(true);
     e.preventDefault();
 
-    console.log(e.target[5].files[0], "target");
-
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;

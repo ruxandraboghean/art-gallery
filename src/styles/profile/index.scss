@@ -1,13 +1,14 @@
 @import '../index.scss';
 @import './user_profile.scss';
 @import './modal.scss';
+@import './user_authenticated_art.scss';
 
 .profile-container {
     @include flexbox(flex, center, space-between);
     border-radius: 10px;
     display: flex;
     overflow: hidden;
-    height: 90vh;
+    height: 100%;
     flex: 5;
 }
    

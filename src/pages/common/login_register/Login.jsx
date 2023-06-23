@@ -49,7 +49,7 @@ export const Login = () => {
                   <input type="password" placeholder="password" />
                 </div>
               </div>
-              <button className="form-button">
+              <button className="form-button" id="login-button">
                 <span className="text">Login</span>
                 <FontAwesomeIcon
                   icon={faCircleArrowRight}

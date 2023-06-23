@@ -1,5 +1,5 @@
 import { collection, doc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 
 const updateRequests = async (id, data) => {
   try {

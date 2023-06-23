@@ -2,13 +2,13 @@ import React from "react";
 
 import { General } from "./General/General";
 import { Exhibitions } from "./Exhibitions/Exhibitions";
-import { AutheticatedArtworks } from "./AutheticatedArtworks/AutheticatedArtworks";
+import { AuthenticatedArtworks } from "./AuthenticatedArtworks";
 
 export const UserCard = ({ currentUser, currentSection }) => {
   return (
     <div className="user-card">
       {currentSection === "authenticated-artworks" ? (
-        <AutheticatedArtworks />
+        <AuthenticatedArtworks />
       ) : currentSection === "exhibitions" ? (
         <Exhibitions />
       ) : (

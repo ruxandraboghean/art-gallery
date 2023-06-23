@@ -4,8 +4,7 @@
   width: 95%;
   height: 100%;
   border-radius: 20px;
-  padding: 4rem;
-  padding-top: 8rem;
+  padding: 2rem 4rem;
   background-color: $grayish_normal;
   box-sizing: border-box;
 
@@ -19,7 +18,7 @@
     gap: 3rem;
 
     .details-header {
-      @include flexbox(flex, center, flex-start);
+      @include flexbox(flex, center, space-between);
       gap: 10rem;
       width: 100%;
       cursor: pointer;

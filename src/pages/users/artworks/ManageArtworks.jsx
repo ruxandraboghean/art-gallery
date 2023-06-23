@@ -210,11 +210,11 @@ export const ManageArtworks = () => {
       {isSuccess && <ToastContainer />}
       {isOpenConfirmationModal && (
         <ConfirmationModal
-          artworkId={currentArtwork}
+          id={currentArtwork}
           isOpenConfirmationModal={isOpenConfirmationModal}
           setIsOpenConfirmationModal={setIsOpenConfirmationModal}
           setIsSuccess={setIsSuccess}
-          setUserArtworks={setUserArtworks}
+          type="artworks"
         />
       )}
     </div>

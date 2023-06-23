@@ -1,0 +1,84 @@
+.user-card {
+    .artworks-wrapper {
+        width: 100%;
+
+        .artwork {
+          @include flexbox(flex, center, center);
+          @include mobile {
+            gap: 0.2rem;
+          }
+          background-color: $base_color_transparent;
+          border-radius: 10px;
+          margin-top: 1rem;
+          padding: 0.5rem;
+          font-size: $xs;
+          gap: 1rem;
+  
+          .artwork-item {
+            flex-grow: 1;
+            flex-basis: 0;
+            text-align: center;
+          }
+  
+          #artwork-image {
+            @include dim(8rem, 10rem);
+            @include mobile() {
+              @include dim(4rem, 5rem);
+            }
+            object-fit: cover;
+            border-radius: 10px;
+            flex-grow: 0;
+          }
+  
+          p {
+            @include mobile() {
+              font-size: $xxs_mobile;
+            }
+          }
+  
+          .actions {
+            .settings-icon {
+              @include dim(1.5rem, 1.5rem);
+              @include mobile() {
+                @include dim(1rem, 1rem);
+              }
+  
+              padding: 0 1rem;
+              color: $dark_magenta;
+              cursor: pointer;
+  
+              &:hover {
+                color: $light_purple;
+              }
+            }
+            .actions-dropdown-menu {
+              @include flexbox-direction(flex, center, column, center);
+              @include dim(0.5rem, 0rem);
+  
+              &:hover {
+                opacity: 3;
+              }
+  
+              .action-btn {
+                @include dim(2.5rem, 2.5rem);
+                background-color: $medium_purple;
+                color: $base_color;
+                margin-right: 2rem;
+  
+                &:hover {
+                  background-color: $dark_magenta;
+                  color: $base_color_pink;
+                }
+                  .input-hidden {
+                    display: none;
+                  }
+              }
+            }
+  
+            @include monitor {
+              width: auto;
+            }
+          }
+        }
+      }
+}

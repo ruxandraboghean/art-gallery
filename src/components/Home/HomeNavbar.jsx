@@ -17,13 +17,13 @@ export const HomeNavbar = () => {
 
   useOnHoverOutside(dropdownRef, closeHoverMenu);
   return (
-    <div className="home-navbar">
-      <div ref={dropdownRef} className="menu-header">
+    <div className="home-navbar" onMouseOver={() => setMenuDropdownOpen(true)}>
+      <div ref={dropdownRef} className="menu-header" data-testid="menu-header">
         <img
           src={currentUser.photoURL}
           className="current-user"
-          onMouseOver={() => setMenuDropdownOpen(true)}
           alt="Avatar"
+          data-testid="image-user"
         />
         {isMenuDropdownOpen && <UserSubmenu />}
       </div>

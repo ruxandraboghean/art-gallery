@@ -48,6 +48,9 @@ const initialState = {
   category: null,
   specialist: null,
   userId: null,
+  certificateURL: "",
+  reportURL: "",
+  isAuthenticated: false,
 };
 
 const artworksRef = collection(db, "artworks");
@@ -328,7 +331,7 @@ export const AddArtworkForm = ({ onClose }) => {
           category: artworkData?.category.value,
           specialist: artworkData?.specialist.value,
           photoURL: artworkData?.photoURL.imageSrc,
-          status: "pending authentication",
+          status: "pending request",
           userId: currentUser.uid,
         });
 
@@ -358,7 +361,7 @@ export const AddArtworkForm = ({ onClose }) => {
         console.log(err.message);
       }
     } else {
-      saveNewArtwork(e, "pending authentication");
+      saveNewArtwork(e, "pending request");
     }
   };
 
@@ -558,6 +561,7 @@ export const AddArtworkForm = ({ onClose }) => {
                   }
                   options={categoryOptions}
                   className="dropdown-input"
+                  data-testid="category-select"
                 />
               </div>
             </div>

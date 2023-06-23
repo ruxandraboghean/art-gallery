@@ -14,15 +14,18 @@ import { db } from "../../../firebase";
 import { AuthContext } from "../../../context/AuthContext";
 import { useContext } from "react";
 import { ArtworkModalContext } from "../../../context/ArtworkModalContext";
+import { RequestContext } from "../../../context/RequestsContext";
 
 export const ConfirmationModal = ({
-  artworkId,
+  id,
   isOpenConfirmationModal,
   setIsOpenConfirmationModal,
   setIsSuccess,
+  type,
 }) => {
   const { currentUser } = useContext(AuthContext);
   const { setUserArtworks } = useContext(ArtworkModalContext);
+  const { setUserRequests } = useContext(RequestContext);
 
   const handleOpenConfirmationModal = () => {
     setIsOpenConfirmationModal(true);
@@ -33,35 +36,60 @@ export const ConfirmationModal = ({
   };
 
   const handleDeleteArtwork = async () => {
-    const docRef = doc(db, "artworks", artworkId);
-
-    //delete from artworks collection
-    await deleteDoc(docRef)
-      .then(() => console.log("Item deleted successfully"))
-      .catch((err) => console.error("Error deleting item: ", err));
-
     const userDocRef = doc(db, "users", currentUser.uid);
     const userDoc = await getDoc(userDocRef);
-    const userArtworksIds = userDoc.data().artworks;
 
-    const indexToRemove = userArtworksIds.findIndex(
-      (artwork) => artwork.id === artworkId
-    );
+    if (type === "artworks") {
+      const artworksDocRef = doc(db, "artworks", id);
 
-    if (indexToRemove !== -1) {
-      let updatedUserArtworks = userArtworksIds.filter(
-        (index) => index !== indexToRemove
+      //delete from artworks collection
+      console.log("case artwrks");
+      await deleteDoc(artworksDocRef)
+        .then(() => console.log("Item deleted successfully"))
+        .catch((err) => console.error("Error deleting item: ", err));
+
+      const userArtworksIds = userDoc.data().artworks;
+
+      const indexToRemove = userArtworksIds.findIndex(
+        (artwork) => artwork.id === id
       );
 
-      await updateDoc(userDocRef, { artworks: updatedUserArtworks });
+      if (indexToRemove !== -1) {
+        let updatedUserArtworks = userArtworksIds.filter(
+          (index) => index !== indexToRemove
+        );
 
-      setUserArtworks((prevUserArtworks) =>
-        prevUserArtworks.filter((artwork) => artwork.id !== artworkId)
+        await updateDoc(userDocRef, { artworks: updatedUserArtworks });
+
+        await setUserArtworks((prevUserArtworks) =>
+          prevUserArtworks.filter((artwork) => artwork.id !== id)
+        );
+      }
+    } else if (type === "requests") {
+      const requestsDocRef = doc(db, "requests", id);
+      console.log("case requests", requestsDocRef);
+
+      //delete from requests collection
+      await deleteDoc(requestsDocRef)
+        .then(() => console.log("Item deleted successfully"))
+        .catch((err) => console.error("Error deleting item: ", err));
+
+      const userRequestsIds = userDoc.data().requests;
+      console.log(userRequestsIds, "ids");
+
+      let updatedUserRequests = userRequestsIds.filter((req) => req.id !== id);
+
+      console.log(updatedUserRequests, "updated");
+
+      await updateDoc(userDocRef, { requests: updatedUserRequests });
+
+      await setUserRequests((prevUserRequests) =>
+        prevUserRequests.filter((req) => req.id !== id)
       );
-
-      setIsOpenConfirmationModal(false);
-      setIsSuccess(true);
     }
+
+    setIsOpenConfirmationModal(false);
+    setIsSuccess(true);
   };
 
   return (

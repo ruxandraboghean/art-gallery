@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`on mouse over event 1`] = `
+<div
+  className="home-navbar"
+  onMouseOver={[Function]}
+>
+  <div
+    className="menu-header"
+    data-testid="menu-header"
+  >
+    <img
+      alt="Avatar"
+      className="current-user"
+      data-testid="image-user"
+      src="photo.png"
+    />
+  </div>
+</div>
+`;
+
+exports[`on mouse over event 2`] = `
+<div
+  className="home-navbar"
+  onMouseOver={[Function]}
+>
+  <div
+    className="menu-header"
+    data-testid="menu-header"
+  >
+    <img
+      alt="Avatar"
+      className="current-user"
+      data-testid="image-user"
+      src="photo.png"
+    />
+  </div>
+</div>
+`;
