@@ -1,4 +1,8 @@
 .user-card {
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
     .artworks-wrapper {
         width: 100%;
 
@@ -11,7 +15,7 @@
           border-radius: 10px;
           margin-top: 1rem;
           padding: 0.5rem;
-          font-size: $xs;
+          font-size: $s_mobile;
           gap: 1rem;
   
           .artwork-item {

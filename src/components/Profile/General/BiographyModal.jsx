@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
+import { Spinner } from "../../utils/Spinner";
 
-export const BiographyModal = ({ user, userData, setIsOpen }) => {
+export const BiographyModal = ({
+  user,
+  userData,
+  setIsOpen,
+  isLoading,
+  setIsLoading,
+}) => {
   const [modalData, setModalData] = useState({
     biography: userData?.biography || "",
   });
@@ -13,6 +20,7 @@ export const BiographyModal = ({ user, userData, setIsOpen }) => {
   };
 
   const handleUpdate = async () => {
+    setIsLoading(true);
     const userRef = doc(db, "users", user.uid);
     const docData = {
       uid: user.uid,
@@ -24,12 +32,15 @@ export const BiographyModal = ({ user, userData, setIsOpen }) => {
       })
       .catch((err) => {
         console.log("Error: " + err.message);
+        setIsLoading(false);
       });
 
     handleClose();
   };
 
   const handleClose = () => {
+    setIsLoading(false);
+
     setIsOpen(false);
   };
 
@@ -53,6 +64,8 @@ export const BiographyModal = ({ user, userData, setIsOpen }) => {
             onChange={handleChange}
           />
         </div>
+        {isLoading && <Spinner />}
+
         <div className="modal-footer">
           <button className="modal-button" onClick={handleUpdate}>
             Save Changes

@@ -14,6 +14,7 @@ import { RequestContext } from "../../context/RequestsContext";
 import getUserById from "../../data/users/getUserById";
 import { ConfirmationModal } from "../../components/gallery/modals/ConfirmationModal";
 import { DocumentsModal } from "./DocumentsModal";
+import { NoData } from "../../components/utils/NoData";
 
 const sortOptions = [
   { label: "date", value: "date" },
@@ -30,6 +31,7 @@ export const ManageRequests = () => {
   const { userRequests, setUserRequests } = useContext(RequestContext);
   const [currentRequest, setCurrentRequest] = useState(null);
   const [artwork, setArtwork] = useState(null);
+  const [requestedArtwork, setRequestedArtwork] = useState(null);
 
   const [searchedInititator, setSearchedInitiator] = useState("");
   const [filteredData, setFilteredData] = useState([]);
@@ -112,6 +114,7 @@ export const ManageRequests = () => {
     },
     [currentUser.uid, setUserRequests]
   );
+
   const fetchData = async (tabName) => {
     if (Object.keys(currentUser).length > 0) {
       const userRequestsData = await getCurrentUserRequests(currentUser);
@@ -156,6 +159,7 @@ export const ManageRequests = () => {
   useEffect(() => {
     handleSearch();
   }, [searchedInititator, handleSearch]);
+  console.log("current req: ", userRequests);
 
   return (
     <div className="gallery-container">
@@ -225,8 +229,8 @@ export const ManageRequests = () => {
               </div>
             </div>
 
-            {userRequests.length === 0 ? (
-              <p>No data...</p>
+            {userRequests?.length === 0 ? (
+              <NoData />
             ) : (
               (filteredData.length === 0 ? userRequests : filteredData)?.map(
                 (request) => (
@@ -240,6 +244,8 @@ export const ManageRequests = () => {
                     setIsOpenDocumentsModal={setIsOpenDocumentsModal}
                     artwork={artwork}
                     setArtwork={setArtwork}
+                    currentRequest={currentRequest}
+                    setRequestedArtwork={setRequestedArtwork}
                   />
                 )
               )
@@ -258,9 +264,7 @@ export const ManageRequests = () => {
       )}
       {isOpenDocumentsModal && (
         <DocumentsModal
-          id={currentRequest}
-          artwork={artwork}
-          isOpenDocumentsModal={isOpenDocumentsModal}
+          artwork={requestedArtwork}
           setIsOpenDocumentsModal={setIsOpenDocumentsModal}
         />
       )}

@@ -30,11 +30,11 @@
     .users{
         @include font($roboto-mono, $normal, $m);
         @include flexbox(flex, stretch, center);
-        gap: 5rem;
+        gap: 2rem;
         padding: 2rem;
 
            .arrow-right {
-            @include flexbox-direction(flex, center, column, center);
+            @include flexbox-direction(flex, stretch, column, center);
                 flex-basis: 0;
                 flex-grow: 1;
                 text-decoration: inherit;
@@ -44,15 +44,15 @@
                 font-size: $s;
 
                 .user_icon, .expert_icon {
-                    width: 4rem;
-                    height: 4rem;
+                    width: 3rem;
+                    height: 3rem;
                 }
                 .user{
                     @include flexbox(flex, center, center);
                     gap:1rem;
                     padding: 2rem;
                     border: 1px solid $base_color_pink;
-                    border-radius: 5px;
+                    border-radius: 100px;
         
                     &:hover {
                         background-color: $base_color_pink;

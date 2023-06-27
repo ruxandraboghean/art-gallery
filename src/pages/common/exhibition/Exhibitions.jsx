@@ -1,16 +1,49 @@
 import React from "react";
-import { Exhibition } from "../../../components/gallery/exhibition/Exhibition";
+import { useState } from "react";
+import { SeeExhibitionModal } from "../../../components/gallery/exhibition/SeeExhibitionModal";
+import { CardExhibition } from "../../../components/gallery/exhibition/CardExhibition";
+import { useEffect } from "react";
+import getAllExhibitions from "../../../data/exhibitions/getAllExhibitions";
 
 export const Exhibitions = () => {
+  const [isOpenExhibitionModal, setIsOpenExhibitionModal] = useState(false);
+  const [exhibitions, setExhibitions] = useState(null);
+  const [currentExpo, setCurrentExpo] = useState(null);
+
+  useEffect(() => {
+    const getExhibitions = async () => {
+      const exhibitionData = await getAllExhibitions();
+      setExhibitions(exhibitionData);
+    };
+    getExhibitions();
+  }, []);
+
   return (
     <div className="works-container">
       <div className="works-title">Exhibitions</div>
       <div className="works-wrapper">
-        <Exhibition />
-        <Exhibition />
-        <Exhibition />
-        <Exhibition />
+        <div className="exhibition-wrapper">
+          {exhibitions?.map((exhibition) => {
+            return (
+              <CardExhibition
+                exhibition={exhibition}
+                key={exhibition.id}
+                isOpenExhibitionModal={isOpenExhibitionModal}
+                setIsOpenExhibitionModal={setIsOpenExhibitionModal}
+                setCurrentExpo={setCurrentExpo}
+              />
+            );
+          })}
+        </div>
       </div>
+
+      {isOpenExhibitionModal && (
+        <SeeExhibitionModal
+          isOpen={isOpenExhibitionModal}
+          onClose={() => setIsOpenExhibitionModal(false)}
+          artworks={Object.values(currentExpo?.artworks)}
+        />
+      )}
     </div>
   );
 };

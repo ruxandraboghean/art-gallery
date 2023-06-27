@@ -2,6 +2,7 @@ import { collection, getDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 
 const getArtworkById = async (id) => {
+  console.log(id, "id");
   try {
     const artworksRef = collection(db, "artworks");
     const artworksDocRef = doc(artworksRef, id);

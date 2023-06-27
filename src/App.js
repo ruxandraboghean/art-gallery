@@ -12,6 +12,7 @@ import { Login } from "./pages/common/login_register/Login";
 import { Home } from "./pages/common/Home";
 import { RegisterExpert } from "./pages/common/login_register/RegisterExpert";
 import { RegisterUser } from "./pages/common/login_register/RegisterUser";
+import { RegisterValidator } from "./pages/common/login_register/RegisterValidator";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -43,6 +44,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/register-expert" element={<RegisterExpert />} />
             <Route path="/register-user" element={<RegisterUser />} />
+            <Route path="/register-validator" element={<RegisterValidator />} />
           </Routes>
         </Router>
       </header>

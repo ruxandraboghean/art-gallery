@@ -1,38 +1,37 @@
 import React, { useContext, useState } from "react";
+import { ref, getDownloadURL } from "firebase/storage";
 
 import { Box, Fab, Tooltip } from "@mui/material";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
+import { storage } from "../../firebase";
 
 export const AuthenticatedArtActionButtons = ({
   artwork,
   setIsOpenConfirmationModal,
   setCurrentArtwork,
 }) => {
-  const { setMenuDropdownOpen, handleOpenModal } =
-    useContext(ArtworkModalContext);
+  const { setMenuDropdownOpen } = useContext(ArtworkModalContext);
 
   const handleDownloadReport = async () => {
-    try {
-      const response = await fetch(artwork.reportURL, { mode: "no-cors" });
-
-      const blob = await response.blob();
-
-      console.log(response, "blob");
-      // Create a temporary link element
-      const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = "expert_report.pdf"; // Specify the desired filename
-      link.click();
-
-      // Clean up the temporary link
-      window.URL.revokeObjectURL(link.href);
-    } catch (error) {
-      console.error("Error downloading the report:", error);
-    }
+    getDownloadURL(ref(storage, `${artwork.id}/report`))
+      .then((url) => {
+        window.open(url, "_blank");
+        console.log(url, "url");
+      })
+      .catch((error) => {
+        console.log("an error ocured", error);
+      });
   };
   const handleDownloadCertificate = () => {
-    //
+    getDownloadURL(ref(storage, `${artwork.id}/certificate`))
+      .then((url) => {
+        window.open(url, "_blank");
+        console.log(url, "url");
+      })
+      .catch((error) => {
+        console.log("an error ocured", error);
+      });
   };
 
   return (
@@ -44,7 +43,10 @@ export const AuthenticatedArtActionButtons = ({
               color="secondary"
               aria-label="edit"
               className="action-btn"
-              onClick={handleDownloadReport}
+              onClick={() => {
+                setMenuDropdownOpen(true);
+                handleDownloadReport();
+              }}
               sx={{ mb: 1 }}
             >
               <DownloadForOfflineIcon sx={{ fontSize: 20 }} />
@@ -56,7 +58,10 @@ export const AuthenticatedArtActionButtons = ({
               color="secondary"
               aria-label="request"
               className="action-btn"
-              onClick={handleDownloadCertificate}
+              onClick={() => {
+                setMenuDropdownOpen(true);
+                handleDownloadCertificate();
+              }}
               sx={{ mb: 1 }}
             >
               <DownloadForOfflineIcon sx={{ fontSize: 18 }} />

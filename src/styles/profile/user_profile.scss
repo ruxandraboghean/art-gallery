@@ -69,18 +69,18 @@
 
     .user-sections {
       @include flexbox(flex, center, space-between);
-      padding: 0.5rem 2rem;
+      padding: 0.5rem 1rem;
       box-sizing: border-box;
-      font-size: $xs;
+      font-size: $xxs;
       width: 100%;
 
       .user-section {
-        padding: 1rem;
+        padding: 0.5rem;
         box-sizing: border-box;
         margin: 1rem;
         border-radius: 10px;
         flex: 1 1 0;
-        width: 100%;
+        width: 80%;
         text-align: center;
         opacity: 0.9;
         border-bottom: 2px solid #8f8cc2;

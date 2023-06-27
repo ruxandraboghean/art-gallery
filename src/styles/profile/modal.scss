@@ -99,12 +99,23 @@
       width: 100%;
     }
   }
+
+  .spinner span {
+    padding: 0;
+    padding: 0.3rem;
+  }
   .modal-footer {
     flex: 1;
     @include flexbox(flex, center, center);
 
     .modal-button {
       @include upload-btn;
+
+      &:hover {
+        background-color: $dark_magenta;
+        color: $base_color;
+        font-weight: normal;
+      }
     }
   }
 }

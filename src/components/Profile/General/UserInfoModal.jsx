@@ -1,9 +1,17 @@
 import React, { useState } from "react";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
 import { updateProfile } from "firebase/auth";
+import { Spinner } from "../../utils/Spinner";
 
-export const UserInfoModal = ({ user, userData, setIsOpen }) => {
+export const UserInfoModal = ({
+  user,
+  userData,
+  setUserData,
+  setIsOpen,
+  isLoading,
+  setIsLoading,
+}) => {
   const [modalData, setModalData] = useState({
     displayName: userData?.displayName,
     email: userData?.email,
@@ -16,12 +24,10 @@ export const UserInfoModal = ({ user, userData, setIsOpen }) => {
   });
 
   const handleChange = (e) => {
-    console.log(e.target.name, "target");
     setModalData({ ...modalData, [e.target.name]: e.target.value });
   };
 
   function updateUserData() {
-    console.log(auth.currentUser);
     const user = auth.currentUser;
     updateProfile(user, {
       displayName: modalData?.displayName,
@@ -37,6 +43,8 @@ export const UserInfoModal = ({ user, userData, setIsOpen }) => {
   }
 
   const handleUpdate = async () => {
+    setIsLoading(true);
+
     const userRef = doc(db, "users", user.uid);
     const docData = {
       uid: user.uid,
@@ -51,17 +59,31 @@ export const UserInfoModal = ({ user, userData, setIsOpen }) => {
     await updateDoc(userRef, docData)
       .then(() => {
         console.log("Document updated successfully");
-        console.log(modalData.displayName);
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log("Error: " + err.message);
+        setIsLoading(false);
       });
 
     handleClose();
   };
 
+  const getUserData = async () => {
+    const docRef = doc(db, "users", user.uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      setUserData(docSnap.data());
+    } else {
+      console.log("No such document!");
+    }
+  };
+
   const handleClose = () => {
+    getUserData();
     setIsOpen(false);
+    setIsLoading(false);
   };
 
   return (
@@ -124,6 +146,7 @@ export const UserInfoModal = ({ user, userData, setIsOpen }) => {
             onChange={handleChange}
           />
         </div>
+        {isLoading && <Spinner />}
         <div className="modal-footer">
           <button className="modal-button" onClick={handleUpdate}>
             Save Changes

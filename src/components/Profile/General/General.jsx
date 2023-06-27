@@ -20,6 +20,7 @@ export const General = ({ currentUser }) => {
   const [isOpenSocialLinksModal, setIsOpenSocialLinksModal] = useState(false);
   const [userData, setUserData] = useState(null);
   const [currentTab, setCurrentTab] = useState("user-info");
+  const [isLoading, setIsLoading] = useState(false);
 
   const getUserData = async () => {
     const docRef = doc(db, "users", currentUser.uid);
@@ -57,7 +58,10 @@ export const General = ({ currentUser }) => {
               <UserInfoModal
                 user={currentUser}
                 userData={userData}
+                setUserData={setUserData}
                 setIsOpen={setIsOpenInfoModal}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
               />
             )}
           </div>
@@ -79,6 +83,8 @@ export const General = ({ currentUser }) => {
                 user={currentUser}
                 userData={userData}
                 setIsOpen={setIsOpenBiographyModal}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
               />
             )}
           </div>
@@ -100,6 +106,8 @@ export const General = ({ currentUser }) => {
                 user={currentUser}
                 userData={userData}
                 setIsOpen={setIsOpenSocialLinksModal}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
               />
             )}
           </div>

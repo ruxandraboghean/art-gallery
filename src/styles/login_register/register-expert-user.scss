@@ -12,7 +12,7 @@
         width: 100%;
 
         .background-form {
-          margin: 0 35%;
+          margin: 0 25%;
           background-color: rgb(243, 239, 250, 0.5);
           padding: 1rem;
           border-radius: 20px;
@@ -42,30 +42,30 @@
                         i {
                             @include dim(1rem, 1rem);
                             position: absolute;
-                            padding:1.25rem 0 0 1.75rem;
+                            padding:0.75rem 0 0 1.5rem;
                             color: $dark_magenta;
 
                             @include monitor() {
-                            padding:1.5rem 0 0 2rem;
+                                padding:1.5rem 0 0 2rem;
                             }
                         }
         
                         input {
-                            @include font($roboto-mono, $light, $xxs);
+                            @include font($roboto-mono, $light, $s_mobile);
                             @include border-outline-none;
-                            @include dim(16rem, 2.5rem); 
+                            @include dim(16rem, 2rem); 
                             color: $dark_magenta;
                             letter-spacing: 1px;
                             margin: 1% 1% 2% 1%;
                             background: #f3effa;
                             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                            border-radius: 20px;
+                            border-radius: 10px;
                             padding-left: 5rem;
             
                             &::placeholder {
                                 color: $dark_magenta;
                                 opacity: 1;
-                                font-size: $xs;
+                                font-size: $s_mobile;
                             }
             
                             @include monitor() {
@@ -74,6 +74,9 @@
                             }
                             
                         }
+
+                      
+
                     }
                 
                     .input-icons {
@@ -91,20 +94,20 @@
                         input {
                             @include font($roboto-mono, $light, $xxs);
                             @include border-outline-none;
-                            @include dim(20rem, 2.8rem); 
+                            @include dim(16rem, 2.3rem); 
                             color: $dark_magenta;;
                             letter-spacing: 1px;
                             margin: 1% 1% 2% 1%;
                             background: #f3effa;
                             box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-                            border-radius: 20px;
+                            border-radius: 10px;
                             padding-left: 5rem;
-                            font-size: $xs;
+                            font-size: $s_mobile;
             
                             &::placeholder {
                                 color: $dark_magenta;
                                 opacity: 1;
-                                font-size: $xs;
+                                font-size: $s_mobile;
                             }
                             
                             @include mobile() {
@@ -137,20 +140,37 @@
                         cursor: pointer;
 
                         .add-avatar {
-                            @include dim(2rem, 2rem);
+                            @include dim(1.5rem, 1.5rem);
                             color: $dark_magenta;
                         }
 
                         span {
                             color: $magenta;
-                            font-size: $xs;
+                            font-size: $s_mobile;
                         }
                     }
                 }
 
+                .file_displayed {
+                    border: 1px solid $grayish_pink;
+                    border-radius: 10px;
+                    font-size: $xxs;
+                    width: 50%;
+                    padding: 0.5rem;
+                    margin-top: 1rem;
+                    background-color: $base_color_transparent;
+
+                    .close_button {
+                        float: right;
+                        color: grey;
+                    }
+                }
+
                 button {
-                    @include font(FontAwesome, $normal, $m);
-                    @include dim(25rem, 3rem);
+                    @include font(FontAwesome, $normal, $xs);
+                    @include flexbox(flex, center, center);
+
+                    @include dim(22rem, 2.5rem);
                     color: $base_color;
                     letter-spacing: -0.133333px;
                     margin: 2rem 0 0 0.5rem;
@@ -162,10 +182,11 @@
                     text-align: center;
 
                     .text {
-                        @include font($roboto-mono, $regular, $m);       
+                        @include font($roboto-mono, $regular, $xs);       
                         letter-spacing: -0.133333px;
                         color: $base_color;
                         margin-right: 1.5rem;
+                        margin-bottom: 0.2rem;
 
                         @include monitor() {
                             font-size: 1.2rem;
@@ -198,7 +219,7 @@
             }
 
             p {
-                @include font($roboto-mono, $normal, $xs); 
+                @include font($roboto-mono, $normal, $xs_mobile); 
                 text-align: center;
                 letter-spacing: -0.133333px;
                 color: $grayish_blue;

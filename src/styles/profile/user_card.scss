@@ -1,10 +1,9 @@
 .user-card {
-  @include flexbox(flex, flex-start, space-between);
-  flex: 4;
+  @include flexbox-direction(flex, flex-start, column, flex-start);
   width: 95%;
   height: 100%;
   border-radius: 20px;
-  padding: 2rem 4rem;
+  padding: 1rem 2rem;
   background-color: $grayish_normal;
   box-sizing: border-box;
 
@@ -28,9 +27,11 @@
         gap: 1rem;
 
         span {
-          @include font($roboto-mono, $regular, $s);
+          @include font($roboto-mono, $regular, $xxs);
           color: $dark_magenta;
           padding-bottom: 0.2rem;
+          padding: 0.5rem 1rem;
+          border-radius: 10px;
 
           &:hover {
             color: $purple;
@@ -38,7 +39,11 @@
         }
 
         .tab-selected {
-            border-bottom: 1px solid $grayish_pink;
+            background-color: $grayish_purple;
+            &:hover {
+              color: $base_color_transparent;
+            }
+            
         }
 
         .edit-btn {
@@ -59,7 +64,7 @@
       gap: 1rem;
 
       span {
-        @include font($roboto-mono, $normal, $xxs);
+        @include font($roboto-mono, $normal, $s_mobile);
       }
 
       .social-links {

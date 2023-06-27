@@ -1,21 +1,29 @@
-@import '../index.scss';
-@import './artist.scss';
+@import "../index.scss";
+@import "./artist.scss";
 
 .artists-container {
-    @include flexbox(flex, center, space-between);
-    height: 90vh;
-    flex: 5;
-   
-    .artists-wrapper {
-        @include flexbox(flex, center, space-between);
-        flex-wrap: wrap;
-        @include dim (98.5%, 97.5%);
-        border-radius: 50px;
-        overflow: scroll;
+  @include flexbox-direction(flex, flex-start, column, space-between);
+  padding: 1rem;
 
-        &::-webkit-scrollbar { 
-            display: none;
-        }
+  .artists_title {
+    font-family: "Frank Ruhl Libre", serif;
+    font-weight: normal;
+    font-size: 1.2rem;
+    color: #532351;
+    letter-spacing: 0.3rem;
+    padding-left: 1rem;
+    padding-bottom: 3rem;
+    padding-top: 1rem;
+  }
+  .artists-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 2rem;
+    grid-row-gap: 0.5rem;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
     }
+    
+  }
 }
-   

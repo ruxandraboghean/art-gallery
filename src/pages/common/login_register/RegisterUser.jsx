@@ -8,6 +8,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 import ClipLoader from "react-spinners/ClipLoader";
 import logo from "../../../images/logo/no_illusion_logo.png";
@@ -15,6 +16,13 @@ import logo from "../../../images/logo/no_illusion_logo.png";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 export const RegisterUser = () => {
+  const [formValues, setFormValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+    checkPassword: "",
+    file: "",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState(false);
   const navigate = useNavigate();
@@ -22,7 +30,35 @@ export const RegisterUser = () => {
   const location = useLocation();
   const { from } = location.state;
 
-  console.log(from, "from");
+  const handleRemove = (file) => {
+    if (file === "file") {
+      setFormValues({ ...formValues, file: null });
+    }
+  };
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    console.log(value);
+
+    setFormValues((previousValues) => ({
+      ...previousValues,
+      [name]: value,
+    }));
+  };
+
+  function extractFileName(filePath) {
+    var startIndex =
+      filePath.indexOf("\\") >= 0
+        ? filePath.lastIndexOf("\\")
+        : filePath.lastIndexOf("/");
+    var fileName = filePath.substring(startIndex);
+
+    if (fileName.indexOf("\\") === 0 || fileName.indexOf("/") === 0) {
+      fileName = fileName.substring(1);
+    }
+
+    return fileName;
+  }
 
   const handleSubmit = async (e) => {
     setIsLoading(true);
@@ -32,7 +68,7 @@ export const RegisterUser = () => {
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
-    // const checkPassword = e.target[3].value;
+    const checkPassword = e.target[3].value;
     const file = e.target[4].files[0];
 
     try {
@@ -85,28 +121,69 @@ export const RegisterUser = () => {
               <div>
                 <div className="input-icons-register">
                   <i className="fa fa-user"></i>
-                  <input type="text" placeholder="username" />
+                  <input
+                    type="text"
+                    placeholder="username"
+                    name="username"
+                    value={formValues.username}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="input-icons-register">
                   <i className="fa fa-envelope"></i>
-                  <input type="email" placeholder="email" />
+                  <input
+                    type="email"
+                    placeholder="email"
+                    name="email"
+                    value={formValues.email}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="input-icons-register">
                   <i className="fa fa-duotone fa-lock"></i>
-                  <input type="password" placeholder="password" />
+                  <input
+                    type="password"
+                    placeholder="password"
+                    name="password"
+                    value={formValues.password}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="input-icons-register">
                   <i className="fa fa-duotone fa-lock"></i>
-                  <input type="password" placeholder="confirm password" />
+                  <input
+                    type="password"
+                    placeholder="confirm password"
+                    name="checkPassword"
+                    value={formValues.checkPassword}
+                    onChange={handleChange}
+                  />
                 </div>
               </div>
-              <input style={{ display: "none" }} type="file" id="file" />
+              <input
+                style={{ display: "none" }}
+                type="file"
+                accept=".jpg, .png, .svg"
+                name="file"
+                id="file"
+                value={formValues.file}
+                onChange={handleChange}
+              />
               <div className="upload-files">
                 <label htmlFor="file">
                   <AddPhotoAlternateIcon className="add-avatar" />
                   <span> Add an avatar </span>
                 </label>
               </div>
+              {formValues?.file && (
+                <div className="file_displayed">
+                  {extractFileName(formValues?.file)}
+                  <AiOutlineCloseCircle
+                    className="close_button"
+                    onClick={() => handleRemove("file")}
+                  />
+                </div>
+              )}
               <button className="form-button">
                 <span className="text">Register</span>
                 <FontAwesomeIcon

@@ -117,9 +117,9 @@ export default function UserSubmenu() {
                 color="secondary"
                 aria-label="edit"
                 className="account-btn"
-                onClick={() => handleOpenModal("exhibition")}
+                onClick={() => handleOpenModal("add", "exhibition", null)}
               >
-                <img src={addExhibition} alt="exhibition" className="icon" />
+                <AddCircle className="icon" />
               </Fab>
             </Tooltip>
           </Link>

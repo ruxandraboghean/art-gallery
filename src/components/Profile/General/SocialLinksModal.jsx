@@ -3,8 +3,15 @@ import * as ImIcons from "react-icons/im";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../../firebase";
 import { Instagram, YouTube } from "@mui/icons-material";
+import { Spinner } from "../../utils/Spinner";
 
-export const SocialLinksModal = ({ user, userData, setIsOpen }) => {
+export const SocialLinksModal = ({
+  user,
+  userData,
+  setIsOpen,
+  isLoading,
+  setIsLoading,
+}) => {
   const [modalData, setModalData] = useState({
     instagram: userData?.instagram || "",
     youtube: userData?.youtube || "",
@@ -16,6 +23,7 @@ export const SocialLinksModal = ({ user, userData, setIsOpen }) => {
   };
 
   const handleUpdate = async () => {
+    setIsLoading(true);
     const userRef = doc(db, "users", user.uid);
     const docData = {
       uid: user.uid,
@@ -29,6 +37,7 @@ export const SocialLinksModal = ({ user, userData, setIsOpen }) => {
       })
       .catch((err) => {
         console.log("Error: " + err.message);
+        setIsLoading(false);
       });
 
     handleClose();
@@ -36,6 +45,7 @@ export const SocialLinksModal = ({ user, userData, setIsOpen }) => {
 
   const handleClose = () => {
     setIsOpen(false);
+    setIsLoading(false);
   };
 
   return (
@@ -91,6 +101,8 @@ export const SocialLinksModal = ({ user, userData, setIsOpen }) => {
             />
           </div>
         </div>
+        {isLoading && <Spinner />}
+
         <div className="modal-footer">
           <button className="modal-button" onClick={handleUpdate}>
             Save Changes

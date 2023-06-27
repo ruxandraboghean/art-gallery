@@ -1,3 +1,6 @@
+@import url('https://fonts.cdnfonts.com/css/brittany-signature');
+@import url('https://fonts.cdnfonts.com/css/longa-iberica');
+@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;600&display=swap');      
 @import "./styles/general.scss";
 @import "./styles/home/index.scss";
 @import "./styles/login_register/index.scss";
@@ -6,10 +9,10 @@
 @import "./styles/profile/index.scss";
 @import "./styles/gallery/index.scss";
 @import "./styles/messages/index.scss";
-@import url('https://fonts.cdnfonts.com/css/brittany-signature');
-@import url('https://fonts.cdnfonts.com/css/longa-iberica');
-@import url('https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;600&display=swap');                
-
+@import "./styles/experts/index.scss";
+@import "./styles/common/certified_art/index.scss";
+@import "./styles/common/index.scss";
+          
 @font-face {
     font-family: 'Optima';
     src: url('./fonts/Optima LT Std Roman.otf') format('truetype');

@@ -121,7 +121,7 @@ export const Search = () => {
           <IoIcons.IoMdSearch />
           <input
             type="text"
-            placeholder="Find a user"
+            placeholder="Find a user chat"
             onKeyDown={handleKey}
             onChange={(e) => setUsername(e.target.value)}
             value={username}

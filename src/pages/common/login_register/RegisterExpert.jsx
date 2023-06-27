@@ -15,6 +15,8 @@ import logo from "../../../images/logo/no_illusion_logo.png";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import AttachmentIcon from "@mui/icons-material/Attachment";
 
+import { AiOutlineCloseCircle } from "react-icons/ai";
+
 export const RegisterExpert = () => {
   const [formValues, setFormValues] = useState({
     username: "",
@@ -38,6 +40,28 @@ export const RegisterExpert = () => {
       ...previousValues,
       [name]: value,
     }));
+  };
+
+  function extractFileName(filePath) {
+    var startIndex =
+      filePath.indexOf("\\") >= 0
+        ? filePath.lastIndexOf("\\")
+        : filePath.lastIndexOf("/");
+    var fileName = filePath.substring(startIndex);
+
+    if (fileName.indexOf("\\") === 0 || fileName.indexOf("/") === 0) {
+      fileName = fileName.substring(1);
+    }
+
+    return fileName;
+  }
+
+  const handleRemove = (file) => {
+    if (file === "file") {
+      setFormValues({ ...formValues, file: null });
+    } else if (file === "certificate") {
+      setFormValues({ ...formValues, certificate: null });
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -206,6 +230,24 @@ export const RegisterExpert = () => {
                   onChange={handleChange}
                 />
               </div>
+              {formValues?.file && (
+                <div className="file_displayed">
+                  {extractFileName(formValues?.file)}
+                  <AiOutlineCloseCircle
+                    className="close_button"
+                    onClick={() => handleRemove("file")}
+                  />
+                </div>
+              )}
+              {formValues?.certificate && (
+                <div className="file_displayed">
+                  {extractFileName(formValues?.certificate)}
+                  <AiOutlineCloseCircle
+                    className="close_button"
+                    onClick={() => handleRemove("certificate")}
+                  />
+                </div>
+              )}
 
               <button className="form-button">
                 <span className="text">Register</span>

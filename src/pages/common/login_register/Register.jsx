@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import logo from "../../../images/logo/no_illusion_logo.png";
 import user from "../../../images/user.png";
 import expert from "../../../images/verified-account.png";
+import validator from "../../../images/legal_validator.png";
 
 export const Register = () => {
   return (
@@ -23,7 +24,7 @@ export const Register = () => {
                 >
                   <div className="user">
                     <img src={user} alt="user" className="user_icon" />
-                    <span className="register_account">user</span>
+                    {/* <span className="register_account">user</span> */}
                   </div>
                 </Link>
                 <Link
@@ -33,7 +34,17 @@ export const Register = () => {
                 >
                   <div className="user">
                     <img src={expert} alt="expert" className="expert_icon" />
-                    <span className="register_account">art authenticator</span>
+                    {/* <span className="register_account">art authenticator</span> */}
+                  </div>
+                </Link>
+                <Link
+                  to="/register-validator"
+                  state={{ from: "validator" }}
+                  className="arrow-right"
+                >
+                  <div className="user">
+                    <img src={validator} alt="expert" className="expert_icon" />
+                    {/* <span className="register_account">art authenticator</span> */}
                   </div>
                 </Link>
               </div>

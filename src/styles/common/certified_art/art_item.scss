@@ -1,0 +1,22 @@
+.certified_art_wrapper {
+  padding: 3rem 4rem;
+  width: 100%;
+  @include font($roboto-mono, normal, $xxs);
+  @include flexbox-direction(flex, flex-start, column, flex-start);
+  gap: 2rem;
+
+  .certified_art {
+    @include flexbox(flex, flex-start, flex-start);
+    width: 100%;
+    gap: 5rem;
+
+    .certified_art_photo {
+      width: 25rem;
+      height: 25rem;
+      object-fit: cover;
+      border-radius: 5px;
+      flex: 1;
+      position: fixed;
+    }
+  }
+}

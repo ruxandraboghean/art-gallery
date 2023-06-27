@@ -20,7 +20,7 @@
             width: 50%;
             .logo {
                 @include dim(2em, 3rem);
-                padding: 0.5rem 0 7.5rem 0;
+                padding: 0.5rem 0 2.5rem 0;
                 cursor: pointer;
                 
                 @include monitor() {
@@ -30,7 +30,7 @@
         }
         .logo {
             @include dim(3rem, 3rem);
-            padding: 2rem 0.5rem 7.5rem 0.5rem;
+            padding: 2rem 0.5rem 2.5rem 0.5rem;
             cursor: pointer;
         }
         

@@ -2,6 +2,7 @@ import React from "react";
 import logo from "../../images/logo/logo_small.png";
 import { Link } from "react-router-dom";
 import * as GrIcons from "react-icons/gr";
+import * as FaIcons from "react-icons/fa";
 import * as BsIcons from "react-icons/bs";
 import { HomeNavbar } from "./HomeNavbar";
 
@@ -35,6 +36,15 @@ export const HomeSidebar = ({ setCurrentMenuItem }) => {
           to="#"
           className="link"
           onClick={() => handleChangeMenu("artists")}
+        >
+          <div className="sidebar-menu-item hidden-sidebar-item">
+            <FaIcons.FaUserShield className="sidebar-img" />
+          </div>
+        </Link>
+        <Link
+          to="#"
+          className="link"
+          onClick={() => handleChangeMenu("artworks")}
         >
           <div className="sidebar-menu-item hidden-sidebar-item">
             <GrIcons.GrCertificate className="sidebar-img" />

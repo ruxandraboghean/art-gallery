@@ -18,11 +18,22 @@
             background-color: $danger_color;
         } 
 
-         &#save:hover {
+      
+
+        &#save:hover {
             background-color: $success_color;
         }
         &:hover {
             background-color: $purple;
+        }
+    }
+    .gray-bg {
+        background-color: rgb(200, 197, 197);
+        color: gray;
+
+        &:hover {
+            background-color: rgb(200, 197, 197);
+
         }
     }
 }

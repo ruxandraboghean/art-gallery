@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import * as ImIcons from "react-icons/im";
 import * as TiIcons from "react-icons/ti";
+import { AiOutlineCloseCircle } from "react-icons/ai";
 
 import { unitOptions } from "../../mockData/unitOptions";
 import { techniqueOptions } from "../../mockData/techniqueOptions";
@@ -46,7 +47,7 @@ const initialState = {
   status: "",
   photoURL: null,
   category: null,
-  specialist: null,
+  specialist: "",
   userId: null,
   certificateURL: "",
   reportURL: "",
@@ -61,11 +62,12 @@ const artId = artworksDocRef.id;
 
 export const AddArtworkForm = ({ onClose }) => {
   const [artworkData, setArtworkData] = useState(initialState);
-  const [specialistSelected, setSpecialistSelected] = useState(null);
+  const [specialistSelected, setSpecialistSelected] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
+  const [certificateFile, setCertificateFile] = useState(null);
   const {
     artworkId,
     setIsSuccess,
@@ -73,6 +75,8 @@ export const AddArtworkForm = ({ onClose }) => {
     setArtworks,
     setUserArtworks,
     setHasNewNotification,
+    editable,
+    legalValidator,
   } = useContext(ArtworkModalContext);
 
   const [specialistOptions, setSpecialistsOptions] = useState(null);
@@ -103,7 +107,19 @@ export const AddArtworkForm = ({ onClose }) => {
       },
     });
   }
+  function extractFileName(filePath) {
+    var startIndex =
+      filePath.indexOf("\\") >= 0
+        ? filePath.lastIndexOf("\\")
+        : filePath.lastIndexOf("/");
+    var fileName = filePath.substring(startIndex);
 
+    if (fileName.indexOf("\\") === 0 || fileName.indexOf("/") === 0) {
+      fileName = fileName.substring(1);
+    }
+
+    return fileName;
+  }
   const resetState = (e) => {
     e.preventDefault();
     setArtworkData(initialState);
@@ -112,13 +128,22 @@ export const AddArtworkForm = ({ onClose }) => {
   const handleRemoveImg = () => {
     setArtworkData({ ...artworkData, photoURL: null });
   };
+  const handleRemove = (file) => {
+    setArtworkData({ ...artworkData, certificateURL: null });
+    setCertificateFile(null);
+  };
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
 
   const handleChange = (e) => {
-    setArtworkData({ ...artworkData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    setArtworkData((previousValues) => ({
+      ...previousValues,
+      [name]: value,
+    }));
   };
 
   const handleDropdownChange = async (dropdownLabel, { label, value }) => {
@@ -127,12 +152,15 @@ export const AddArtworkForm = ({ onClose }) => {
     if (dropdownLabel === "specialist") {
       const users = await getUsers();
 
-      const userSelected =
-        users.find((user) => user.displayName === value.toLowerCase()) || {};
-      setSpecialistSelected(userSelected);
+      if (value) {
+        const userSelected =
+          users.find((user) => user.displayName === value.toLowerCase()) || {};
+        setSpecialistSelected(userSelected);
+      } else {
+        setSpecialistSelected("");
+      }
     }
   };
-
   const getSpecialistsData = async () => {
     const specialistsData = await getSpecialists();
     setSpecialistsOptions(
@@ -159,20 +187,34 @@ export const AddArtworkForm = ({ onClose }) => {
           technique: artworkData?.technique.value,
           genre: artworkData?.genre.value,
           category: artworkData?.category.value,
-          specialist: artworkData?.specialist.value,
+          specialist: artworkData?.specialist.value || "",
           status: status,
           photoURL: artworkData?.photoURL?.imageSrc || "",
           userId: currentUser.uid,
         });
 
-        await setDoc(requestsDocRef, {
-          id: requestsDocRef.id,
-          initiator: currentUser.uid,
-          receiver: specialistSelected.uid,
-          date: new Date().getTime(),
-          artworkId: artId,
-          status: RequestStatusEnum.PENDING,
-        });
+        if (specialistSelected === "") {
+          console.log(legalValidator, "legalV");
+
+          await setDoc(requestsDocRef, {
+            id: requestsDocRef.id,
+            initiator: currentUser.uid,
+            receiver: legalValidator.uid,
+            date: new Date().getTime(),
+            artworkId: artId,
+            status: RequestStatusEnum.PENDING,
+          });
+        } else {
+          await setDoc(requestsDocRef, {
+            id: requestsDocRef.id,
+            initiator: currentUser.uid,
+            receiver: specialistSelected.uid,
+            date: new Date().getTime(),
+            artworkId: artId,
+            status: RequestStatusEnum.PENDING,
+          });
+        }
+
         await uploadBytesResumable(
           storageRef,
           artworkData?.photoURL?.file
@@ -186,7 +228,7 @@ export const AddArtworkForm = ({ onClose }) => {
                 technique: artworkData?.technique.value,
                 genre: artworkData?.genre.value,
                 category: artworkData?.category.value,
-                specialist: artworkData?.specialist.value,
+                specialist: artworkData?.specialist.value || "",
                 status: status,
                 userId: currentUser.uid,
               });
@@ -202,19 +244,21 @@ export const AddArtworkForm = ({ onClose }) => {
                   image: downloadURL,
                 }),
               });
-              await updateDoc(doc(db, "users", specialistSelected.uid), {
-                notifications: arrayUnion({
-                  id: nanoid(),
-                  message: `You have a new request for authenticating the artwork: ${artworkData.title} of ${currentUser.displayName}. 
+              if (specialistSelected !== "") {
+                await updateDoc(doc(db, "users", specialistSelected.uid), {
+                  notifications: arrayUnion({
+                    id: nanoid(),
+                    message: `You have a new request for authenticating the artwork: ${artworkData.title} of ${currentUser.displayName}. 
                   You can deny or accept the request.`,
-                  time: new Date().getTime(),
-                  image: downloadURL,
-                }),
+                    time: new Date().getTime(),
+                    image: downloadURL,
+                  }),
 
-                requests: arrayUnion({
-                  id: requestsDocRef.id,
-                }),
-              });
+                  requests: arrayUnion({
+                    id: requestsDocRef.id,
+                  }),
+                });
+              }
               console.log("Document written with ID: ", artId);
 
               setErr(false);
@@ -230,7 +274,7 @@ export const AddArtworkForm = ({ onClose }) => {
                   technique: artworkData?.technique.value,
                   genre: artworkData?.genre.value,
                   category: artworkData?.category.value,
-                  specialist: artworkData?.specialist.value,
+                  specialist: artworkData?.specialist.value || "",
                   photoURL: downloadURL,
                   status: status,
                 })
@@ -277,7 +321,7 @@ export const AddArtworkForm = ({ onClose }) => {
           technique: artworkData?.technique.value,
           genre: artworkData?.genre.value,
           category: artworkData?.category.value,
-          specialist: artworkData?.specialist.value,
+          specialist: artworkData?.specialist.value || " ",
           photoURL: artworkData?.photoURL.imageSrc,
           status: artworkData?.status,
           userId: currentUser.uid,
@@ -329,7 +373,7 @@ export const AddArtworkForm = ({ onClose }) => {
           technique: artworkData?.technique.value,
           genre: artworkData?.genre.value,
           category: artworkData?.category.value,
-          specialist: artworkData?.specialist.value,
+          specialist: artworkData?.specialist.value || "",
           photoURL: artworkData?.photoURL.imageSrc,
           status: "pending request",
           userId: currentUser.uid,
@@ -457,6 +501,7 @@ export const AddArtworkForm = ({ onClose }) => {
                 placeholder="title"
                 value={artworkData?.title}
                 onChange={handleChange}
+                readOnly={!editable}
               />
             </div>
             <div className="input-item">
@@ -467,6 +512,7 @@ export const AddArtworkForm = ({ onClose }) => {
                 placeholder="year"
                 value={artworkData?.year}
                 onChange={handleChange}
+                readOnly={!editable}
               />
             </div>
             <div className="input-item">
@@ -477,6 +523,7 @@ export const AddArtworkForm = ({ onClose }) => {
                 placeholder="description"
                 value={artworkData?.description}
                 onChange={handleChange}
+                readOnly={!editable}
               />
             </div>
             <div className="art-details">
@@ -488,6 +535,7 @@ export const AddArtworkForm = ({ onClose }) => {
                   placeholder="height"
                   value={artworkData?.height}
                   onChange={handleChange}
+                  readOnly={!editable}
                 />
               </div>
               <div className="input-item">
@@ -498,6 +546,7 @@ export const AddArtworkForm = ({ onClose }) => {
                   placeholder="width"
                   value={artworkData?.width}
                   onChange={handleChange}
+                  readOnly={!editable}
                 />
               </div>
               <div className="input-item">
@@ -508,6 +557,7 @@ export const AddArtworkForm = ({ onClose }) => {
                   placeholder="depth"
                   value={artworkData?.depth}
                   onChange={handleChange}
+                  readOnly={!editable}
                 />
               </div>
             </div>
@@ -521,6 +571,7 @@ export const AddArtworkForm = ({ onClose }) => {
                     handleDropdownChange("unit", { label, value })
                   }
                   options={unitOptions}
+                  disabled={!editable}
                   className="dropdown-input"
                 />
               </div>
@@ -533,6 +584,7 @@ export const AddArtworkForm = ({ onClose }) => {
                     handleDropdownChange("technique", { label, value })
                   }
                   options={techniqueOptions}
+                  disabled={!editable}
                   className="dropdown-input"
                 />
               </div>
@@ -546,6 +598,7 @@ export const AddArtworkForm = ({ onClose }) => {
                   onChange={({ label, value }) =>
                     handleDropdownChange("genre", { label, value })
                   }
+                  disabled={!editable}
                   options={genreOptions}
                   className="dropdown-input"
                 />
@@ -559,6 +612,7 @@ export const AddArtworkForm = ({ onClose }) => {
                   onChange={({ label, value }) =>
                     handleDropdownChange("category", { label, value })
                   }
+                  disabled={!editable}
                   options={categoryOptions}
                   className="dropdown-input"
                   data-testid="category-select"
@@ -571,6 +625,7 @@ export const AddArtworkForm = ({ onClose }) => {
                 id="certificate"
                 checked={isChecked}
                 onChange={handleCheckboxChange}
+                readOnly={!editable}
               />
               <label htmlFor="certificate">has certificate</label>
             </div>
@@ -578,11 +633,12 @@ export const AddArtworkForm = ({ onClose }) => {
               <div className="input-item">
                 <Select
                   styles={{ width: 400 }}
-                  value={artworkData.specialist}
+                  value={artworkData.specialist || ""}
                   placeholder="art authenticator"
                   onChange={({ label, value }) =>
                     handleDropdownChange("specialist", { label, value })
                   }
+                  disabled={!editable}
                   options={specialistOptions}
                   className="dropdown-input"
                 />
@@ -590,24 +646,52 @@ export const AddArtworkForm = ({ onClose }) => {
             )}
             {isChecked && (
               <div className="input-item dropdown-input">
-                <label htmlFor="upload-btn" className="custom-file-upload">
-                  <i className="fa fa-cloud-upload"></i> upload certificate
+                <label
+                  htmlFor="certificateUpload"
+                  className="custom-file-upload"
+                >
+                  <span>
+                    <i className="fa fa-cloud-upload" /> upload Certificate
+                  </span>
                 </label>
                 <input
                   type="file"
-                  id="upload-btn"
-                  accept="image/*"
+                  id="certificateUpload"
+                  name="certificateUpload"
+                  accept=".pdf, .doc, .docx"
                   style={{ display: "none" }}
+                  value={artworkData?.certificateURL}
+                  onChange={(e) => {
+                    handleChange(e);
+                    setCertificateFile(e.target.value);
+                  }}
                 />
               </div>
             )}
+
+            {certificateFile && (
+              <div className="file_displayed">
+                {extractFileName(certificateFile)}
+                <AiOutlineCloseCircle
+                  className="close_button"
+                  onClick={() => handleRemove("certificate")}
+                />
+              </div>
+            )}
+
             {err && <p className="error">You have to upload an image</p>}
           </div>
           <div className="buttons">
             <button id="cancel" name="cancel" onClick={onClose}>
               Cancel
             </button>
-            <button id="save" name="save" onClick={handleSaveAsDraft}>
+            <button
+              id="save"
+              name="save"
+              disabled={!editable}
+              className={editable ? "" : "gray-bg"}
+              onClick={handleSaveAsDraft}
+            >
               Save as draft
             </button>
             <button id="publish" name="publish" onClick={sendRequest}>

@@ -11,7 +11,7 @@ export const ActionButtons = ({
   setIsOpenConfirmationModal,
   setCurrentArtwork,
 }) => {
-  const { setMenuDropdownOpen, handleOpenModal } =
+  const { setMenuDropdownOpen, handleOpenModal, setEditable } =
     useContext(ArtworkModalContext);
 
   const handleDelete = () => {
@@ -30,6 +30,7 @@ export const ActionButtons = ({
               onClick={() => {
                 handleOpenModal("edit", "artwork", artworkId);
                 setMenuDropdownOpen(true);
+                setEditable(true);
               }}
               sx={{ mb: 1 }}
             >
@@ -43,7 +44,8 @@ export const ActionButtons = ({
               aria-label="request"
               className="action-btn"
               onClick={() => {
-                handleOpenModal("edit", "artwork", artworkId);
+                handleOpenModal("send-to-specialist", "artwork", artworkId);
+                setEditable(false);
                 setMenuDropdownOpen(true);
               }}
               sx={{ mb: 1 }}

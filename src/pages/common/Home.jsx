@@ -16,6 +16,9 @@ import { useContext } from "react";
 import { ArtworkModal } from "../../components/gallery/modals/ArtworkModal";
 import { NotificationsModal } from "../../components/gallery/modals/NotificationsModal";
 import { ManageRequests } from "../experts/ManageRequests";
+import { Artworks } from "./artworks/Artworks";
+import { ArtistItem } from "../../components/users/ArtistItem";
+import { AddExhibitionModal } from "../../components/gallery/modals/AddExhibitionModal";
 
 export const Home = () => {
   const {
@@ -24,6 +27,8 @@ export const Home = () => {
     isSuccess,
     isOpenArtwork,
     isOpenNotificationsModal,
+    isOpenAddExhibition,
+    setIsOpenAddExhibition,
   } = useContext(ArtworkModalContext);
 
   return (
@@ -37,6 +42,10 @@ export const Home = () => {
             <Messages />
           ) : currentMenuItem === "artists" ? (
             <Artists />
+          ) : currentMenuItem === "artworks" ? (
+            <Artworks />
+          ) : currentMenuItem === "artist" ? (
+            <ArtistItem />
           ) : currentMenuItem === "profile" ? (
             <Profile />
           ) : currentMenuItem === "manage-artworks" ? (
@@ -51,6 +60,7 @@ export const Home = () => {
       </div>
       {isOpenArtwork && <ArtworkModal />}
       {isOpenNotificationsModal && <NotificationsModal />}
+      {isOpenAddExhibition && <AddExhibitionModal />}
     </div>
   );
 };

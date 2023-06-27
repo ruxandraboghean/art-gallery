@@ -1,0 +1,121 @@
+#biography-modal {
+    @include font($roboto-mono, normal, $s_mobile);
+
+        #close-documents-modal {
+            margin-bottom: 1rem;
+            flex: 0 0;
+        }
+  #documents-modal {
+    justify-content: space-between;
+    align-items: center;
+    .custom-label {
+      @include font($roboto-mono, normal, $s_mobile);
+      border-radius: 5px;
+      padding: 0.5rem 0.25rem;
+      border: 1px solid $base_color_light;
+      width: 100%;
+      text-align: center;
+      background-color: $base_color_pink;
+
+      &:hover {
+        background-color: $base_color_transparent;
+      }
+    }
+    #report,
+    #certificate {
+      display: none;
+    }
+
+    .file-name {
+      @include font($roboto-mono, normal, $s_mobile);
+      text-align: center;
+    }
+
+    .drag-container {
+        @include flexbox-direction(flex, flex-end, column, space-between);
+        border: 1px dashed $purple;
+        padding: 1rem;
+        border-radius: 5px;
+        width: 90%;
+        height: 30%;
+
+        .drag-drop{
+        @include flexbox-direction(flex, center, column, center);
+
+        height: 100%;
+            .drag-icon {
+                width: 1rem;
+                height: 1rem;
+            }
+    
+            p {
+                text-align: center;
+            }
+        }
+
+        .drag-drop-none {
+            display: none;
+        }
+        .remove-icon {
+            width: 1rem;
+            height: 1rem;
+            float:right;
+        }
+        .dragged-content {
+            @include flexbox-direction(flex, center, column, center);
+            gap:0.5rem;
+            width: 100%;
+
+        .file-type {
+            width: 3rem;
+            height: 3rem;
+            color: $base_color_pink;
+        }
+    }
+    }
+
+    .center-content {
+        align-items: center;
+    }
+
+    .input-item-checkbox {
+        @include form-input;   
+        @include flexbox(flex, center, flex-start);   
+        gap: 2rem;
+        width: 100%;
+        padding: 0;
+        padding-bottom: 0.7rem;
+        padding-left: 0.7rem;
+        box-sizing: border-box;
+          
+        label {
+            @include font($roboto-mono, $light, $s_mobile);
+            color: hsl(0, 0%, 40%);
+        }
+        input[type="checkbox"] {
+            appearance: none;
+            margin-right: 5px;
+            border-bottom: none;
+            padding: 0;
+            display: none;
+          }
+
+        input[type="checkbox"]:checked+label:after{
+            content: "\2713";
+            display: inline-block;
+            text-align: center;
+            background-color: $dark_magenta;
+            color: #fff;
+            border-radius: 4px;
+            padding: 0 0.1rem;
+            margin-left: 2rem;
+          }
+    }
+    .modal-footer {
+        width: 100%;
+        text-align: right;
+        flex: 0 0;
+        @include flexbox(flex, center, flex-end)
+    }
+  }
+}
