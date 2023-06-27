@@ -20,6 +20,7 @@ export const ArtworkModalContextProvider = ({ children }) => {
   const [isOpenNotificationsModal, setIsOpenNotificationsModal] =
     useState(false);
   const [artworkId, setArtworkId] = useState(null);
+  const [currentExhibitionId, setCurrentExhibitionId] = useState(null);
   const [isMenuDropdownOpen, setMenuDropdownOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [hasDisplayedMessage, setHasDisplayedMessage] = useState(false);
@@ -29,19 +30,21 @@ export const ArtworkModalContextProvider = ({ children }) => {
   const [currentArtist, setCurrentArtist] = useState(null);
   const [legalValidator, setLegalValidator] = useState(null);
   const [editable, setEditable] = useState(true);
+  const [isEditExhibitionAction, setIsEditExhibitionAction] = useState(false);
 
   injectStyle();
 
   const handleOpenModal = (action, type, id) => {
-    setArtworkId(id);
-
     if (type === "artwork") {
+      setArtworkId(id);
       setIsOpenArtwork(true);
       return id;
     } else if (type === "notifications") {
       setIsOpenNotificationsModal(true);
     } else if (type === "exhibition") {
+      setCurrentExhibitionId(id);
       setIsOpenAddExhibition(true);
+      action === "edit" && setIsEditExhibitionAction(true);
     }
   };
 
@@ -119,6 +122,9 @@ export const ArtworkModalContextProvider = ({ children }) => {
         isOpenAddExhibition,
         setIsOpenAddExhibition,
         legalValidator,
+        currentExhibitionId,
+        setCurrentExhibitionId,
+        isEditExhibitionAction,
       }}
     >
       {children}

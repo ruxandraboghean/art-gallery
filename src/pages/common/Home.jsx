@@ -28,7 +28,6 @@ export const Home = () => {
     isOpenArtwork,
     isOpenNotificationsModal,
     isOpenAddExhibition,
-    setIsOpenAddExhibition,
   } = useContext(ArtworkModalContext);
 
   return (

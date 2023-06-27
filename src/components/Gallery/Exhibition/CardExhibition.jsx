@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import getUserById from "../../../data/users/getUserById";
 import moment from "moment";
+import { AiOutlineArrowsAlt } from "react-icons/ai";
 
 export const CardExhibition = ({
   exhibition,
@@ -12,6 +13,7 @@ export const CardExhibition = ({
   const [date, setDate] = useState(null);
   const handleSeeExhibition = () => {
     setIsOpenExhibitionModal(true);
+    setCurrentExpo(exhibition);
   };
 
   function formatDate(date) {
@@ -24,7 +26,6 @@ export const CardExhibition = ({
       setAuthor(authorData.displayName);
     };
     getAuthorName();
-    setCurrentExpo(exhibition);
     formatDate();
   }, []);
 
@@ -37,7 +38,7 @@ export const CardExhibition = ({
         }}
       >
         <span className="see-exhibition" onClick={handleSeeExhibition}>
-          see expo
+          <AiOutlineArrowsAlt className="open_expo" />
         </span>
         <div className="info-wrapper">
           <div className="profile-info">

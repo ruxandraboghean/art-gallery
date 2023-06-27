@@ -41,6 +41,7 @@ export const ManageRequests = () => {
   const [isOpenConfirmationModal, setIsOpenConfirmationModal] = useState(false);
   const [isOpenDocumentsModal, setIsOpenDocumentsModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [currentTab, setCurrentTab] = useState("pending");
 
   const handleChange = (e) => {
     setSearchedInitiator(e.target.value);
@@ -48,6 +49,7 @@ export const ManageRequests = () => {
 
   const handleChangeTab = (tabName) => {
     fetchData(tabName);
+    setCurrentTab(tabName);
   };
 
   const handleDropdownChange = (dropdownLabel, { label, value }) => {
@@ -135,6 +137,11 @@ export const ManageRequests = () => {
             userRequestsData.filter((req) => req.status === "denied")
           );
           break;
+          case "completed":
+            setUserRequests(
+              userRequestsData.filter((req) => req.status === "completed")
+            );
+            break;
         default:
           setUserRequests(userRequestsData);
           break;
@@ -210,22 +217,36 @@ export const ManageRequests = () => {
           <div className="works">
             <div className="works-header">
               <div
-                className="work-section"
+                className={`work-section ${
+                  currentTab === "pending" && "selected"
+                }`}
                 onClick={() => handleChangeTab("pending")}
               >
                 pending
               </div>
               <div
-                className="work-section"
+                className={`work-section ${
+                  currentTab === "accepted" && "selected"
+                }`}
                 onClick={() => handleChangeTab("accepted")}
               >
                 accepted
               </div>
               <div
-                className="work-section"
+                className={`work-section ${
+                  currentTab === "denied" && "selected"
+                }`}
                 onClick={() => handleChangeTab("denied")}
               >
                 denied
+              </div>
+              <div
+                className={`work-section ${
+                  currentTab === "completed" && "selected"
+                }`}
+                onClick={() => handleChangeTab("completed")}
+              >
+                completed
               </div>
             </div>
 
@@ -246,6 +267,7 @@ export const ManageRequests = () => {
                     setArtwork={setArtwork}
                     currentRequest={currentRequest}
                     setRequestedArtwork={setRequestedArtwork}
+                    requestedArtwork={requestedArtwork}
                   />
                 )
               )
@@ -266,6 +288,7 @@ export const ManageRequests = () => {
         <DocumentsModal
           artwork={requestedArtwork}
           setIsOpenDocumentsModal={setIsOpenDocumentsModal}
+          request={currentRequest}
         />
       )}
     </div>

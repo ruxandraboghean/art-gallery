@@ -6,6 +6,7 @@
   padding: 1rem 2rem;
   background-color: $grayish_normal;
   box-sizing: border-box;
+  overflow: scroll;
 
   .details {
     @include flexbox-direction(flex, flex-start, column, space-between);
@@ -15,6 +16,7 @@
     }
     width: 100%;
     gap: 3rem;
+    padding: 0 3rem;
 
     .details-header {
       @include flexbox(flex, center, space-between);
@@ -23,8 +25,9 @@
       cursor: pointer;
 
       .details-header-item {
-        @include flexbox(flex, center, flex-start);
+        @include flexbox(flex, center, center);
         gap: 1rem;
+        width: 100%;
 
         span {
           @include font($roboto-mono, $regular, $xxs);
@@ -32,6 +35,7 @@
           padding-bottom: 0.2rem;
           padding: 0.5rem 1rem;
           border-radius: 10px;
+          text-align: center;
 
           &:hover {
             color: $purple;
@@ -39,11 +43,10 @@
         }
 
         .tab-selected {
-            background-color: $grayish_purple;
-            &:hover {
-              color: $base_color_transparent;
-            }
-            
+          background-color: $grayish_purple;
+          &:hover {
+            color: $base_color_transparent;
+          }
         }
 
         .edit-btn {
@@ -60,15 +63,21 @@
     }
 
     .details-content {
-      @include flexbox-direction(flex, flex-start, column, center);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       gap: 1rem;
+      width: 100%;
 
       span {
         @include font($roboto-mono, $normal, $s_mobile);
+        border: 1px solid $purple;
+        padding: 1rem;
+        border-radius: 10px;
+        width: 80%;
       }
 
       .social-links {
-        @include flexbox(flex, center, center);
+        @include flexbox(flex, center, flex-start);
         gap: 2rem;
         cursor: pointer;
 

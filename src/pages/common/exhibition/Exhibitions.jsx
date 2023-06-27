@@ -17,7 +17,6 @@ export const Exhibitions = () => {
     };
     getExhibitions();
   }, []);
-
   return (
     <div className="works-container">
       <div className="works-title">Exhibitions</div>
@@ -31,6 +30,21 @@ export const Exhibitions = () => {
                 isOpenExhibitionModal={isOpenExhibitionModal}
                 setIsOpenExhibitionModal={setIsOpenExhibitionModal}
                 setCurrentExpo={setCurrentExpo}
+                artworks={exhibition.artworks}
+              />
+            );
+          })}
+        </div>
+        <div className="exhibition-wrapper">
+          {exhibitions?.reverse()?.map((exhibition) => {
+            return (
+              <CardExhibition
+                exhibition={exhibition}
+                key={exhibition.id}
+                isOpenExhibitionModal={isOpenExhibitionModal}
+                setIsOpenExhibitionModal={setIsOpenExhibitionModal}
+                setCurrentExpo={setCurrentExpo}
+                artworks={exhibition.artworks}
               />
             );
           })}

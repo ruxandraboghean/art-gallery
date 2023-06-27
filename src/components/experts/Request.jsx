@@ -12,6 +12,7 @@ import { RequestAcceptedActions } from "./RequestAcceptedActions";
 import { RequestDeniedActions } from "./RequestDeniedActions";
 import { AuthContext } from "../../context/AuthContext";
 import { RequestAcceptedActionsValidator } from "./RequestAcceptedActionsValidator";
+import { Spinner } from "../utils/Spinner";
 
 export const Request = ({
   request,
@@ -23,6 +24,7 @@ export const Request = ({
   artwork,
   setArtwork,
   currentRequest,
+  requestedArtwork,
   setRequestedArtwork,
 }) => {
   const dropdownRef = useRef(null);
@@ -65,7 +67,7 @@ export const Request = ({
   }, []);
 
   if (!artwork) {
-    return <div> loading... </div>;
+    return <Spinner />;
   }
 
   return (
@@ -79,6 +81,7 @@ export const Request = ({
         />
         <p className="artwork-item">{initiator?.displayName}</p>
         <p className="artwork-item">{date}</p>
+        <p className="artwork-item">{request.status}</p>
         <div className="actions" ref={dropdownRef}>
           <MdIcons.MdOutlineSettingsSuggest
             className="settings-icon"
@@ -99,6 +102,7 @@ export const Request = ({
               setCurrentRequest={setCurrentRequest}
               currentRequest={currentRequest}
               setRequestedArtwork={setRequestedArtwork}
+              requestedArtwork={requestedArtwork}
             />
           ) : (
             isMenuOpen &&
@@ -113,6 +117,7 @@ export const Request = ({
                 setCurrentRequest={setCurrentRequest}
                 currentRequest={currentRequest}
                 setRequestedArtwork={setRequestedArtwork}
+                requestedArtwork={requestedArtwork}
               />
             )
           )}

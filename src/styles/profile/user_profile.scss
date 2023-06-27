@@ -91,6 +91,7 @@
       }
       .selected {
         border-bottom: 2px solid $dark_magenta;
+        background: linear-gradient(to top, $base_color_transparent, $base_color);
       }
     }
   }
@@ -100,5 +101,10 @@
     margin: 0 2rem;
     width: 100%;
     flex: 1;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }

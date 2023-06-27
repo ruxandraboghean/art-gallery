@@ -2,11 +2,15 @@
   @include flexbox(flex, flex-start, center);
   font-size: $xxs;
   width: 100%;
+
   &.hovered {
+    border-radius: 10px;
+
     .img-wrapper {
       transform: scale(1.08);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       cursor: pointer;
+
       &::after {
         position: absolute;
         top: 0;
@@ -37,7 +41,7 @@
     background-position: center;
     background-size: cover;
     max-height: 100%;
-    width: 335px;
+    width: 300px;
 
     @include monitor {
       width: 700px;

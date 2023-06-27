@@ -10,14 +10,10 @@ import * as FaIcons from "react-icons/fa";
 import * as ImIcons from "react-icons/im";
 
 import { UserInfoModal } from "./UserInfoModal";
-import { BiographyModal } from "./BiographyModal";
-import { SocialLinksModal } from "./SocialLinksModal";
 import { useState } from "react";
 
 export const General = ({ currentUser }) => {
   const [isOpenInfoModal, setIsOpenInfoModal] = useState(false);
-  const [isOpenBiographyModal, setIsOpenBiographyModal] = useState(false);
-  const [isOpenSocialLinksModal, setIsOpenSocialLinksModal] = useState(false);
   const [userData, setUserData] = useState(null);
   const [currentTab, setCurrentTab] = useState("user-info");
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +40,7 @@ export const General = ({ currentUser }) => {
           <div className="details-header-item">
             <span
               className={`details-span ${
-                currentTab === "user-info" ? "tab-selected" : "false"
+                currentTab === "user-info" ? "" : "false"
               }`}
               onClick={() => setCurrentTab("user-info")}
             >
@@ -65,56 +61,19 @@ export const General = ({ currentUser }) => {
               />
             )}
           </div>
-          <div className="details-header-item">
-            <span
-              className={`details-span ${
-                currentTab === "biography" ? "tab-selected" : "false"
-              }`}
-              onClick={() => setCurrentTab("biography")}
-            >
-              Biography
-            </span>
-            <FaIcons.FaEdit
-              className="edit-btn"
-              onClick={() => setIsOpenBiographyModal(!isOpenBiographyModal)}
-            />
-            {isOpenBiographyModal && (
-              <BiographyModal
-                user={currentUser}
-                userData={userData}
-                setIsOpen={setIsOpenBiographyModal}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-              />
-            )}
-          </div>
-          <div className="details-header-item">
-            <span
-              className={`details-span ${
-                currentTab === "social-links" ? "tab-selected" : "false"
-              }`}
-              onClick={() => setCurrentTab("social-links")}
-            >
-              Social Links
-            </span>
-            <FaIcons.FaEdit
-              className="edit-btn"
-              onClick={() => setIsOpenSocialLinksModal(!isOpenSocialLinksModal)}
-            />
-            {isOpenSocialLinksModal && (
-              <SocialLinksModal
-                user={currentUser}
-                userData={userData}
-                setIsOpen={setIsOpenSocialLinksModal}
-                isLoading={isLoading}
-                setIsLoading={setIsLoading}
-              />
-            )}
-          </div>
         </div>
         <div className="details-content">
-          {currentTab === "social-links" ? (
-            <>
+          <>
+            <span className="details-span">
+              Username: {userData?.displayName}
+            </span>
+            <span className="details-span">E-mail: {userData?.email}</span>
+            <span className="details-span">Address: {userData?.address}</span>
+            <span className="details-span">City: {userData?.city}</span>
+            <span className="details-span">Country: {userData?.country}</span>
+            <span className="details-span">Phone: {userData?.phone}</span>
+            <span className="details-span">{userData?.biography} </span>
+            <span>
               <div className="social-links">
                 <Link to={userData?.instagram || "#"}>
                   <Instagram
@@ -130,23 +89,8 @@ export const General = ({ currentUser }) => {
                   <ImIcons.ImBlog className="blog" name="blog" />
                 </Link>
               </div>
-            </>
-          ) : currentTab === "biography" ? (
-            <>
-              <span className="details-span">{userData?.biography} </span>
-            </>
-          ) : (
-            <>
-              <span className="details-span">
-                Username: {userData?.displayName}
-              </span>
-              <span className="details-span">E-mail: {userData?.email}</span>
-              <span className="details-span">Address: {userData?.address}</span>
-              <span className="details-span">City: {userData?.city}</span>
-              <span className="details-span">Country: {userData?.country}</span>
-              <span className="details-span">Phone: {userData?.phone}</span>
-            </>
-          )}
+            </span>
+          </>
         </div>
       </div>
     </>

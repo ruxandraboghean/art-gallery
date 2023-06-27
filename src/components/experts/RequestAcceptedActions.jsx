@@ -67,10 +67,6 @@ export const RequestAcceptedActions = ({
     });
   };
 
-  // useEffect(() => {
-
-  //   getArtwork();
-  // }, []);
 
   return (
     <>

@@ -3,6 +3,8 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
 import { updateProfile } from "firebase/auth";
 import { Spinner } from "../../utils/Spinner";
+import { Instagram, YouTube } from "@mui/icons-material";
+import * as ImIcons from "react-icons/im";
 
 export const UserInfoModal = ({
   user,
@@ -21,6 +23,10 @@ export const UserInfoModal = ({
     city: userData?.city || "",
     country: userData?.country || "",
     address: userData?.address || "",
+    biography: userData?.biography || "",
+    instagram: userData?.instagram || "",
+    youtube: userData?.youtube || "",
+    blog: userData?.blog || "",
   });
 
   const handleChange = (e) => {
@@ -54,6 +60,10 @@ export const UserInfoModal = ({
       city: modalData?.city,
       country: modalData?.country,
       address: modalData?.address,
+      biography: modalData?.biography,
+      instagram: modalData?.instagram,
+      youtube: modalData?.youtube,
+      blog: modalData?.blog,
     };
     updateUserData();
     await updateDoc(userRef, docData)
@@ -145,6 +155,53 @@ export const UserInfoModal = ({
             defaultValue={modalData?.phone}
             onChange={handleChange}
           />
+          <textarea
+            type="text"
+            id="biography"
+            placeholder=" Tell the world about yourself..."
+            name="biography"
+            defaultValue={modalData?.biography}
+            onChange={handleChange}
+          />
+          <div className="social-links-input">
+            <label htmlFor="instagram">
+              <Instagram size="medium" className="instagram" />
+            </label>
+            <input
+              type="text"
+              id="instagram"
+              placeholder=" instagram link"
+              name="instagram"
+              defaultValue={modalData?.instagram}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="social-links-input">
+            <label htmlFor="youtube">
+              <YouTube className="youtube" />
+            </label>
+            <input
+              type="text"
+              id="youtube"
+              placeholder=" youtube link"
+              name="youtube"
+              defaultValue={modalData?.youtube}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="social-links-input">
+            <label htmlFor="blog">
+              <ImIcons.ImBlog className="blog" />
+            </label>
+            <input
+              type="text"
+              id="blog"
+              placeholder=" blog link"
+              name="blog"
+              defaultValue={modalData?.blog}
+              onChange={handleChange}
+            />
+          </div>
         </div>
         {isLoading && <Spinner />}
         <div className="modal-footer">

@@ -7,11 +7,12 @@ import { RequestContext } from "../../context/RequestsContext";
 import RequestStatusEnum from "../../enums/RequestStatusEnum";
 import updateRequests from "../../data/requests/updateRequests";
 import { AuthContext } from "../../context/AuthContext";
-import { db } from "../../firebase";
+import { db, storage } from "../../firebase";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
 import getArtworkById from "../../data/artworks/getArtworkById";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
+import { getDownloadURL, ref } from "firebase/storage";
 export const RequestAcceptedActionsValidator = ({
   request,
   isOpenConfirmationModal,
@@ -21,6 +22,7 @@ export const RequestAcceptedActionsValidator = ({
   setCurrentRequest,
   currentRequest,
   setRequestedArtwork,
+  requestedArtwork,
 }) => {
   const { userRequests, setUserRequests } = useContext(RequestContext);
   const { currentUser } = useContext(AuthContext);
@@ -30,40 +32,41 @@ export const RequestAcceptedActionsValidator = ({
     setRequestedArtwork(artwork);
   };
 
-  const handleOpenDocumentsModal = async () => {
-    await setIsOpenDocumentsModal(true);
-    await setCurrentRequest(request);
-    await getArtwork();
+  const handleDownloadCertificate = () => {
+    console.log(request.artworkId);
+    getDownloadURL(ref(storage, `${request.artworkId}- certificate`))
+      .then((url) => {
+        window.open(url, "_blank");
+        console.log(url, "url");
+      })
+      .catch((error) => {
+        console.log("an error ocured", error);
+      });
   };
 
-  const handleChangeRequestStatus = async (newStatus) => {
-    const newData = userRequests.map((req) => {
-      if (req.id === request.id) {
-        return newStatus === "accepted"
-          ? { ...req, status: RequestStatusEnum.ACCEPTED }
-          : { ...req, status: RequestStatusEnum.DENIED };
-      }
-      return req;
-    });
-    const reqModified = newData.find((req) => req.id === currentRequest.id);
+  const handleValidateCertificate = async (result) => {
+    await getArtwork();
 
-    setUserRequests(newData);
+    console.log(requestedArtwork, "rek art");
+    if (result === "invalid") {
+      await updateDoc(doc(db, "artworks", requestedArtwork.id), {
+        status: "completed",
+        isAuthenticated: false,
+      });
+    } else if (result === "valid") {
+      await updateDoc(doc(db, "artworks", requestedArtwork.id), {
+        status: "completed",
+        isAuthenticated: true,
+      });
+    }
 
     //send notification to user
-
-    await updateDoc(doc(db, "users", reqModified.initiator), {
+    await updateDoc(doc(db, "users", request.initiator), {
       notifications: arrayUnion({
         id: nanoid(),
-        message: `Expert ${currentUser.displayName} has ${reqModified.status} your request`,
+        message: `Expert ${currentUser.displayName} has completed your request`,
         time: new Date().getTime(),
       }),
-    });
-    await updateRequests(currentRequest.id, reqModified);
-
-    const artworkReq = await getArtworkById(currentRequest.artworkId);
-
-    await updateDoc(doc(db, "artworks", artworkReq.id), {
-      status: "pending authentication",
     });
   };
 
@@ -76,7 +79,7 @@ export const RequestAcceptedActionsValidator = ({
               color="secondary"
               aria-label="edit"
               className="action-btn"
-              onClick={handleOpenDocumentsModal}
+              onClick={handleDownloadCertificate}
               sx={{ mb: 1 }}
             >
               <DownloadForOfflineIcon sx={{ fontSize: 15 }} />
@@ -87,7 +90,7 @@ export const RequestAcceptedActionsValidator = ({
               color="secondary"
               aria-label="edit"
               className="action-btn"
-              onClick={handleOpenDocumentsModal}
+              onClick={() => handleValidateCertificate("valid")}
               sx={{ mb: 1 }}
             >
               <Check sx={{ fontSize: 15 }} />
@@ -99,7 +102,7 @@ export const RequestAcceptedActionsValidator = ({
               color="secondary"
               aria-label="request"
               className="action-btn"
-              onClick={() => handleChangeRequestStatus("denied")}
+              onClick={() => handleValidateCertificate("invalid")}
               sx={{ mb: 1 }}
             >
               <DoDisturb sx={{ fontSize: 18 }} />

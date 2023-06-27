@@ -3,7 +3,7 @@
 
 .artists-container {
   @include flexbox-direction(flex, flex-start, column, space-between);
-  padding: 1rem;
+  padding: 0 1rem;
 
   .artists_title {
     font-family: "Frank Ruhl Libre", serif;
@@ -12,14 +12,14 @@
     color: #532351;
     letter-spacing: 0.3rem;
     padding-left: 1rem;
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
     padding-top: 1rem;
   }
   .artists-wrapper {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-column-gap: 2rem;
-    grid-row-gap: 0.5rem;
+    grid-column-gap: 4rem;
+    grid-row-gap: 2rem;
     overflow: scroll;
     &::-webkit-scrollbar {
       display: none;

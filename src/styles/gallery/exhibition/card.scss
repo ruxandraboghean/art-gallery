@@ -1,18 +1,18 @@
 .exhibition-card-wrapper{
     @include flexbox(flex, flex-start, space-between);
-    height:250%;
+    height:200%;
     font-size: $xxs;
 
     .img-wrapper {
         @include flexbox-direction(flex, flex-end, column, space-between);
         border-radius: 15px;
-        height: 380px;
+        height: 350px;
         text-align: right;
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
         max-height: 100%;
-        width: 545px;
+        width: 495px;
 
         @include monitor {
             width: 700px;
@@ -43,6 +43,13 @@
 
             &:hover {
                 color: $magenta;
+            }
+            .open_expo {
+                font-size: 2rem;
+                color: $dark_magenta;
+                &:hover {
+                    color: $purple;
+                }
             }
         }
 

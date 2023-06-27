@@ -9,6 +9,7 @@
     transform: none;
   }
 
+  overflow: scroll;
   padding: 1rem;
   height: 100%;
   position: fixed;
@@ -20,6 +21,10 @@
   border-radius: 5px;
   box-sizing: border-box;
   z-index: 9999999;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 //Biography modal
 
@@ -40,7 +45,6 @@
 
   .modal-header {
     @include flexbox(flex, center, space-between);
-    margin-bottom: 3rem;
     flex: 1;
 
     img {

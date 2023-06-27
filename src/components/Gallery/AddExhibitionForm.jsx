@@ -6,7 +6,8 @@ import { ArtworkExhibitionForm } from "./ArtworkExhibitionForm";
 import { genreOptions } from "../../mockData/genreOptions";
 import { categoryOptions } from "../../mockData/categoryOptions";
 import { db } from "../../firebase";
-import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 
 const initialState = {
   title: "",
@@ -27,27 +28,58 @@ export const AddExhibitionForm = ({ onClose }) => {
   const { currentUser } = useContext(AuthContext);
   const [userArtworks, setUserArtworks] = useState(null);
   const [exhibitionData, setExhibitionData] = useState(initialState);
+  const { currentExhibitionId } = useContext(ArtworkModalContext);
 
   const handleCreateExhibition = async (e) => {
     e.preventDefault();
-    try {
-      await setDoc(exhibitionsDocRef, {
-        ...exhibitionData,
-        title: exhibitionData.title,
-        description: exhibitionData.description,
-        genre: exhibitionData.genre.value,
-        coverPhotoURL: exhibitionData.coverPhotoURL,
-        category: exhibitionData.category.value,
-        author: currentUser.uid,
-        artworks: selectedArtworks,
-      });
 
-      // Clear form data and selected artworks
-      setExhibitionData(initialState);
-      setSelectedArtworks(null);
-      onClose();
-    } catch (error) {
-      console.error("Error creating/updating exhibition", error);
+    if (currentExhibitionId) {
+      try {
+        const existentExhibitionsDocRef = doc(
+          db,
+          "exhibitions",
+          currentExhibitionId
+        );
+
+        await updateDoc(existentExhibitionsDocRef, {
+          ...exhibitionData,
+          title: exhibitionData.title,
+          description: exhibitionData.description,
+          genre: exhibitionData.genre.value,
+          coverPhotoURL: exhibitionData.coverPhotoURL,
+          category: exhibitionData.category.value,
+          author: currentUser.uid,
+          artworks: selectedArtworks,
+        });
+
+        // Clear form data and selected artworks
+        setExhibitionData(initialState);
+        setSelectedArtworks(null);
+        onClose();
+      } catch (error) {
+        console.error("Error creating/updating exhibition", error);
+      }
+    } else {
+      try {
+        await setDoc(exhibitionsDocRef, {
+          ...exhibitionData,
+          title: exhibitionData.title,
+          id: exhibitionsDocRef.id,
+          description: exhibitionData.description,
+          genre: exhibitionData.genre.value,
+          coverPhotoURL: exhibitionData.coverPhotoURL,
+          category: exhibitionData.category.value,
+          author: currentUser.uid,
+          artworks: selectedArtworks,
+        });
+
+        // Clear form data and selected artworks
+        setExhibitionData(initialState);
+        setSelectedArtworks(null);
+        onClose();
+      } catch (error) {
+        console.error("Error creating/updating exhibition", error);
+      }
     }
   };
 
@@ -56,55 +88,75 @@ export const AddExhibitionForm = ({ onClose }) => {
   };
 
   const handleDropdownChange = async (dropdownLabel, { label, value }) => {
-    console.log(dropdownLabel);
+    let updatedExhibitionData = { ...exhibitionData };
     if (dropdownLabel === "category") {
       switch (value) {
         case "prints":
-          setExhibitionData({
-            ...exhibitionData,
-            coverPhotoURL:
-              "https://firebasestorage.googleapis.com/v0/b/art-gallery-da0fa.appspot.com/o/prints.svg?alt=media&token=d1c2cfce-db61-4508-8265-224c3dc7132e",
-          });
+          updatedExhibitionData.coverPhotoURL =
+            "https://firebasestorage.googleapis.com/v0/b/art-gallery-da0fa.appspot.com/o/prints.svg?alt=media&token=d1c2cfce-db61-4508-8265-224c3dc7132e";
+
           break;
         case "paintings":
-          setExhibitionData({
-            ...exhibitionData,
-            coverPhotoURL:
-              "https://firebasestorage.googleapis.com/v0/b/art-gallery-da0fa.appspot.com/o/prints.svg?alt=media&token=d1c2cfce-db61-4508-8265-224c3dc7132e",
-          });
+          updatedExhibitionData.coverPhotoURL =
+            "https://firebasestorage.googleapis.com/v0/b/art-gallery-da0fa.appspot.com/o/prints.svg?alt=media&token=d1c2cfce-db61-4508-8265-224c3dc7132e";
           break;
 
         case "exhibitions":
-          setExhibitionData({
-            ...exhibitionData,
-            coverPhotoURL:
-              "https://firebasestorage.googleapis.com/v0/b/art-gallery-da0fa.appspot.com/o/Exhibitions.svg?alt=media&token=9b87872f-4ae6-4e8e-ae33-5e1ec2f66672",
-          });
+          updatedExhibitionData.coverPhotoURL =
+            "https://firebasestorage.googleapis.com/v0/b/art-gallery-da0fa.appspot.com/o/Exhibitions.svg?alt=media&token=9b87872f-4ae6-4e8e-ae33-5e1ec2f66672";
           break;
 
         case "sculptures":
-          setExhibitionData({
-            ...exhibitionData,
-            coverPhotoURL:
-              "https://firebasestorage.googleapis.com/v0/b/art-gallery-da0fa.appspot.com/o/sculptures.svg?alt=media&token=0cf62eef-9228-445e-acf0-ad11226db886",
-          });
+          updatedExhibitionData.coverPhotoURL =
+            "https://firebasestorage.googleapis.com/v0/b/art-gallery-da0fa.appspot.com/o/sculptures.svg?alt=media&token=0cf62eef-9228-445e-acf0-ad11226db886";
           break;
 
         default:
-          setExhibitionData({
-            ...exhibitionData,
-            coverPhotoURL:
-              "https://firebasestorage.googleapis.com/v0/b/art-gallery-da0fa.appspot.com/o/traditional.svg?alt=media&token=fcb3a89a-cc22-46c8-8b40-a25a2880d3e4",
-          });
+          updatedExhibitionData.coverPhotoURL =
+            "https://firebasestorage.googleapis.com/v0/b/art-gallery-da0fa.appspot.com/o/traditional.svg?alt=media&token=fcb3a89a-cc22-46c8-8b40-a25a2880d3e4";
           break;
       }
+    }
 
-      setExhibitionData({
-        ...exhibitionData,
-        [dropdownLabel]: { label, value },
-      });
+    setExhibitionData({
+      ...exhibitionData,
+      [dropdownLabel]: { label, value },
+      coverPhotoURL: updatedExhibitionData.coverPhotoURL,
+    });
+  };
+
+  //EDIT ARTWORK
+  const editHandler = async () => {
+    try {
+      const docRef = doc(db, "exhibitions", currentExhibitionId);
+
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        console.log(data, "data");
+        setExhibitionData({
+          ...data,
+          genre: { label: data.genre, value: data.genre },
+          category: { label: data.category, value: data.category },
+        });
+
+        if (data.artworks) {
+          setSelectedArtworks(data.artworks);
+        }
+      } else {
+        console.log("No such document!");
+      }
+    } catch (err) {
+      console.log(err.message);
     }
   };
+
+  useEffect(() => {
+    if (currentExhibitionId !== undefined && currentExhibitionId !== "") {
+      editHandler();
+    }
+  }, [currentExhibitionId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -131,6 +183,7 @@ export const AddExhibitionForm = ({ onClose }) => {
               <input
                 type="text"
                 id="title"
+                value={exhibitionData.title}
                 name="title"
                 placeholder="title"
                 onChange={handleChange}
@@ -140,6 +193,7 @@ export const AddExhibitionForm = ({ onClose }) => {
               <input
                 type="text"
                 id="description"
+                value={exhibitionData.description}
                 name="description"
                 placeholder="description"
                 onChange={handleChange}

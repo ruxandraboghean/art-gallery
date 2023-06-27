@@ -21,6 +21,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { db, storage } from "../../firebase";
 import {
   getDownloadURL,
+  ref,
   ref as sRef,
   uploadBytesResumable,
 } from "firebase/storage";
@@ -67,7 +68,6 @@ export const AddArtworkForm = ({ onClose }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
-  const [certificateFile, setCertificateFile] = useState(null);
   const {
     artworkId,
     setIsSuccess,
@@ -81,7 +81,10 @@ export const AddArtworkForm = ({ onClose }) => {
 
   const [specialistOptions, setSpecialistsOptions] = useState(null);
   const { nanoid } = require("nanoid");
+  // derrived state
+  const isImageUploaded = artworkData?.photoURL !== null;
 
+  //drop artwork photo
   const onDrop = (acceptedFiles) => {
     const selectedFile = acceptedFiles[0];
     setArtworkData({
@@ -92,12 +95,9 @@ export const AddArtworkForm = ({ onClose }) => {
       },
     });
   };
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
-  // derrived state
-  const isImageUploaded = artworkData?.photoURL !== null;
-
+  //load art photo
   function loadFile(e) {
     setArtworkData({
       ...artworkData,
@@ -107,36 +107,34 @@ export const AddArtworkForm = ({ onClose }) => {
       },
     });
   }
-  function extractFileName(filePath) {
-    var startIndex =
-      filePath.indexOf("\\") >= 0
-        ? filePath.lastIndexOf("\\")
-        : filePath.lastIndexOf("/");
-    var fileName = filePath.substring(startIndex);
 
-    if (fileName.indexOf("\\") === 0 || fileName.indexOf("/") === 0) {
-      fileName = fileName.substring(1);
-    }
-
-    return fileName;
+  //load art certificate
+  function loadCertificate(e) {
+    setArtworkData({
+      ...artworkData,
+      certificateURL: {
+        name: e.target.files[0].name,
+        file: e.target.files[0],
+      },
+    });
   }
+
+  //reset state
   const resetState = (e) => {
     e.preventDefault();
     setArtworkData(initialState);
   };
 
+  //remove img
   const handleRemoveImg = () => {
     setArtworkData({ ...artworkData, photoURL: null });
   };
+
   const handleRemove = (file) => {
     setArtworkData({ ...artworkData, certificateURL: null });
-    setCertificateFile(null);
   };
 
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-  };
-
+  // handle inputs changes
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -153,14 +151,24 @@ export const AddArtworkForm = ({ onClose }) => {
       const users = await getUsers();
 
       if (value) {
+        console.log(value, "value");
+
         const userSelected =
-          users.find((user) => user.displayName === value.toLowerCase()) || {};
+          users.find(
+            (user) => user.displayName.toLowerCase() === value.toLowerCase()
+          ) || {};
         setSpecialistSelected(userSelected);
       } else {
         setSpecialistSelected("");
       }
     }
   };
+
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
+
+  //set specialists
   const getSpecialistsData = async () => {
     const specialistsData = await getSpecialists();
     setSpecialistsOptions(
@@ -175,26 +183,27 @@ export const AddArtworkForm = ({ onClose }) => {
     );
   };
 
+  // SAVE NEW ARTWORK
   const saveNewArtwork = async (e, status) => {
     try {
       const storageRef = sRef(storage, artId);
 
-      if (artworkData?.photoURL?.imageSrc) {
-        await setDoc(artworksDocRef, {
-          ...artworkData,
-          id: artId,
-          unit: artworkData?.unit.value,
-          technique: artworkData?.technique.value,
-          genre: artworkData?.genre.value,
-          category: artworkData?.category.value,
-          specialist: artworkData?.specialist.value || "",
-          status: status,
-          photoURL: artworkData?.photoURL?.imageSrc || "",
-          userId: currentUser.uid,
-        });
-
-        if (specialistSelected === "") {
-          console.log(legalValidator, "legalV");
+      // if artwork has certificate
+      if (specialistSelected === "") {
+        if (artworkData?.photoURL?.imageSrc) {
+          await setDoc(artworksDocRef, {
+            ...artworkData,
+            id: artId,
+            unit: artworkData?.unit.value,
+            technique: artworkData?.technique.value,
+            genre: artworkData?.genre.value,
+            category: artworkData?.category.value,
+            specialist: "",
+            status: status,
+            photoURL: artworkData?.photoURL?.imageSrc || "",
+            userId: currentUser.uid,
+            certificateURL: "",
+          });
 
           await setDoc(requestsDocRef, {
             id: requestsDocRef.id,
@@ -204,11 +213,112 @@ export const AddArtworkForm = ({ onClose }) => {
             artworkId: artId,
             status: RequestStatusEnum.PENDING,
           });
-        } else {
+
+          const storageRefCertificate = ref(storage, artId + "- certificate");
+
+          await uploadBytesResumable(
+            storageRefCertificate,
+            artworkData.certificateURL.file
+          ).then(() => {
+            getDownloadURL(storageRefCertificate).then(async (downloadURL) => {
+              console.log(downloadURL, "certficate URL");
+              try {
+                await updateDoc(doc(db, "artworks", artId), {
+                  certificateURL: downloadURL,
+                });
+              } catch (err) {
+                setErr(true);
+              }
+            });
+          });
+
+          await uploadBytesResumable(
+            storageRef,
+            artworkData?.photoURL?.file
+          ).then(() => {
+            getDownloadURL(storageRef).then(async (downloadURL) => {
+              try {
+                await updateDoc(doc(db, "artworks", artId), {
+                  photoURL: downloadURL,
+                  unit: artworkData?.unit.value,
+                  technique: artworkData?.technique.value,
+                  genre: artworkData?.genre.value,
+                  category: artworkData?.category.value,
+                  status: status,
+                  userId: currentUser.uid,
+                });
+
+                await updateDoc(doc(db, "users", currentUser.uid), {
+                  artworks: arrayUnion({
+                    id: artId,
+                  }),
+                  notifications: arrayUnion({
+                    id: nanoid(),
+                    message: `You can see now your art: ${artworkData.title} in your artworks with ${status} status. 
+                    Wait for the legal validator ${legalValidator.displayName} validation`,
+                    time: new Date().getTime(),
+                    image: downloadURL,
+                  }),
+                });
+
+                await updateDoc(doc(db, "users", legalValidator.uid), {
+                  notifications: arrayUnion({
+                    id: nanoid(),
+                    message: `You have a new request for validating the artwork certficate for: ${artworkData.title} of ${currentUser.displayName}. 
+                    You can deny or accept the request.`,
+                    time: new Date().getTime(),
+                    image: downloadURL,
+                  }),
+
+                  requests: arrayUnion({
+                    id: requestsDocRef.id,
+                  }),
+                });
+                setErr(false);
+                resetState(e);
+                setIsSuccess(true);
+                setHasNewNotification(true);
+
+                setArtworks((prevArtworks) =>
+                  prevArtworks.concat({
+                    id: artId,
+                    unit: artworkData?.unit.value,
+                    technique: artworkData?.technique.value,
+                    genre: artworkData?.genre.value,
+                    category: artworkData?.category.value,
+                    photoURL: downloadURL,
+                    status: status,
+                  })
+                );
+                console.log("Document written with ID: ", artId);
+
+                onClose();
+              } catch (err) {
+                console.log("Can't update doc:", err.message);
+                setErr(true);
+              }
+            });
+          });
+        }
+      } else if (specialistSelected) {
+        if (artworkData?.photoURL?.imageSrc) {
+          await setDoc(artworksDocRef, {
+            id: artId,
+            unit: artworkData?.unit.value,
+            technique: artworkData?.technique.value,
+            genre: artworkData?.genre.value,
+            category: artworkData?.category.value,
+            specialist: artworkData?.specialist.value,
+            status: status,
+            photoURL: artworkData?.photoURL?.imageSrc || "",
+            userId: currentUser.uid,
+            certificateURL: "",
+          });
+
           await setDoc(requestsDocRef, {
             id: requestsDocRef.id,
             initiator: currentUser.uid,
-            receiver: specialistSelected.uid,
+            receiver: specialistSelected,
             date: new Date().getTime(),
             artworkId: artId,
             status: RequestStatusEnum.PENDING,
@@ -231,7 +341,9 @@ export const AddArtworkForm = ({ onClose }) => {
                 specialist: artworkData?.specialist.value || "",
                 status: status,
                 userId: currentUser.uid,
+                certificateURL: "",
               });
+
               await updateDoc(doc(db, "users", currentUser.uid), {
                 artworks: arrayUnion({
                   id: artId,
@@ -244,23 +356,20 @@ export const AddArtworkForm = ({ onClose }) => {
                   image: downloadURL,
                 }),
               });
-              if (specialistSelected !== "") {
-                await updateDoc(doc(db, "users", specialistSelected.uid), {
-                  notifications: arrayUnion({
-                    id: nanoid(),
-                    message: `You have a new request for authenticating the artwork: ${artworkData.title} of ${currentUser.displayName}. 
+
+              await updateDoc(doc(db, "users", specialistSelected.uid), {
+                notifications: arrayUnion({
+                  id: nanoid(),
+                  message: `You have a new request for authenticating the artwork: ${artworkData.title} of ${currentUser.displayName}. 
                   You can deny or accept the request.`,
-                    time: new Date().getTime(),
-                    image: downloadURL,
-                  }),
+                  time: new Date().getTime(),
+                  image: downloadURL,
+                }),
 
-                  requests: arrayUnion({
-                    id: requestsDocRef.id,
-                  }),
-                });
-              }
-              console.log("Document written with ID: ", artId);
-
+                requests: arrayUnion({
+                  id: requestsDocRef.id,
+                }),
+              });
               setErr(false);
               resetState(e);
               setIsSuccess(true);
@@ -277,8 +386,11 @@ export const AddArtworkForm = ({ onClose }) => {
                   specialist: artworkData?.specialist.value || "",
                   photoURL: downloadURL,
                   status: status,
+                  certificateURL: "",
                 })
               );
+              console.log("Document written with ID: ", artId);
+
               onClose();
             } catch (err) {
               console.log("Can't update doc:", err.message);
@@ -368,7 +480,6 @@ export const AddArtworkForm = ({ onClose }) => {
 
         const docRef = doc(db, "artworks", artworkId);
         await updateDoc(docRef, {
-          ...artworkData,
           unit: artworkData?.unit.value,
           technique: artworkData?.technique.value,
           genre: artworkData?.genre.value,
@@ -660,16 +771,13 @@ export const AddArtworkForm = ({ onClose }) => {
                   name="certificateUpload"
                   accept=".pdf, .doc, .docx"
                   style={{ display: "none" }}
-                  value={artworkData?.certificateURL}
-                  onChange={(e) => {
-                    handleChange(e);
-                    setCertificateFile(e.target.value);
-                  }}
+                  // value={artworkData?.certificateURL}
+                  onChange={loadCertificate}
                 />
               </div>
             )}
 
-            {certificateFile && (
+            {/* {certificateFile && (
               <div className="file_displayed">
                 {extractFileName(certificateFile)}
                 <AiOutlineCloseCircle
@@ -677,7 +785,7 @@ export const AddArtworkForm = ({ onClose }) => {
                   onClick={() => handleRemove("certificate")}
                 />
               </div>
-            )}
+            )} */}
 
             {err && <p className="error">You have to upload an image</p>}
           </div>

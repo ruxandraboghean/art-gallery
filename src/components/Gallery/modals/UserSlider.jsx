@@ -55,11 +55,11 @@ export default function UserSlider({ user }) {
             </div>
           </div>
           <div className="certified_art_content">
-            <div className="technical_details_wrapper">
+            <div className="technical_details_wrapper no_border">
               <span className="certified_art_header"> About me</span>
               <span>{user.biography}</span>
             </div>
-            <div className="technical_details_wrapper">
+            <div className="technical_details_wrapper no_border">
               <span className="certified_art_header"> Contact</span>
               <span className="certified_art_technical_details">
                 phone: {user.phone}
@@ -77,7 +77,7 @@ export default function UserSlider({ user }) {
                 address: {user.address}
               </span>
             </div>
-            <div className="technical_details_wrapper grid_item_full">
+            <div className="technical_details_wrapper no_border grid_item_full">
               <span className="certified_art_header"> Socials</span>
               {user.instagram && <span>Instagram: {user.instagram}</span>}
               {user.youtube && <span>Youtube: {user.youtube}</span>}

@@ -43,7 +43,6 @@ export const ConfirmationModal = ({
       const artworksDocRef = doc(db, "artworks", id);
 
       //delete from artworks collection
-      console.log("case artwrks");
       await deleteDoc(artworksDocRef)
         .then(() => console.log("Item deleted successfully"))
         .catch((err) => console.error("Error deleting item: ", err));
@@ -67,7 +66,6 @@ export const ConfirmationModal = ({
       }
     } else if (type === "requests") {
       const requestsDocRef = doc(db, "requests", id);
-      console.log("case requests", requestsDocRef);
 
       //delete from requests collection
       await deleteDoc(requestsDocRef)
@@ -75,11 +73,8 @@ export const ConfirmationModal = ({
         .catch((err) => console.error("Error deleting item: ", err));
 
       const userRequestsIds = userDoc.data().requests;
-      console.log(userRequestsIds, "ids");
 
       let updatedUserRequests = userRequestsIds.filter((req) => req.id !== id);
-
-      console.log(updatedUserRequests, "updated");
 
       await updateDoc(userDocRef, { requests: updatedUserRequests });
 

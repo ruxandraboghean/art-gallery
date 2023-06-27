@@ -6,12 +6,14 @@ import { AuthContext } from "../../context/AuthContext";
 import { useState } from "react";
 import { upload } from "../../firebase";
 import { useEffect } from "react";
+import getUserById from "../../data/users/getUserById";
 
 export const UserProfile = () => {
   const { currentUser } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState(null);
   const [photoURL, setPhotoURL] = useState(null);
+  const [currentUserRole, setCurrentUserRole] = useState(null);
 
   const [currentSection, setCurrentSection] = useState("general");
 
@@ -22,13 +24,6 @@ export const UserProfile = () => {
   const capitalizeFirst = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
-
-  useEffect(() => {
-    if (currentUser?.photoURL) {
-      setPhotoURL(currentUser.photoURL);
-    }
-  }, [currentUser]);
-
   function handleChange(e) {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
@@ -39,6 +34,19 @@ export const UserProfile = () => {
     upload(image, currentUser, setLoading);
   };
 
+  useEffect(() => {
+    const getUserRole = async () => {
+      const data = await getUserById(currentUser.uid);
+      setCurrentUserRole(data.role);
+    };
+    getUserRole();
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser?.photoURL) {
+      setPhotoURL(currentUser.photoURL);
+    }
+  }, [currentUser]);
   return (
     <div className="user-profile">
       <div className="header-wrapper">
@@ -71,37 +79,52 @@ export const UserProfile = () => {
           </span>
         </div>
 
-        <section className="user-sections">
-          <section
-            className={`user-section ${
-              currentSection === "general" ? "selected" : "false"
-            }`}
-            aria-label="General Information Section"
-            onClick={() => handleChangesCurrentSection("general")}
-          >
-            General Information
+        {currentUserRole === "expert" || currentUserRole === "validator" ? (
+          <section className="user-sections">
+            <section
+              className={`user-section 
+              }`}
+              aria-label="General Information Section"
+              onClick={() => handleChangesCurrentSection("general")}
+            >
+              General Information
+            </section>
           </section>
-          <section
-            className={`user-section ${
-              currentSection === "authenticated-artworks" ? "selected" : "false"
-            }`}
-            aria-label="Authenticated Artworks Section"
-            onClick={() =>
-              handleChangesCurrentSection("authenticated-artworks")
-            }
-          >
-            Authenticated Artworks
+        ) : (
+          <section className="user-sections">
+            <section
+              className={`user-section ${
+                currentSection === "general" ? "selected" : "false"
+              }`}
+              aria-label="General Information Section"
+              onClick={() => handleChangesCurrentSection("general")}
+            >
+              General Information
+            </section>
+            <section
+              className={`user-section ${
+                currentSection === "authenticated-artworks"
+                  ? "selected"
+                  : "false"
+              }`}
+              aria-label="Authenticated Artworks Section"
+              onClick={() =>
+                handleChangesCurrentSection("authenticated-artworks")
+              }
+            >
+              Authenticated Artworks
+            </section>
+            <section
+              className={`user-section ${
+                currentSection === "exhibitions" ? "selected" : "false"
+              }`}
+              aria-label="Exhibitions Section"
+              onClick={() => handleChangesCurrentSection("exhibitions")}
+            >
+              Exhibitions
+            </section>
           </section>
-          <section
-            className={`user-section ${
-              currentSection === "exhibitions" ? "selected" : "false"
-            }`}
-            aria-label="Exhibitions Section"
-            onClick={() => handleChangesCurrentSection("exhibitions")}
-          >
-            Exhibitions
-          </section>
-        </section>
+        )}
       </div>
 
       <section className="user-info">

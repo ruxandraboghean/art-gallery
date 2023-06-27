@@ -17,9 +17,9 @@
     border: none;
 
     .close_circle {
-        width: 1.5rem;
-        height: 1.5rem;
-        color: $grayish_blue;
+        width: 1.2rem;
+        height: 1.2rem;
+        color: $dark_magenta;
 
         &:hover {
             color: $grayish_purple;
@@ -30,7 +30,7 @@
 
   .modal-content {
     @include flexbox(flex, center, center);
-    background-color: $base_color_pink;
+    background-color: $base_color;
     padding: 50px;
     border-radius: 8px;
     max-width: 60%;
@@ -82,7 +82,7 @@
         .certified_art_content {
           width: 100%;
           @include flexbox-direction(flex, center, column, center);
-  
+          gap:0.2rem;
         
           .technical_details_wrapper {
             @include flexbox-direction(flex, center, column, flex-start);
@@ -99,6 +99,10 @@
               font-size: $xs;
               font-weight: 700;
             }
+          }
+
+          .no_border {
+            border: none;
           }
   
         }

@@ -13,7 +13,11 @@ import { FaRegFilePdf } from "react-icons/fa";
 import { useDropzone } from "react-dropzone";
 import { Spinner } from "../../components/utils/Spinner";
 
-export const DocumentsModal = ({ artwork, setIsOpenDocumentsModal }) => {
+export const DocumentsModal = ({
+  artwork,
+  setIsOpenDocumentsModal,
+  request,
+}) => {
   const [formValues, setFormValues] = useState({
     report: null,
     certificate: null,
@@ -135,6 +139,9 @@ export const DocumentsModal = ({ artwork, setIsOpenDocumentsModal }) => {
                   certificateURL: downloadURL,
                   isAuthenticated: true,
                   status: "authenticated",
+                });
+                await updateDoc(doc(db, "requests", request.id), {
+                  status: "completed",
                 });
               } catch (err) {
                 console.error(err);
