@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 import { AddCircle, SettingsSystemDaydream } from "@mui/icons-material";
 import CircleNotificationsIcon from "@mui/icons-material/CircleNotifications";
 
-import addExhibition from "../../images/exhibitions/add-exhibition.png";
-
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";

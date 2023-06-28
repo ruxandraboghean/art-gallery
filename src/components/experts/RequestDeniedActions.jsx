@@ -10,11 +10,9 @@ import { AuthContext } from "../../context/AuthContext";
 import { db } from "../../firebase";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { nanoid } from "nanoid";
-import getAllRequests from "../../data/requests/getAllRequests";
 
 export const RequestDeniedActions = ({
   request,
-  isOpenConfirmationModal,
   setIsOpenConfirmationModal,
 }) => {
   const { userRequests, setUserRequests } = useContext(RequestContext);

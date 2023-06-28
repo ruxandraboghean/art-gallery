@@ -1,11 +1,8 @@
 import React from "react";
 
 import { Box, Fab, Tooltip } from "@mui/material";
-import { Edit, DoDisturb, Check } from "@mui/icons-material";
+import { DoDisturb, Check } from "@mui/icons-material";
 import { useContext } from "react";
-import { RequestContext } from "../../context/RequestsContext";
-import RequestStatusEnum from "../../enums/RequestStatusEnum";
-import updateRequests from "../../data/requests/updateRequests";
 import { AuthContext } from "../../context/AuthContext";
 import { db, storage } from "../../firebase";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
@@ -15,16 +12,9 @@ import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import { getDownloadURL, ref } from "firebase/storage";
 export const RequestAcceptedActionsValidator = ({
   request,
-  isOpenConfirmationModal,
-  setIsOpenConfirmationModal,
-  isOpenDocumentsModal,
-  setIsOpenDocumentsModal,
-  setCurrentRequest,
-  currentRequest,
   setRequestedArtwork,
   requestedArtwork,
 }) => {
-  const { userRequests, setUserRequests } = useContext(RequestContext);
   const { currentUser } = useContext(AuthContext);
 
   const getArtwork = async () => {

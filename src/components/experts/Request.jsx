@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 
-import { RequestActions, RequestPendingActions } from "./RequestPendingActions";
+import { RequestPendingActions } from "./RequestPendingActions";
 
 import { useOnHoverOutside } from "../../hooks/useOnHoverOutside";
 import getUserById from "../../data/users/getUserById";
