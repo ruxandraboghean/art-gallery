@@ -2,7 +2,7 @@ import { CertifiedArtwork } from "../../../components/Common/CertifiedArtwork";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import getAllCertifiedArtworks from "../../../data/artworks/getAllCertifiedArtworks";
-import { SeeArtworkModal } from "../../../components/gallery/exhibition/SeeArtworkModal";
+import { SeeArtworkModal } from "../../../components/gallery/Exhibition/SeeArtworkModal";
 import { useContext } from "react";
 import { ArtworkModalContext } from "../../../context/ArtworkModalContext";
 

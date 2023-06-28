@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { SeeExhibitionModal } from "../../../components/gallery/exhibition/SeeExhibitionModal";
-import { CardExhibition } from "../../../components/gallery/exhibition/CardExhibition";
+import { SeeExhibitionModal } from "../../../components/gallery/Exhibition/SeeExhibitionModal";
+import { CardExhibition } from "../../../components/gallery/Exhibition/CardExhibition";
 import { useEffect } from "react";
 import getAllExhibitions from "../../../data/exhibitions/getAllExhibitions";
 

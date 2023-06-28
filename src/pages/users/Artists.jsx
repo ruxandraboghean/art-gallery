@@ -3,7 +3,7 @@ import { Artist } from "../../components/users/Artist";
 import getUsers from "../../data/users/getUsers";
 import { useState } from "react";
 import { useEffect } from "react";
-import { SeeUserModal } from "../../components/gallery/exhibition/SeeUserModal";
+import { SeeUserModal } from "../../components/gallery/Exhibition/SeeUserModal";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import { useContext } from "react";
 

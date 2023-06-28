@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { ArtworkModalContext } from "../../../context/ArtworkModalContext";
 import { Modal } from "../../Modal";
-import { Notifications } from "../user/Notifications";
+import { Notifications } from "../User/Notifications";
 
 export const NotificationsModal = () => {
   const { setIsOpenNotificationsModal, isOpenNotificationsModal } =
