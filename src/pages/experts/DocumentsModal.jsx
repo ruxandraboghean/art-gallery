@@ -27,7 +27,6 @@ export const DocumentsModal = ({
   const isCertificateUploaded = formValues?.certificate !== null;
   const [isChecked, setIsChecked] = useState(false);
   const [isPdf, setIsPdf] = useState(false);
-  const [isJPG, setIsJPG] = useState(false);
   const [isPNG, setIsPNG] = useState(false);
   const [isSVG, setIsSVG] = useState(false);
 
@@ -71,9 +70,7 @@ export const DocumentsModal = ({
     if (value.name.endsWith(".docx") || value.name.endsWith(".doc")) {
       setIsPdf(false);
     }
-    if (value.name.endsWith(".jpg")) {
-      setIsJPG(true);
-    }
+
     if (value.name.endsWith(".svg")) {
       setIsSVG(true);
     }
