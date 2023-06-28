@@ -12,7 +12,7 @@
        
 
         .message-info {
-            @include flexbox-direction(flex, center, column, space-around);
+            @include flexbox-direction(flex, stretch, column, space-around);
             @include font($roboto-mono, $light, $xxs);
             color: $text_purple;
             padding-right: 1rem;
@@ -28,13 +28,15 @@
         .message-content {
             @include flexbox-direction(flex, center, column, space-between);
 
+            max-width: 20rem;
+            min-width: 5rem;
             p {
                 width: 50%;
-                background-color: $pale_purple;
+                background-color: $base_color;
                 padding: 0.5rem 1rem;
                 border-radius: 0 10px 10px 10px;
                 color: $magenta;
-                font-size: $xs;
+                font-size: $s_mobile;
                 box-shadow: 5px 5px 5px $grayish_purple;
                
             }
@@ -52,7 +54,7 @@
 
                 p {
                     width: 50%;
-                    background-color: $grayish_purple;
+                    background-color: $base_color_transparent;
                     color: $dark_magenta;
                     border-radius: 10px 0 10px 10px;
                 }
@@ -69,18 +71,17 @@
 
 .input {
     @include flexbox(flex, center, space-around);
-    @include dim (90%, 5%);
-    margin: 0 0 1% 1%;
-    padding: 1% 0 1% 5%;
+    @include dim (100%, 5%);
+    padding: 2% 0 2% 5%;
     border-radius: 100px;
     border: 1px solid $pale_grayish_purple;
+    box-sizing: border-box;
 
     input {
         @include border-outline-none;
         width: 80%;
         color: $magenta;
-        font-size: 1rem;
-        background-color: $light_purple;
+        font-size: $xs;
 
         @include monitor() {
             width: 75%;
@@ -141,7 +142,7 @@
         }
 
         .attach {
-            @include dim (1.25rem, 1.25rem);
+            @include dim (1rem, 1rem);
             padding-right: 1rem;
             color:$magenta;
             cursor: pointer;
@@ -155,15 +156,14 @@
             @include border-outline-none;
             padding: 10% 20%;
             color: $magenta;
-            background-color: $grayish_purple;
             cursor: pointer;
             border-radius: 10px;
             display: flex;
             gap: 10%;
+            background-color: transparent;
 
             &:hover {
-                background-color: $grayish_purple;
-                color: $dark_magenta;
+                color:$dark_magenta;
             }
 
             @include laptop() {

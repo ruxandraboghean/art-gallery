@@ -298,6 +298,13 @@
       }
     }
 
+    .spinner_form {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
     .file_displayed {
       border: 1px solid $grayish_pink;
       border-radius: 10px;

@@ -1,5 +1,6 @@
 .sidebar {
     flex: 1;
+    border-right:1px solid $base_color_pink ;
 
     .navbar {
         @include flexbox(flex, center, flex-start);
@@ -70,7 +71,7 @@
             
 
             &:hover {
-                background-color: $pale_purple;
+                background-color: $base_color_transparent;
             }
 
             img {
@@ -85,7 +86,7 @@
                 width: 50%;
 
                 span {
-                    font-size: $m;
+                    font-size: $xxs;
                 }
 
                 p {
@@ -120,11 +121,11 @@
             
 
             &:hover {
-                background-color: $pale_purple;
+                background-color: $base_color_transparent;
             }
 
             img {
-                @include dim (3rem, 3rem);
+                @include dim (2rem, 2rem);
                 border-radius: 50%;
                 object-fit: cover;
                 border: 1px solid $grayish_purple;
@@ -135,11 +136,13 @@
             }
 
             .user-chat-info {
+                @include flexbox-direction(flex, flex-start, column, space-around);
                 padding-left: 1.5rem;
                 width: 50%;
+                gap: 0.4rem;
 
                 span {
-                    font-size: $m;
+                    font-size: $xxs;
                 }
 
                 p {
@@ -148,6 +151,7 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     max-width: 200px;
+                    margin: 0;
                 }
             }
         }

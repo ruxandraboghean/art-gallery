@@ -35,15 +35,11 @@ export const CertifiedArtwork = ({ art, setIsOpenArtwork }) => {
         <div className="info-wrapper">
           <div className="info-profile">
             <div className="profile-info">
-              <span> {art.description} </span>
+              <span>{art.title} </span>
             </div>
             <div className="profile-info">
               <span> {art.year} </span>
             </div>
-          </div>
-
-          <div>
-            <span>{art.title} </span>
           </div>
         </div>
       </div>

@@ -64,11 +64,11 @@ export default function ArtworkSlider({ artwork, onClose }) {
               </div>
             </div>
             <div className="certified_art_content">
-              <div className="technical_details_wrapper">
+              <div className="technical_details_wrapper no_border">
                 <span className="certified_art_header"> About the work</span>
                 <span>{artwork.description}</span>
               </div>
-              <div className="technical_details_wrapper">
+              <div className="technical_details_wrapper no_border">
                 <span className="certified_art_header"> Technical Details</span>
                 <span className="certified_art_technical_details">
                   depth: {artwork.depth} {artwork.unit}
@@ -80,7 +80,7 @@ export default function ArtworkSlider({ artwork, onClose }) {
                   width: {artwork.width} {artwork.unit}
                 </span>
               </div>
-              <div className="technical_details_wrapper grid_item_full">
+              <div className="technical_details_wrapper no_border grid_item_full">
                 <span className="certified_art_header"> Characteristics</span>
 
                 <span>Category: {artwork.category}</span>

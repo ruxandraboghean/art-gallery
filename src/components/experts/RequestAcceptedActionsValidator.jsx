@@ -50,13 +50,19 @@ export const RequestAcceptedActionsValidator = ({
     console.log(requestedArtwork, "rek art");
     if (result === "invalid") {
       await updateDoc(doc(db, "artworks", requestedArtwork.id), {
-        status: "completed",
+        status: "forgery",
         isAuthenticated: false,
+      });
+      await updateDoc(doc(db, "requests", request.id), {
+        status: "completed",
       });
     } else if (result === "valid") {
       await updateDoc(doc(db, "artworks", requestedArtwork.id), {
-        status: "completed",
+        status: "validated",
         isAuthenticated: true,
+      });
+      await updateDoc(doc(db, "requests", request.id), {
+        status: "completed",
       });
     }
 

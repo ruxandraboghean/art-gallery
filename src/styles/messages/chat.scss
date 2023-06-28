@@ -2,9 +2,9 @@
 @import './messages.scss';
 
 .chat {
-    flex: 2;
+    flex: 3;
     border-radius: 0 50px 50px 0;
-    margin-right: 1rem;
+    padding: 3rem 0 0 1rem;
 
     @include mobile() {
         display: none;

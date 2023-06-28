@@ -5,10 +5,10 @@ import { useOnHoverOutside } from "../../hooks/useOnHoverOutside";
 
 export const AuthenticatedArt = ({ artwork }) => {
   const dropdownRef = useRef(null);
-  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [isAuthenticatedMenuOpen, setAuthenticatedMenuOpen] = useState(false);
 
   const closeHoverMenu = () => {
-    setMenuOpen(false);
+    setAuthenticatedMenuOpen(false);
   };
 
   useOnHoverOutside(dropdownRef, closeHoverMenu);
@@ -25,11 +25,18 @@ export const AuthenticatedArt = ({ artwork }) => {
         <p className="artwork-item">{artwork?.year}</p>
         <p className="artwork-item">{artwork?.status}</p>
         <div className="actions" ref={dropdownRef}>
-          <MdIcons.MdOutlineSettingsSuggest
-            className="settings-icon"
-            onMouseOver={() => setMenuOpen(true)}
-          />
-          {isMenuOpen && <AuthenticatedArtActionButtons artwork={artwork} />}
+          {artwork.reportURL !== "" && (
+            <MdIcons.MdOutlineSettingsSuggest
+              className="settings-icon"
+              onMouseOver={() => setAuthenticatedMenuOpen(true)}
+            />
+          )}
+          {isAuthenticatedMenuOpen && artwork.reportURL !== "" && (
+            <AuthenticatedArtActionButtons
+              artwork={artwork}
+              setAuthenticatedMenuOpen={setAuthenticatedMenuOpen}
+            />
+          )}
         </div>
       </div>
     </div>

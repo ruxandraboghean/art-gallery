@@ -100,7 +100,6 @@ export const Input = () => {
           <FontAwesomeIcon icon={faPaperclip} className="attach" />
         </label>
         <button onClick={handleSend}>
-          <span>Send</span>
           <FontAwesomeIcon icon={faPaperPlane} />
         </button>
       </div>

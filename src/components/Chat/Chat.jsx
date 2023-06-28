@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
 import { Messages } from "./Messages";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { Input } from "./Input";
 import { ChatContext } from "../../context/ChatContext";
 

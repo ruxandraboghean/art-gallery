@@ -39,6 +39,7 @@
     .inputs {
       @include flexbox-direction(flex, center, column, flex-start);
       padding: 0.5rem;
+      padding-top: 1.5rem;
       box-sizing: border-box;
       gap: 1rem;
       border: none;

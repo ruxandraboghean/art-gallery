@@ -10,9 +10,8 @@ export const AuthenticatedArtActionButtons = ({
   artwork,
   setIsOpenConfirmationModal,
   setCurrentArtwork,
+  setAuthenticatedMenuOpen,
 }) => {
-  const { setMenuDropdownOpen } = useContext(ArtworkModalContext);
-
   const handleDownloadReport = async () => {
     getDownloadURL(ref(storage, `${artwork.id}/report`))
       .then((url) => {
@@ -44,7 +43,7 @@ export const AuthenticatedArtActionButtons = ({
               aria-label="edit"
               className="action-btn"
               onClick={() => {
-                setMenuDropdownOpen(true);
+                setAuthenticatedMenuOpen(true);
                 handleDownloadReport();
               }}
               sx={{ mb: 1 }}
@@ -59,7 +58,7 @@ export const AuthenticatedArtActionButtons = ({
               aria-label="request"
               className="action-btn"
               onClick={() => {
-                setMenuDropdownOpen(true);
+                setAuthenticatedMenuOpen(true);
                 handleDownloadCertificate();
               }}
               sx={{ mb: 1 }}

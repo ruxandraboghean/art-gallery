@@ -17,14 +17,16 @@ export const Notifications = () => {
 
     if (docSnap.exists()) {
       const userNotifications = docSnap.data().notifications;
-      setNotifications(userNotifications);
+      const sortedNotifications = userNotifications.sort(
+        (a, b) => b.time - a.time
+      );
+      setNotifications(sortedNotifications);
     } else {
       console.log("User notifications does not exist");
     }
   };
 
   const handleDeleteNotification = async (id) => {
-    console.log(id, "id");
     const updatedNotifications = Object.values(notifications).filter(
       (notification) => notification.id !== id
     );
@@ -39,7 +41,6 @@ export const Notifications = () => {
     getNotifications();
   }, []);
 
-  console.log(notifications, "notif");
   return (
     <div className="notifications__container">
       {notifications?.map((notification) => {

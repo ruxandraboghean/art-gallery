@@ -35,6 +35,7 @@ export const Exhibitions = () => {
             );
           })}
         </div>
+
         <div className="exhibition-wrapper">
           {exhibitions?.reverse()?.map((exhibition) => {
             return (

@@ -28,13 +28,12 @@ import {
 
 // components
 import Select from "react-select";
-import { ClipLoader } from "react-spinners";
 import { useDropzone } from "react-dropzone";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import getSpecialists from "../../data/users/getSpecialists";
 import getUsers from "../../data/users/getUsers";
 import RequestStatusEnum from "../../enums/RequestStatusEnum";
-
+import { FormSpinner } from "../utils/FormSpinner";
 const initialState = {
   title: "",
   year: "",
@@ -61,10 +60,9 @@ const artworksDocRef = doc(artworksRef);
 const requestsDocRef = doc(requestsRef);
 const artId = artworksDocRef.id;
 
-export const AddArtworkForm = ({ onClose }) => {
+export const AddArtworkForm = ({ onClose, isLoading, setIsLoading }) => {
   const [artworkData, setArtworkData] = useState(initialState);
   const [specialistSelected, setSpecialistSelected] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [err, setErr] = useState(false);
   const { currentUser } = useContext(AuthContext);
@@ -168,7 +166,7 @@ export const AddArtworkForm = ({ onClose }) => {
     setIsChecked(!isChecked);
   };
 
-  //set specialists
+  //set specialists in form
   const getSpecialistsData = async () => {
     const specialistsData = await getSpecialists();
     setSpecialistsOptions(
@@ -185,12 +183,14 @@ export const AddArtworkForm = ({ onClose }) => {
 
   // SAVE NEW ARTWORK
   const saveNewArtwork = async (e, status) => {
+    setIsLoading(true);
     try {
       const storageRef = sRef(storage, artId);
 
       // if artwork has certificate
       if (specialistSelected === "") {
         if (artworkData?.photoURL?.imageSrc) {
+          // SET NEW DOC - ARTWORK
           await setDoc(artworksDocRef, {
             ...artworkData,
             id: artId,
@@ -204,7 +204,7 @@ export const AddArtworkForm = ({ onClose }) => {
             userId: currentUser.uid,
             certificateURL: "",
           });
-
+          // SET NEW DOC - REQUEST
           await setDoc(requestsDocRef, {
             id: requestsDocRef.id,
             initiator: currentUser.uid,
@@ -214,8 +214,10 @@ export const AddArtworkForm = ({ onClose }) => {
             status: RequestStatusEnum.PENDING,
           });
 
+          // certificate ref from storage
           const storageRefCertificate = ref(storage, artId + "- certificate");
 
+          //upload certificate then save the URL in db
           await uploadBytesResumable(
             storageRefCertificate,
             artworkData.certificateURL.file
@@ -232,6 +234,7 @@ export const AddArtworkForm = ({ onClose }) => {
             });
           });
 
+          //upload image then save the URL in db
           await uploadBytesResumable(
             storageRef,
             artworkData?.photoURL?.file
@@ -245,13 +248,14 @@ export const AddArtworkForm = ({ onClose }) => {
                   genre: artworkData?.genre.value,
                   category: artworkData?.category.value,
                   status: status,
-                  userId: currentUser.uid,
                 });
 
+                // notification to user
                 await updateDoc(doc(db, "users", currentUser.uid), {
                   artworks: arrayUnion({
                     id: artId,
                   }),
+
                   notifications: arrayUnion({
                     id: nanoid(),
                     message: `You can see now your art: ${artworkData.title} in your artworks with ${status} status. 
@@ -261,6 +265,7 @@ export const AddArtworkForm = ({ onClose }) => {
                   }),
                 });
 
+                // notification to validator
                 await updateDoc(doc(db, "users", legalValidator.uid), {
                   notifications: arrayUnion({
                     id: nanoid(),
@@ -274,10 +279,6 @@ export const AddArtworkForm = ({ onClose }) => {
                     id: requestsDocRef.id,
                   }),
                 });
-                setErr(false);
-                resetState(e);
-                setIsSuccess(true);
-                setHasNewNotification(true);
 
                 setArtworks((prevArtworks) =>
                   prevArtworks.concat({
@@ -290,8 +291,12 @@ export const AddArtworkForm = ({ onClose }) => {
                     status: status,
                   })
                 );
-                console.log("Document written with ID: ", artId);
+                setErr(false);
+                resetState(e);
+                setIsSuccess(true);
+                setHasNewNotification(true);
 
+                console.log("Document written with ID: ", artId);
                 onClose();
               } catch (err) {
                 console.log("Can't update doc:", err.message);
@@ -301,6 +306,7 @@ export const AddArtworkForm = ({ onClose }) => {
           });
         }
       } else if (specialistSelected) {
+        // artwork without certificate - needs specialist report and certificate
         if (artworkData?.photoURL?.imageSrc) {
           await setDoc(artworksDocRef, {
             id: artId,
@@ -370,10 +376,6 @@ export const AddArtworkForm = ({ onClose }) => {
                   id: requestsDocRef.id,
                 }),
               });
-              setErr(false);
-              resetState(e);
-              setIsSuccess(true);
-              setHasNewNotification(true);
 
               setArtworks((prevArtworks) =>
                 prevArtworks.concat({
@@ -389,12 +391,17 @@ export const AddArtworkForm = ({ onClose }) => {
                   certificateURL: "",
                 })
               );
-              console.log("Document written with ID: ", artId);
+              setErr(false);
+              resetState(e);
+              setIsSuccess(true);
+              setHasNewNotification(true);
 
+              console.log("Document written with ID: ", artId);
               onClose();
             } catch (err) {
               console.log("Can't update doc:", err.message);
               setErr(true);
+              setIsLoading(false);
             }
           });
         });
@@ -404,6 +411,7 @@ export const AddArtworkForm = ({ onClose }) => {
     } catch (err) {
       console.log("Can't update doc:", err.message);
       setErr(true);
+      setIsLoading(false);
     }
   };
   //SAVE AS DRAFT
@@ -412,7 +420,6 @@ export const AddArtworkForm = ({ onClose }) => {
 
     try {
       setIsLoading(true);
-
       //doc ref user artworks
 
       const userDocRef = doc(db, "users", currentUser.uid);
@@ -422,11 +429,9 @@ export const AddArtworkForm = ({ onClose }) => {
       //if artwork exists
       if (artworkId) {
         setHasDisplayedMessage(false);
-
         const docRef = doc(db, "artworks", artworkId);
 
-        //update la artwork existent in firebase
-
+        //update to existing artwork
         await updateDoc(docRef, {
           ...artworkData,
           unit: artworkData?.unit.value,
@@ -439,8 +444,7 @@ export const AddArtworkForm = ({ onClose }) => {
           userId: currentUser.uid,
         });
 
-        //seteaza in view imediat artwork ul editat
-
+        //update the view
         const index = artworks.findIndex((artwork) => artwork.id === artworkId);
 
         if (index !== -1) {
@@ -459,14 +463,13 @@ export const AddArtworkForm = ({ onClose }) => {
         setIsSuccess(true);
         setHasNewNotification(true);
         onClose();
-
         console.log("Document updated with ID: ", docRef.id);
       } else {
         saveNewArtwork(e, "draft");
       }
-      setIsLoading(false);
     } catch (e) {
       console.error("Error adding document: ", e);
+      setIsLoading(false);
     }
   }
 
@@ -507,13 +510,12 @@ export const AddArtworkForm = ({ onClose }) => {
           setArtworks(updatedArtworks);
         }
 
-        setIsLoading(false);
         setIsSuccess(true);
         setHasNewNotification(true);
-
         onClose();
       } catch (err) {
         console.log(err.message);
+        setIsLoading(false);
       }
     } else {
       saveNewArtwork(e, "pending request");
@@ -777,15 +779,15 @@ export const AddArtworkForm = ({ onClose }) => {
               </div>
             )}
 
-            {/* {certificateFile && (
+            {artworkData?.certificateURL?.name && (
               <div className="file_displayed">
-                {extractFileName(certificateFile)}
+                {artworkData?.certificateURL?.name}
                 <AiOutlineCloseCircle
                   className="close_button"
                   onClick={() => handleRemove("certificate")}
                 />
               </div>
-            )} */}
+            )}
 
             {err && <p className="error">You have to upload an image</p>}
           </div>
@@ -807,8 +809,8 @@ export const AddArtworkForm = ({ onClose }) => {
             </button>
           </div>
           {isLoading && (
-            <div className="spinner">
-              <ClipLoader size={30} aria-label="Loading Spinner" />
+            <div className="spinner_form">
+              <FormSpinner />
             </div>
           )}
         </form>
