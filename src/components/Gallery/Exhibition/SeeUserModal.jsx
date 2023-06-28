@@ -1,6 +1,6 @@
 import React from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import UserSlider from "../Modals/UserSlider";
+import UserSlider from "../modals/UserSlider";
 
 export const SeeUserModal = ({ isOpen, onClose, user }) => {
   if (!isOpen) {

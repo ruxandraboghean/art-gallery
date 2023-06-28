@@ -12,7 +12,7 @@ import getCurrentUserRequests from "../../data/currentUser/getCurrentUserRequest
 import { Request } from "../../components/Experts/Request";
 import { RequestContext } from "../../context/RequestsContext";
 import getUserById from "../../data/users/getUserById";
-import { ConfirmationModal } from "../../components/gallery/Modals/ConfirmationModal";
+import { ConfirmationModal } from "../../components/gallery/modals/ConfirmationModal";
 import { DocumentsModal } from "./DocumentsModal";
 import { NoData } from "../../components/utils/NoData";
 

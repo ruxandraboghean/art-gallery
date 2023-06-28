@@ -12,12 +12,12 @@ import "react-toastify/dist/ReactToastify.css";
 //context
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import { useContext } from "react";
-import { ArtworkModal } from "../../components/gallery/Modals/ArtworkModal";
-import { NotificationsModal } from "../../components/gallery/Modals/NotificationsModal";
+import { ArtworkModal } from "../../components/gallery/modals/ArtworkModal";
+import { NotificationsModal } from "../../components/gallery/modals/NotificationsModal";
 import { ManageRequests } from "../experts/ManageRequests";
 import { Artworks } from "./artworks/Artworks";
 import { ArtistItem } from "../../components/users/ArtistItem";
-import { AddExhibitionModal } from "../../components/gallery/Modals/AddExhibitionModal";
+import { AddExhibitionModal } from "../../components/gallery/modals/AddExhibitionModal";
 
 export const Home = () => {
   const {

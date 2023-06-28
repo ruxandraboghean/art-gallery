@@ -1,5 +1,5 @@
 import React from "react";
-import ExhibtionSlider from "../Modals/ExhibitionSlider";
+import ExhibtionSlider from "../modals/ExhibitionSlider";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 export const SeeExhibitionModal = ({ isOpen, onClose, artworks }) => {
