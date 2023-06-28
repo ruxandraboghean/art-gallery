@@ -1,4 +1,4 @@
-import { CertifiedArtwork } from "../../../components/common/CertifiedArtwork";
+import { CertifiedArtwork } from "../../../components/Common/CertifiedArtwork";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import getAllCertifiedArtworks from "../../../data/artworks/getAllCertifiedArtworks";

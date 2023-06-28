@@ -9,10 +9,10 @@ import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 //notifications
 import "react-toastify/dist/ReactToastify.css";
 import getCurrentUserRequests from "../../data/currentUser/getCurrentUserRequests";
-import { Request } from "../../components/experts/Request";
+import { Request } from "../../components/Experts/Request";
 import { RequestContext } from "../../context/RequestsContext";
 import getUserById from "../../data/users/getUserById";
-import { ConfirmationModal } from "../../components/gallery/modals/ConfirmationModal";
+import { ConfirmationModal } from "../../components/gallery/Modals/ConfirmationModal";
 import { DocumentsModal } from "./DocumentsModal";
 import { NoData } from "../../components/utils/NoData";
 

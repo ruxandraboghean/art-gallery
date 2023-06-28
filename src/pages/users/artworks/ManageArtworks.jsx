@@ -10,7 +10,7 @@ import { ArtworkArtistView } from "../../../components/gallery/ArtworkArtistView
 //notifications
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { ConfirmationModal } from "../../../components/gallery/modals/ConfirmationModal";
+import { ConfirmationModal } from "../../../components/gallery/Modals/ConfirmationModal";
 import { ArtworkModalContext } from "../../../context/ArtworkModalContext";
 import getCurrentUserArtworks from "../../../data/currentUser/getCurrentUserArtworks";
 

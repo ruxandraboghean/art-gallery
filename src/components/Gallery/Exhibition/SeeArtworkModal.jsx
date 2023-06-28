@@ -1,5 +1,5 @@
 import React from "react";
-import ArtworkSlider from "../modals/ArtworkSlider";
+import ArtworkSlider from "../Modals/ArtworkSlider";
 
 export const SeeArtworkModal = ({ isOpen, onClose, artwork }) => {
   if (!isOpen) {
