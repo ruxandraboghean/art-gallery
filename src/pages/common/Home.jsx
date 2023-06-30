@@ -5,6 +5,7 @@ import { Artists } from "../users/Artists";
 import { Profile } from "../users/Profile";
 import { ManageArtworks } from "../users/artworks/ManageArtworks";
 import { HomeSidebar } from "../../components/Home/HomeSidebar";
+
 //notifications
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
