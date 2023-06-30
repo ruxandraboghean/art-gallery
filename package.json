@@ -77,6 +77,7 @@
     "jest": "^27.5.1",
     "jest-svg-transformer": "^1.0.0",
     "jsdom": "^22.1.0",
+    "main": "^1000.0.1",
     "prettier": "2.8.3",
     "react-test-renderer": "^18.2.0"
   },
@@ -84,5 +85,10 @@
   "main": "index.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "homepage": "https://github.com/ruxandraboghean/art-gallery/",
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "main -d build"
+  }
 }
