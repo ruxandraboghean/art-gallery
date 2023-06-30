@@ -47,6 +47,7 @@ export const Request = ({
       const inititorData = await getUserById(request.initiator);
       const dateFormatted = moment(request.date).format("MMMM DD, YYYY");
 
+      console.log(artData, "artData");
       setInitiator(inititorData);
       setArtwork(artData);
       setArtPhoto(artData.photoURL);
@@ -66,10 +67,6 @@ export const Request = ({
     getUserRole();
   }, []);
 
-  if (!artwork) {
-    return <Spinner />;
-  }
-
   return (
     <div className="artworks-wrapper">
       <div className="artwork">
@@ -79,7 +76,7 @@ export const Request = ({
           className="artwork-item"
           id="artwork-image"
         />
-        <p className="artwork-item">{initiator?.displayName}</p>
+        <p className="artwork-item">initiator: {initiator?.displayName}</p>
         <p className="artwork-item">{date}</p>
         <p className="artwork-item">{request.status}</p>
         <div className="actions" ref={dropdownRef}>

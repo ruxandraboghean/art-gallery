@@ -141,6 +141,7 @@ export const ManageArtworks = () => {
     handleSearch();
   }, [searchedTitle]);
 
+  console.log(userArtworks, "userARTS");
   return (
     <div className="gallery-container">
       <div className="gallery-wrapper">

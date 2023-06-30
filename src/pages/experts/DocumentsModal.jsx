@@ -1,4 +1,4 @@
-import { doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
 import { db, storage } from "../../firebase";
@@ -29,6 +29,7 @@ export const DocumentsModal = ({
   const [isPdf, setIsPdf] = useState(false);
   const [isPNG, setIsPNG] = useState(false);
   const [isSVG, setIsSVG] = useState(false);
+  const { nanoid } = require("nanoid");
 
   const onDrop = (acceptedFiles) => {
     setFormValues({
@@ -147,6 +148,16 @@ export const DocumentsModal = ({
           }
         );
 
+        // notification to user
+        await updateDoc(doc(db, "users", request.initiator), {
+          notifications: arrayUnion({
+            id: nanoid(),
+            message: `The authentication process is complete. Your artwork, titled "${artwork.title}", is now ${artwork.status}.
+            You can now view it in the certified artworks section. Additionally, you can download the certificate from your Profile under the "Authenticated Artworks" section.`,
+            time: new Date().getTime(),
+            image: artwork.photoURL,
+          }),
+        });
         setIsLoading(false);
         setIsOpenDocumentsModal(false);
       } catch (err) {

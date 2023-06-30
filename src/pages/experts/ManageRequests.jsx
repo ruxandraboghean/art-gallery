@@ -9,12 +9,13 @@ import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 //notifications
 import "react-toastify/dist/ReactToastify.css";
 import getCurrentUserRequests from "../../data/currentUser/getCurrentUserRequests";
-import { Request } from "../../components/Experts/Request";
 import { RequestContext } from "../../context/RequestsContext";
 import getUserById from "../../data/users/getUserById";
 import { ConfirmationModal } from "../../components/gallery/modals/ConfirmationModal";
 import { DocumentsModal } from "./DocumentsModal";
 import { NoData } from "../../components/utils/NoData";
+import { Request } from "../../components/experts/Request";
+import { UserRequests } from "./UserRequests";
 
 const sortOptions = [
   { label: "date", value: "date" },
@@ -137,11 +138,11 @@ export const ManageRequests = () => {
             userRequestsData.filter((req) => req.status === "denied")
           );
           break;
-          case "completed":
-            setUserRequests(
-              userRequestsData.filter((req) => req.status === "completed")
-            );
-            break;
+        case "completed":
+          setUserRequests(
+            userRequestsData.filter((req) => req.status === "completed")
+          );
+          break;
         default:
           setUserRequests(userRequestsData);
           break;
@@ -249,29 +250,20 @@ export const ManageRequests = () => {
                 completed
               </div>
             </div>
-
-            {userRequests?.length === 0 ? (
-              <NoData />
-            ) : (
-              (filteredData.length === 0 ? userRequests : filteredData)?.map(
-                (request) => (
-                  <Request
-                    request={request}
-                    key={request.id}
-                    isOpenConfirmationModal={isOpenConfirmationModal}
-                    setIsOpenConfirmationModal={setIsOpenConfirmationModal}
-                    setCurrentRequest={setCurrentRequest}
-                    isOpenDocumentsModal={isOpenDocumentsModal}
-                    setIsOpenDocumentsModal={setIsOpenDocumentsModal}
-                    artwork={artwork}
-                    setArtwork={setArtwork}
-                    currentRequest={currentRequest}
-                    setRequestedArtwork={setRequestedArtwork}
-                    requestedArtwork={requestedArtwork}
-                  />
-                )
-              )
-            )}
+            <UserRequests
+              userRequests={userRequests}
+              filteredData={filteredData}
+              isOpenConfirmationModal={isOpenConfirmationModal}
+              setIsOpenConfirmationModal={setIsOpenConfirmationModal}
+              setCurrentRequest={setCurrentRequest}
+              isOpenDocumentsModal={isOpenDocumentsModal}
+              setIsOpenDocumentsModal={setIsOpenDocumentsModal}
+              artwork={artwork}
+              setArtwork={setArtwork}
+              currentRequest={currentRequest}
+              setRequestedArtwork={setRequestedArtwork}
+              requestedArtwork={requestedArtwork}
+            />
           </div>
         </div>
       </div>

@@ -42,17 +42,10 @@ export const RequestPendingActions = ({ request }) => {
 
     const artworkReq = await getArtworkById(request.artworkId);
 
-    console.log(artworkReq, "artwork to be autheticated");
-    console.log(artworkReq.status, "status");
-
     await updateDoc(doc(db, "artworks", artworkReq.id), {
       status: "pending authentication",
     });
-
-    console.log(artworkReq.status, "status");
   };
-
-  console.log(request.id);
 
   return (
     <>

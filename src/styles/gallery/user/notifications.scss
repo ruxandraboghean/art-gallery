@@ -2,6 +2,11 @@
   @include flexbox-direction(flex, center, column, center);
   padding: 1rem;
   gap: 0.5rem;
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   .notification__container {
     @include flexbox(flex, center, flex-start);

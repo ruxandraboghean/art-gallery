@@ -34,6 +34,8 @@ import getSpecialists from "../../data/users/getSpecialists";
 import getUsers from "../../data/users/getUsers";
 import RequestStatusEnum from "../../enums/RequestStatusEnum";
 import { FormSpinner } from "../utils/FormSpinner";
+import getAllArtworks from "../../data/artworks/getAllArtworks";
+import getCurrentUserArtworks from "../../data/currentUser/getCurrentUserArtworks";
 const initialState = {
   title: "",
   year: "",
@@ -314,7 +316,7 @@ export const AddArtworkForm = ({ onClose, isLoading, setIsLoading }) => {
             technique: artworkData?.technique.value,
             genre: artworkData?.genre.value,
             category: artworkData?.category.value,
-            specialist: artworkData?.specialist.value,
+            specialist: specialistSelected.uid,
             status: status,
             photoURL: artworkData?.photoURL?.imageSrc || "",
             userId: currentUser.uid,
@@ -324,7 +326,7 @@ export const AddArtworkForm = ({ onClose, isLoading, setIsLoading }) => {
           await setDoc(requestsDocRef, {
             id: requestsDocRef.id,
             initiator: currentUser.uid,
-            receiver: specialistSelected,
+            receiver: specialistSelected.uid,
             date: new Date().getTime(),
             artworkId: artId,
             status: RequestStatusEnum.PENDING,
@@ -462,7 +464,12 @@ export const AddArtworkForm = ({ onClose, isLoading, setIsLoading }) => {
         setErr(false);
         setIsSuccess(true);
         setHasNewNotification(true);
+        const artworksFromDb = await getAllArtworks();
+        setArtworks(artworksFromDb);
+        const userArtworksData = await getCurrentUserArtworks(currentUser);
+        setUserArtworks(userArtworksData);
         onClose();
+
         console.log("Document updated with ID: ", docRef.id);
       } else {
         saveNewArtwork(e, "draft");
@@ -507,7 +514,10 @@ export const AddArtworkForm = ({ onClose, isLoading, setIsLoading }) => {
           };
 
           await updateDoc(userDocRef, { artworks: updatedArtworks });
-          setArtworks(updatedArtworks);
+          const artworksFromDb = await getAllArtworks();
+          setArtworks(artworksFromDb);
+          const userArtworksData = await getCurrentUserArtworks(currentUser);
+          setUserArtworks(userArtworksData);
         }
 
         setIsSuccess(true);
