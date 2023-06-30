@@ -1,4 +1,4 @@
-### university thesis
+### no illusion gallery
 
 ### `npm start`
 
