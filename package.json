@@ -48,7 +48,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "main -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -86,9 +88,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "homepage": "https://github.com/ruxandraboghean/art-gallery/",
-  "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "main -d build"
-  }
+  "homepage": "https://github.com/ruxandraboghean/art-gallery/"
 }
