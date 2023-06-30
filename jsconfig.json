@@ -1,5 +1,15 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src"
-  }
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"]
+    },
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "target": "es5"
+  },
+  "include": ["src"]
 }
