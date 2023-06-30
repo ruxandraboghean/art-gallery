@@ -7,7 +7,6 @@ import "@fontsource/roboto-mono";
 import { ChatContextProvider } from "./context/ChatContext";
 import { ArtworkModalContextProvider } from "./context/ArtworkModalContext";
 import { RequestContextProvider } from "./context/RequestsContext";
-import { app } from "firebase";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -23,8 +22,3 @@ root.render(
     </ChatContextProvider>
   </AuthContextProvider>
 );
-app.use(express.static(__dirname)); //here is important thing - no static directory, because all static :)
-
-app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
