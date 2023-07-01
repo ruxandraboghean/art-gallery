@@ -6,6 +6,7 @@ const getSpecialists = async () => {
 
   users.map((user) => {
     user.role === "expert" && specialists.push(user);
+    return user;
   });
   return specialists;
 };

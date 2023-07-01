@@ -31,7 +31,7 @@ export const General = ({ currentUser }) => {
 
   useEffect(() => {
     getUserData();
-  }, []);
+  }, [currentUser.uid]);
 
   return (
     <>

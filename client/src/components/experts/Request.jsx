@@ -12,7 +12,6 @@ import { RequestAcceptedActions } from "./RequestAcceptedActions";
 import { RequestDeniedActions } from "./RequestDeniedActions";
 import { AuthContext } from "../../context/AuthContext";
 import { RequestAcceptedActionsValidator } from "./RequestAcceptedActionsValidator";
-import { Spinner } from "../utils/Spinner";
 
 export const Request = ({
   request,
@@ -47,7 +46,6 @@ export const Request = ({
       const inititorData = await getUserById(request.initiator);
       const dateFormatted = moment(request.date).format("MMMM DD, YYYY");
 
-      console.log(artData, "artData");
       setInitiator(inititorData);
       setArtwork(artData);
       setArtPhoto(artData.photoURL);
@@ -65,7 +63,7 @@ export const Request = ({
       setUserRole(userData.role);
     };
     getUserRole();
-  }, []);
+  }, [currentUser.uid]);
 
   return (
     <div className="artworks-wrapper">

@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import getCurrentUserArtworks from "../../data/currentUser/getCurrentUserArtworks";
@@ -24,7 +24,7 @@ export const AuthenticatedArtworks = () => {
     if (currentUser) {
       fetchData();
     }
-  }, [currentUser]);
+  }, [currentUser.uid]);
 
   useEffect(() => {
     if (userArtworks.length !== 0) {

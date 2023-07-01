@@ -32,8 +32,6 @@ export const ManageArtworks = () => {
   const [sortData, setSortData] = useState(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [hasDisplayedMessage, setHasDisplayedMessage] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-
   const { userArtworks, setUserArtworks } = useContext(ArtworkModalContext);
 
   //modal for displaying a message for deleting confirmation

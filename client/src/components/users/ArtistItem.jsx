@@ -2,10 +2,9 @@ import React, { useContext, useEffect } from "react";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import getArtworkById from "../../data/artworks/getArtworkById";
 import { useState } from "react";
-import { NoData } from "../utils/NoData";
 
 export const ArtistItem = () => {
-  const { currentArtist, setCurrentMenuItem } = useContext(ArtworkModalContext);
+  const { currentArtist } = useContext(ArtworkModalContext);
   const [userArtworks, setUserArtworks] = useState(null);
 
   const toSentenceCase = (str) => {
@@ -39,7 +38,7 @@ export const ArtistItem = () => {
     };
 
     getArtworks();
-  }, []);
+  }, [currentArtist.uid]);
 
   if (!currentArtist) {
     return <div> loading...</div>;

@@ -34,7 +34,7 @@ export const ArtworkExhibitionForm = ({
         return updatedSelectedArtworks;
       });
     }
-  }, [isChecked, art]);
+  }, [isChecked, art.id]);
 
   console.log(selectedArtworks, "selected");
   return (

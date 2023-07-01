@@ -13,8 +13,6 @@ import { RequestContext } from "../../context/RequestsContext";
 import getUserById from "../../data/users/getUserById";
 import { ConfirmationModal } from "../../components/gallery/modals/ConfirmationModal";
 import { DocumentsModal } from "./DocumentsModal";
-import { NoData } from "../../components/utils/NoData";
-import { Request } from "../../components/experts/Request";
 import { UserRequests } from "./UserRequests";
 
 const sortOptions = [
@@ -167,7 +165,7 @@ export const ManageRequests = () => {
   useEffect(() => {
     handleSearch();
   }, [searchedInititator, handleSearch]);
-  console.log("current req: ", userRequests);
+  console.log("is success: ", isSuccess);
 
   return (
     <div className="gallery-container">
