@@ -1,23 +1,22 @@
 .buttons {
-    @include flexbox(flex, center, center);
+    @include flexbox(flex, stretch, center);
     gap:2rem;
     width: 90%;
 
     button {
         @include upload-btn; 
-        @include dim(8rem, 2rem);
-        @include bigger-laptop() {
-            font-size: $xs_mobile; 
-        }
-        @include laptop-height() {
-            font-size: $xs_mobile; 
-        }
-        font-size: $xxs; 
+        // @include bigger-laptop() {
+        //     font-size: $xs_mobile; 
+        // }
+        // @include laptop-height() {
+        //     font-size: $xs_mobile; 
+        // }
+        font-size: $s_mobile; 
 
         &#cancel:hover {
             background-color: $danger_color;
         } 
-
+        flex: 1;
       
 
         &#save:hover {

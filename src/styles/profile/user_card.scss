@@ -70,7 +70,8 @@
 
       span {
         @include font($roboto-mono, $normal, $s_mobile);
-        border: 1px solid $purple;
+        // border: 1px solid $purple;
+        background-color: $base_color_transparent;
         padding: 1rem;
         border-radius: 10px;
         width: 80%;

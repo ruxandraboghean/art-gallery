@@ -87,13 +87,17 @@ export const AddArtworkForm = ({ onClose, isLoading, setIsLoading }) => {
   //drop artwork photo
   const onDrop = (acceptedFiles) => {
     const selectedFile = acceptedFiles[0];
-    setArtworkData({
-      ...artworkData,
-      photoURL: {
-        imageSrc: URL.createObjectURL(selectedFile),
-        file: selectedFile,
-      },
-    });
+    if (selectedFile && selectedFile.type.startsWith("image/")) {
+      setArtworkData({
+        ...artworkData,
+        photoURL: {
+          imageSrc: URL.createObjectURL(selectedFile),
+          file: selectedFile,
+        },
+      });
+    } else {
+      console.log("Invalid file type. Please select an image file.");
+    }
   };
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -629,7 +633,7 @@ export const AddArtworkForm = ({ onClose, isLoading, setIsLoading }) => {
             </div>
             <div className="input-item">
               <input
-                type="text"
+                type="number"
                 id="year"
                 name="year"
                 placeholder="year"
@@ -654,6 +658,8 @@ export const AddArtworkForm = ({ onClose, isLoading, setIsLoading }) => {
                 <input
                   type="number"
                   id="height  "
+                  min="0"
+                  max="10000"
                   name="height"
                   placeholder="height"
                   value={artworkData?.height}
@@ -665,6 +671,8 @@ export const AddArtworkForm = ({ onClose, isLoading, setIsLoading }) => {
                 <input
                   type="number"
                   id="width"
+                  min="0"
+                  max="10000"
                   name="width"
                   placeholder="width"
                   value={artworkData?.width}
@@ -675,6 +683,8 @@ export const AddArtworkForm = ({ onClose, isLoading, setIsLoading }) => {
               <div className="input-item">
                 <input
                   type="number"
+                  min="0"
+                  max="10000"
                   id="depth"
                   name="depth"
                   placeholder="depth"

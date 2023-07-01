@@ -1,4 +1,5 @@
-$roboto-mono: 'Roboto Mono', sans-serif;
+$roboto-mono:"Basier Circle", sans-serif;
+
 $brittany: 'Brittany Signature', sans-serif;
 $frank-ruhl-libre:  'Frank Ruhl Libre', serif;
 $longa-iberica: 'Longa Iberica', sans-serif;
@@ -12,17 +13,18 @@ $bold   : 900;
 
 $xxs_mobile : 0.4rem;
 $xs_mobile  : 0.5rem;
-$s_mobile   : 0.6rem;
-$xxs        : 0.7rem;
-$xs         : 0.8rem;
-$s          : 0.9rem;
-$m          : 1.0rem;
-$l          : 1.2rem;
-$xl         : 1.4rem;
+$s_mobile   : 0.9rem;
+$xxs        : 1rem;
+$xs         : 1.1rem;
+$s          : 1.2rem;
+$m          : 1.3rem;
+$l          : 1.4rem;
+$xl         : 1.5rem;
 $xxl        : 2.0rem;
 
 $base_color             :  #FFFFFF !default;
 $base_color_transparent :  rgb(231,228,238, 0.9);
+$dark_color_transparent :   rgb(83, 35, 81, 0.9);
 $base_color_pink        :  #eedfe5 !default;
 $base_color_light       : rgb(231,228,238, 0.2);
 
@@ -34,7 +36,7 @@ $grayish_pink           :  #B396A8 !default;
 $grayish_blue           :  #6E6D91 !default;
 $purple                 :  #AF92C6 !default;
 $magenta                :  #6D398E !default;
-$dark_magenta           :  #532351 !default;
+$dark_magenta           :  rgb(83, 35, 81) !default;
 $pale_purple            :  #EFE7FF !default;
 $pale_grayish_purple    :  rgb(187,174,209, 0.2);
 $success_color          :  #9AB0A6;
