@@ -1,15 +1,12 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import { ref, getDownloadURL } from "firebase/storage";
 
 import { Box, Fab, Tooltip } from "@mui/material";
-import { ArtworkModalContext } from "../../context/ArtworkModalContext";
 import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
 import { storage } from "../../firebase";
 
 export const AuthenticatedArtActionButtons = ({
   artwork,
-  setIsOpenConfirmationModal,
-  setCurrentArtwork,
   setAuthenticatedMenuOpen,
 }) => {
   const handleDownloadReport = async () => {

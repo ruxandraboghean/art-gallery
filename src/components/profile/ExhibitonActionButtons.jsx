@@ -1,20 +1,12 @@
-import React, { useContext, useState } from "react";
-import { ref, getDownloadURL } from "firebase/storage";
+import React, { useContext } from "react";
 
 import { Box, Fab, Tooltip } from "@mui/material";
 import { ArtworkModalContext } from "../../context/ArtworkModalContext";
-import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
-import { db, storage } from "../../firebase";
+import { db } from "../../firebase";
 import { DeleteForever, Edit } from "@mui/icons-material";
 import { deleteDoc, doc } from "firebase/firestore";
 
-export const ExhibitonActionButtons = ({
-  exhibition,
-  setIsOpenConfirmationModal,
-  setCurrentArtwork,
-  exhibitions,
-  setUserExhibitions,
-}) => {
+export const ExhibitonActionButtons = ({ exhibition, setUserExhibitions }) => {
   const { handleOpenModal } = useContext(ArtworkModalContext);
 
   const handleDeleteExhibition = async () => {

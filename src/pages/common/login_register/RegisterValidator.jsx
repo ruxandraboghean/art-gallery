@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { auth, db, storage } from "../../../firebase";
-import { doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
@@ -13,7 +13,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 import logo from "../../../images/logo/no_illusion_logo.png";
 
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import AttachmentIcon from "@mui/icons-material/Attachment";
 
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
@@ -71,8 +70,9 @@ export const RegisterValidator = () => {
     const checkPassword = e.target[3].value;
     const file = e.target[4].files[0] || null;
 
-    console.log(file, "file");
-
+    if (password !== checkPassword) {
+      setErr(true);
+    }
     if (
       !formValues.username.trim() ||
       !formValues.email.trim() ||

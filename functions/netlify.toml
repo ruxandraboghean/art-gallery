@@ -8,4 +8,4 @@ to = "/.netlify/functions/api/:splat";
 
 [build];
 command = "npm run build";
-publish = "client/public";
+publish = "public";

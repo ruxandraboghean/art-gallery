@@ -75,8 +75,9 @@ export const RegisterExpert = () => {
     const file = e.target[4].files[0] || null;
     const certificate = e.target[5].files[0] || null;
 
-    console.log(file, "file");
-
+    if (password !== checkPassword) {
+      setErr(true);
+    }
     if (
       !formValues.username.trim() ||
       !formValues.email.trim() ||

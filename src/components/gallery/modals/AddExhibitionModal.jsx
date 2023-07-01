@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { Modal } from "../../Modal";
 import { ArtworkModalContext } from "../../../context/ArtworkModalContext";
 import { AddExhibitionForm } from "../AddExhibitionForm";
