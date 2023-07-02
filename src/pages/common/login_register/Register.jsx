@@ -24,8 +24,8 @@ export const Register = () => {
                 >
                   <div className="user">
                     <img src={user} alt="user" className="user_icon" />
-                    {/* <span className="register_account">user</span> */}
                   </div>
+                  <span className="register_account">user</span>
                 </Link>
                 <Link
                   to="/register-expert"
@@ -34,8 +34,8 @@ export const Register = () => {
                 >
                   <div className="user">
                     <img src={expert} alt="expert" className="expert_icon" />
-                    {/* <span className="register_account">art authenticator</span> */}
                   </div>
+                  <span className="register_account">specialist</span>
                 </Link>
                 <Link
                   to="/register-validator"
@@ -44,8 +44,8 @@ export const Register = () => {
                 >
                   <div className="user">
                     <img src={validator} alt="expert" className="expert_icon" />
-                    {/* <span className="register_account">art authenticator</span> */}
                   </div>
+                  <span className="register_account">validator</span>
                 </Link>
               </div>
             </div>
