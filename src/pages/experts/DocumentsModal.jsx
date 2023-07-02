@@ -179,9 +179,9 @@ export const DocumentsModal = ({
           id="documents-modal"
           onSubmit={handleSubmit}
         >
-          <label htmlFor="report" className="custom-label">
+          {/* <label htmlFor="report" className="custom-label">
             upload report
-          </label>
+          </label> */}
           <div
             className={`drag-container ${
               !isReportUploaded && "center-content"
@@ -202,12 +202,10 @@ export const DocumentsModal = ({
                   onClick={() => handleRemoveImg("report")}
                 />
                 <div className="dragged-content">
-                  {isPdf ? (
-                    <FaRegFilePdf className="file-type" />
-                  ) : (
-                    <BsFiletypeDoc className="file-type" />
-                  )}
-
+                  {/* {isPdf ? ( */}
+                  <FaRegFilePdf className="file-type" />
+                  {/* // ) : ( // <BsFiletypeDoc className="file-type" />
+                  // )} */}
                   <div className="file-name">{formValues.report.name}</div>
                 </div>
               </>
@@ -224,9 +222,9 @@ export const DocumentsModal = ({
             onChange={(e) => handleChange("report", e.target.files[0])}
           />
 
-          <label htmlFor="certificate" className="custom-label">
+          {/* <label htmlFor="certificate" className="custom-label">
             upload certificate
-          </label>
+          </label> */}
           <input
             {...getInputCertificateProps()}
             multiple={false}
@@ -258,13 +256,13 @@ export const DocumentsModal = ({
                   onClick={() => handleRemoveImg("certificate")}
                 />
                 <div className="dragged-content">
-                  {isPNG ? (
-                    <BsFiletypePng className="file-type" />
-                  ) : isSVG ? (
-                    <BsFiletypeSvg className="file-type" />
+                  {/* {isPNG ? ( */}
+                  <BsFiletypePng className="file-type" />
+                  {/* ) : isSVG ? ( */}
+                  {/* <BsFiletypeSvg className="file-type" />
                   ) : (
                     <BsFiletypeJpg className="file-type" />
-                  )}
+                  )} */}
                   <div className="file-name">{formValues.certificate.name}</div>
                 </div>
               </>
