@@ -14,14 +14,14 @@
 
         .drag-icon {
             @include dim(1.5rem, 1.5rem);
-            color:$grayish_pink;
+            color:rgb(142,142,142);
             cursor: pointer;
         }
 
         p {
             @include font($roboto-mono, $light, $s);
             text-align: center;
-            color:$grayish_pink;
+            color:rgb(142,142,142);
             font-size: $xxs;
 
             @include laptop {

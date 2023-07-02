@@ -11,18 +11,20 @@
 
   .close {
     position: absolute;
-    top: 12.5%;
-    right: 22.5%;
+    top: 3.5%;
+    right: 2.5%;
     background-color: transparent;
     border: none;
-
+  
     .close_circle {
-      width: 1.2rem;
-      height: 1.2rem;
-      color: $dark_magenta;
-
+      width: 1.3rem;
+      height: 1.3rem;
+      color: grey;
+      border-radius: 30px;
+      background: linear-gradient(180deg, rgba(200, 215, 254, 0.90) 3.34%, rgba(50, 94, 179, 0.00) 57.67%), radial-gradient(65.91% 121.80% at 76.68% 66.67%, #e2c8cb 0%, #fefefe 100%);
+      background-blend-mode: overlay, normal;
+      z-index: 999999999;
       &:hover {
-        color: $grayish_purple;
         cursor: pointer;
       }
     }
@@ -36,6 +38,9 @@
     max-height: 90%;
     height: 90%;
     box-sizing: border-box;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.30) 15.80%, rgba(255, 255, 255, 0.15) 92.73%);
+    box-shadow: 0px 40px 40px 0px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(30px);
 
     .slick-slider {
       max-height: 100%;

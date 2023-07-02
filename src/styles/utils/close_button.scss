@@ -4,14 +4,18 @@
     color: $dark_magenta;
     box-sizing: border-box;
     cursor: pointer;
-    font-size: $s;
+    font-size: $s_mobile;
     outline: none;
     overflow: hidden;
     text-transform: uppercase;
     transition: all 0.2s ease-in;
     width: 20px;
-    padding: 0;
-
+    padding: 0.1rem;
+    background: linear-gradient(180deg, rgba(200, 215, 254, 0.90) 3.34%, rgba(50, 94, 179, 0.00) 57.67%), radial-gradient(65.91% 121.80% at 76.68% 66.67%, #e2c8cb 0%, #fefefe 100%);
+    background-blend-mode: overlay, normal;
+    border-radius: 30px;
+    margin-left: 0.5rem;
+    margin-top: 0.2rem;
     &::before,
     .close_button::after {
       color: $base_color_pink;

@@ -1,4 +1,4 @@
-$roboto-mono:"Basier Circle", sans-serif;
+$roboto-mono:"Raleway", sans-serif;
 
 $brittany: 'Brittany Signature', sans-serif;
 $frank-ruhl-libre:  'Frank Ruhl Libre', serif;
@@ -43,9 +43,10 @@ $success_color          :  #9AB0A6;
 $danger_color           :  #C47A7A;
 $grayish_light          : rgb(231,228,238, 0.25);
 $grayish_normal         : rgb(231,228,238, 0.5);
-
+$modal_background       : linear-gradient(90deg, rgba(255, 255, 255, 0.612) 15.80%, rgba(255, 255, 255, 0.625) 92.73%);
 
 $text-white             :  #FFF9FD !default;
 $text_purple            :  #6E6D90 !default;
 $text_magenta           :  #6D398E !default;
 $text_black             :  #000000 !default;
+
